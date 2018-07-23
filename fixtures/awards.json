@@ -1,0 +1,54 @@
+[
+{
+    "model": "awards.rangaward",
+    "pk": 1,
+    "fields": {
+        "title": "No Rank",
+        "volume": "0.00",
+        "max_lines": 0,
+        "lines_volume": "0.00",
+        "include_rang": null,
+        "include_rang_count": 0,
+        "bonus": "0.00"
+    }
+},
+{
+    "model": "awards.rangaward",
+    "pk": 2,
+    "fields": {
+        "title": "Silver",
+        "volume": "300.00",
+        "max_lines": 1,
+        "lines_volume": "1000.00",
+        "include_rang": null,
+        "include_rang_count": 0,
+        "bonus": "100.00"
+    }
+},
+{
+    "model": "awards.rangaward",
+    "pk": 3,
+    "fields": {
+        "title": "Gold",
+        "volume": "1000.00",
+        "max_lines": 3,
+        "lines_volume": "5000.00",
+        "include_rang": 2,
+        "include_rang_count": 2,
+        "bonus": "500.00"
+    }
+},
+{
+    "model": "awards.rangaward",
+    "pk": 4,
+    "fields": {
+        "title": "Diamond",
+        "volume": "5000.00",
+        "max_lines": 5,
+        "lines_volume": "20000.00",
+        "include_rang": 3,
+        "include_rang_count": 2,
+        "bonus": "1000.00"
+    }
+}
+]

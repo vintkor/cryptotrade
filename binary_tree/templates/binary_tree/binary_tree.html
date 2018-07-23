@@ -1,0 +1,269 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}
+    <script type="text/javascript" src="http://www.getorgchart.com/GetOrgChart/getorgchart/getorgchart.js"></script>
+{% endblock headed_scripts %}
+
+
+{% block content %}{% endblock content %}
+
+
+{% block footer_scripts %}
+    <link rel="stylesheet" type="text/css" href="http://www.getorgchart.com/GetOrgChart/getorgchart/getorgchart.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    function sameOrigin(url) {
+        var host = document.location.host;
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    var csrftoken = getCookie('csrftoken');
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    var my_tree_data;
+    var settings = {
+        "async": false,
+        "url": "{% url 'binary_tree:binary_tree' %}",
+        "method": "POST",
+        "headers": {},
+        "data": "{\"root_node\": \"{{ user.unique_number }}\"}"
+    };
+
+    $.ajax(settings).done(function (response) {
+        if (response.status) {
+            my_tree_data = response.tree;
+        } else {
+            my_tree_data = [];
+        }
+    });
+
+    var not_active = {};
+    function traverseTree(orgChart, inputArray) {
+        return traverseNode(orgChart, inputArray, outputArray, inputArray[0].id);
+    }
+    function generateRootNode(inputArray) {
+        var node = inputArray[0];
+        node.fakeId = 0;
+        node.fakeParentId = null;
+        return JSON.parse(JSON.stringify(node));
+    }
+    function getChildId(parentId, isLeftBranch) {
+        return parentId * 100000 + isLeftBranch;
+    }
+    function mockUnit(parentId, isLeftBranch) {
+        var magic = 16777213;
+        return {
+            id: -1,
+            parentId: parentId,
+            name: null,
+            package: null,
+            left: 0,
+            right: 0,
+            image: null,
+            left_node: null,
+            right_node: null
+        };
+    }
+    var nodes_customize = {};
+    function traverseNode(orgChart, inputArray, outputArray, nodeId, parentId, isLeftBranch) {
+        var node = inputArray.find(function(item) {
+            return (Number(item.id) === Number(nodeId));
+        });
+        var mock;
+        if (!node) {
+            throw new Error('Node ID ' + nodeId + ' is not present!');
+        }
+        if (node.parentId) {
+            node.fakeId = getChildId(node.parentId, isLeftBranch);
+            node.fakeParentId = parentId;
+            outputArray.push(node);
+        }
+        if (node.status == "1") {
+            nodes_customize[node.fakeId] = { color: "neutralgrey" };
+        } else if (node.status == "2") {
+            nodes_customize[node.fakeId] = { color: "teal" };
+        } else if (node.status == "3") {
+            nodes_customize[node.fakeId] = { color: "cordovan" };
+        } else if (node.status == "4") {
+            nodes_customize[node.fakeId] = { color: "green" };
+        } else {
+            nodes_customize[node.fakeId] = { color: "black" };
+        }
+        if (!node.left_node) {
+            mock = mockUnit(nodeId, 0);
+            mock.fakeId = getChildId(node.id, 0);
+            nodes_customize[getChildId(node.id, 0)] = { theme: "helen" };
+            mock.fakeParentId = node.fakeId;
+            outputArray.push(mock);
+        } else if (!node.skip_children) {
+            traverseNode(orgChart, inputArray, outputArray, node.left_node, node.fakeId, 0);
+        }
+        if (!node.right_node) {
+            mock = mockUnit(nodeId, 1);
+            mock.fakeId = getChildId(node.id, 1);
+            nodes_customize[getChildId(node.id, 1)] = { theme: "helen" };
+            mock.fakeParentId = node.fakeId;
+            outputArray.push(mock);
+        } else if (!node.skip_children) {
+            traverseNode(orgChart, inputArray, outputArray, node.right_node, node.fakeId, 1);
+        }
+        return outputArray;
+    }
+    var peopleElement = document.getElementById("tree");
+    var outputArray = [generateRootNode(my_tree_data)];
+    traverseTree(null, my_tree_data, outputArray);
+    var orgChart = new getOrgChart(peopleElement, {
+        renderNodeEvent: renderNodeHandler,
+        color: "neutralgrey",
+        gridView: true,
+        idField: "fakeId",
+        parentIdField: "fakeParentId",
+        enableEdit: false,
+        enableSearch: false,
+        enableDetailsView: false,
+        enableZoomOnNodeDoubleClick: true,
+        linkType: "M",
+        primaryFields: [
+            "name",
+            "left_points",
+            "right_points",
+            "package_weight",
+            "look_tree"
+        ],
+        photoFields: ["image"],
+        expandToLevel: 30,
+        scale: 0.3,
+        dataSource: outputArray,
+        customize: nodes_customize
+    });
+    function renderNodeHandler(sender, args) {
+        for (i = 0; i < args.content.length; i++) {
+            if (args.content[i].indexOf(args.node.data["look_tree"]) != -1) {
+                args.content[i] = "<foreignObject x='420' y='10' width='70' height='70'>" + args.node.data["look_tree"] + "</foreignObject>";
+            }
+            if (args.content[i].indexOf(args.node.data["package_weight"]) != -1) {
+                args.content[i] = "<foreignObject x='0' y='-45' width='54' height='42'>" + args.node.data["package_weight"] + "</foreignObject>";
+            }
+        }
+    }
+    traverseTree(orgChart, my_tree_data);
+    </script>
+    <style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+    }
+    #tree {
+        width: calc(100vw - 290px);
+        position: relative;
+        top: 60px;
+        left: 270px;
+    }
+    .get-oc-c {
+        height: 100vh !important;
+    }
+    .content-header {
+        position: relative;
+        padding: 0;
+    }
+    .get-green.get-org-chart .get-oc-tb {
+        background-color: #008d4c;
+    }
+    .get-green .get-box,
+    g.get-green .get-box {
+        fill: #008d4c;
+        stroke: #017741;
+    }
+    .look_tree {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: inherit;
+        z-index: 9;
+        width: 70px;
+        height: 70px;
+        background: #fff;
+        border-radius: 5px;
+        color: #017741;
+        transition: .2s;
+    }
+    .look_tree:hover {
+        color: #fff;
+        background: #ea4e4e;
+    }
+    .content-wrapper {
+        position: relative;
+    }
+    #tree_info {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 200px;
+        height: auto;
+        z-index: 20;
+        display: block;
+        background: #fff;
+        padding: 10px;
+    }
+    #tree_info h3 {
+        font-size: 16px;
+        margin-top: 0;
+    }
+    @media screen and (max-width: 769px) {
+        #tree_info {
+            display: none;
+        }
+    }
+    .get-green.get-org-chart {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .fa-battery-1 {
+        color: #ff645d;
+    }
+    .fa-battery-2 {
+        color: #ff8b51;
+    }
+    .fa-battery-3 {
+        color: #52a9ff;
+    }
+    .fa-battery-4 {
+        color: #017741;
+    }
+    </style>
+{% endblock footer_scripts %}

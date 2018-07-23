@@ -1,0 +1,90 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <center class="m-t-30">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}" class="rounded-circle" width="150">
+                                {% else %}
+                                <img src="{% static 'adminbite/' %}assets/images/users/5.png" class="rounded-circle" width="150">
+                            {% endif %}
+                            <h4 class="card-title m-t-10">{{ user.get_full_name }}</h4>
+                            <h6 class="card-subtitle">{{ user.unique_number }}</h6>
+                        </center>
+                    </div>
+                    <div>
+                        <hr> </div>
+                    <div class="card-body text-center-">
+
+                        <table class="table table-striped">
+                            <tr>
+                                <td>{% trans 'Ваш спонсор' %}</td>
+                                <td>{{ user.parent.get_full_name }} ({{ user.parent.email }})</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Email' %}</td>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Номер телефона' %}</td>
+                                <td>{{ user.phone }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Баланс' %}</td>
+                                <td>FBC {{ user.balance }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Пакет' %}</td>
+                                <td>{{ user.package.title }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Страна' %}</td>
+                                <td>{{ user.country.title }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Направление регистрации' %}</td>
+                                <td>
+                                    {% if user.registration_direction == 'left'%}
+                                        {% trans 'В левую ногу' %}
+                                    {% else %}
+                                        {% trans 'В правую ногу' %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Реферальная ссылка для регистрации' %}</td>
+                                <td><a target="_blank" href="//{{ request.META.HTTP_HOST }}{{ ref_link }}">//{{ request.META.HTTP_HOST }}{{ ref_link }}</a></td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Дата регистрации' %}</td>
+                                <td>{{ user.created }}</td>
+                            </tr>
+                        </table>
+
+                        <br>
+
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Редактировать профиль' %}</button>
+                            <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Сменить аватар' %}</button>
+                            <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Сменить пароль' %}</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}{% endblock footer_scripts %}

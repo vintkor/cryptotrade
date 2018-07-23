@@ -1,0 +1,114 @@
+{% load static %}
+{% load i18n %}
+
+<aside class="left-sidebar">
+    <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li>
+
+                    <div class="user-profile dropdown m-t-20">
+                        <div class="user-pic">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}" class="rounded-circle img-fluid">
+                                {% else %}
+                                <img src="{% static 'adminbite/' %}assets/images/users/5.png" class="rounded-circle img-fluid">
+                            {% endif %}
+                        </div>
+                        <div class="user-content hide-menu m-t-10">
+                            <h5 class="m-b-10 user-name font-medium">FBC {{ user.balance }}</h5>
+                            <h5 class="m-b-10 user-name font-medium">{{ user.unique_number }}</h5>
+                            <h5 class="m-b-10 user-name font-medium"><small>{{ user.package }}</small></h5>
+                        </div>
+                    </div>
+
+                </li>
+                {# -------------------------------- Панель управления -------------------------------- #}
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashboard:dashboard' %}" aria-expanded="false">
+                        <i class="sl-icon-loop"></i>
+                        <span class="hide-menu">{% trans 'Панель управления' %}</span>
+                    </a>
+                </li>
+
+                {# -------------------------------- Мои финансы -------------------------------- #}
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-Mailbox-Empty"></i>
+                        <span class="hide-menu">{% trans 'Мои финансы' %}</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{% url 'package:packages-list' %}" class="sidebar-link">
+                                <i class="mdi mdi-email"></i>
+                                <span class="hide-menu">{% trans 'Купить пакет' %}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'finance:finance-history' %}" class="sidebar-link">
+                                <i class="mdi mdi-email"></i>
+                                <span class="hide-menu">{% trans 'Общая статистика' %}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {# -------------------------------- Маркетинг -------------------------------- #}
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-Mailbox-Empty"></i>
+                        <span class="hide-menu">{% trans 'Маркетинг' %}</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+
+                        <li class="sidebar-item">
+                            <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
+                                <i class="mdi mdi-playlist-plus"></i>
+                                <span class="hide-menu">{% trans 'Линейный бонус' %}</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse second-level">
+                                <li class="sidebar-item">
+                                    <a href="{% url 'linear_tree:linear_tree' %}" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu">{% trans 'Линейное дерево' %}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
+                                <i class="mdi mdi-playlist-plus"></i>
+                                <span class="hide-menu">{% trans 'Бинарный бонус' %}</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse second-level">
+                                <li class="sidebar-item">
+                                    <a href="{% url 'binary_tree:binary_tree' %}" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu">{% trans 'Бинарное дерево' %}</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="{% url 'binary_tree:points-history' %}" class="sidebar-link">
+                                        <i class="mdi mdi-octagram"></i>
+                                        <span class="hide-menu">{% trans 'Статистика баллов' %}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                {# -------------------------------- Новости -------------------------------- #}
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'news:list' %}" aria-expanded="false">
+                        <i class="sl-icon-loop"></i>
+                        <span class="hide-menu">{% trans 'Новости' %}</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</aside>

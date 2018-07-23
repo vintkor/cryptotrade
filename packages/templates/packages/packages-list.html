@@ -1,0 +1,45 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load packages_tags %}
+
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            {% for package in packages %}
+
+                <div class="col-12">
+                    <div class="card {% if user.package and user.package.price >= package.price %}bg-success{% else %}bg-dark{% endif %}">
+                        <div class="card-body text-white">
+                            <div class="d-flex flex-row">
+                                <div class="p-10 align-self-center">
+                                    <h2 class="m-b-20">{{ package }}</h2>
+                                    <div>{% trans 'Токенов FBT' %} - <b>{{ package.tokens }}</b></div>
+                                    <div>{% trans 'Структурных баллов' %} - <b>{{ package.points }}</b></div>
+                                </div>
+                                <div class="ml-auto align-self-center">
+                                    <h2 class="font-medium m-b-0">
+                                        FBC {{ package.price }}
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        {% if not user.package or user.package.price < package.price %}
+                            <form action="{% url 'package:buy-package' package.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ package.id }}">
+                                <button class="btn btn-block btn-dark btn-lg">{% trans 'Купить за' %} FBC {% get_price_for_user user package %}</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endfor%}
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block footer_scripts %}{% endblock footer_scripts %}

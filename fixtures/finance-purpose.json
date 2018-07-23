@@ -1,0 +1,18 @@
+[
+{
+    "model": "finance.purpose",
+    "pk": 1,
+    "fields": {
+        "code": 10,
+        "title": "\u0421\u043f\u0438\u0441\u0430\u043d\u0438\u0435. \u041f\u043e\u043a\u0443\u043f\u043a\u0430 \u043f\u0430\u043a\u0435\u0442\u0430"
+    }
+},
+{
+    "model": "finance.purpose",
+    "pk": 2,
+    "fields": {
+        "code": 11,
+        "title": "\u041f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u0435. \u041f\u043e\u043a\u0443\u043f\u043a\u0430 \u043f\u0430\u043a\u0435\u0442\u0430"
+    }
+}
+]

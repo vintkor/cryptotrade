@@ -1,0 +1,61 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+
+{% block headed_scripts %}
+    <script type="text/javascript" src="http://www.getorgchart.com/GetOrgChart/getorgchart/getorgchart.js"></script>
+{% endblock headed_scripts %}
+
+{% block content %}{% endblock content %}
+
+{% block footer_scripts %}
+    <link rel="stylesheet" type="text/css" href="http://www.getorgchart.com/GetOrgChart/getorgchart/getorgchart.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript">
+
+        var peopleElement = document.getElementById("tree");
+        var orgChart = new getOrgChart(peopleElement, {
+            color: "green",
+            enableEdit: false,
+            enableSearch: true,
+            enableDetailsView: false,
+            enableZoomOnNodeDoubleClick: true,
+            linkType: "M", //"B"
+            primaryFields: ["full_name", "name"],
+            photoFields: ["image"],
+            expandToLevel: 15,
+            scale: 0.4,
+            dataSource: [
+                {% for node in nodes %}
+                    {
+                        id: {{ node.id }},
+                        parentId: {% if node.parent %}{{ node.parent }}{% else %}null{% endif %},
+                        name: "{{ node.user__unique_number }}",
+                        full_name: "{{ node.user__first_name }} {{ node.user__last_name }}",
+                        image: "{{ MEDIA_URL }}{{ node.user__avatar }}"
+                    },
+                {% endfor %}
+            ],
+            customize: {
+                {% for node in nodes %}
+                    {% if not node.user__profile__active %}"{{ node.id }}": {color: "neutralgrey"},{% endif %}
+                {% endfor %}
+            }
+        });
+
+    </script>
+    <style>
+    html,
+    body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+    }
+    #tree {
+        width: calc(100vw - 290px);
+        position: relative;
+        top: 60px;
+        left: 270px;
+    }
+    </style>
+{% endblock footer_scripts %}

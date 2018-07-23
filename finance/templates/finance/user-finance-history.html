@@ -1,0 +1,35 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <tr>
+                        <th>{% trans 'Сумма' %} (FBC)</th>
+                        <th>{% trans 'Получатель' %}</th>
+                        <th>{% trans 'Назначение платежа' %}</th>
+                        <th>{% trans 'Дата' %}</th>
+                    </tr>
+                    {% for finance in finances %}
+                        <tr>
+                            <td style="font-weight: bold;color: {% if finance.amount < 0 %}#d22{% else %}green{% endif %}">{{ finance.amount }}</td>
+                            <td>{{ finance.second_user.unique_number }}</td>
+                            <td>{{ finance.purpose.title }}</td>
+                            <td>{{ finance.created }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}{% endblock footer_scripts %}
