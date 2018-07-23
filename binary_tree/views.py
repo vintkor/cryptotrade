@@ -70,6 +70,7 @@ class BinaryTreeView(LoginRequiredMixin, View):
             element['right_points'] = 'Баллы в правой ноге - {}'.format(i.right_points)
             element['status'] = i.user.status
             element['created'] = i.created
+            element['image'] = i.user.avatar.url if i.user.avatar else None
 
             if node.left_node or node.right_node:
                 element[
