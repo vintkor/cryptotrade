@@ -31,7 +31,7 @@
                         parentId: {% if node.parent %}{{ node.parent }}{% else %}null{% endif %},
                         name: "{{ node.user__unique_number }}",
                         full_name: "{{ node.user__first_name }} {{ node.user__last_name }}",
-                        image: "{{ MEDIA_URL }}{{ node.user__avatar }}"
+                        image: "{% if node.user__avatar %}/media/{{ node.user__avatar }}{% else %}{% endif %}"
                     },
                 {% endfor %}
             ],
