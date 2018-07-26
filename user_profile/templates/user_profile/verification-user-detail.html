@@ -1,0 +1,101 @@
+{% extends 'cabinet.html' %}
+{% load static %}
+{% load i18n %}
+{% load user_profile %}
+
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                {% user_has_perm v_user 'user_profile.is_verified' as v_user_is_verified %}
+                <table class="table" style="{% if v_user_is_verified %}background: #e8f9e7;{% endif %}">
+                    <tr>
+                        <td>{% trans 'Номер пользователя' %}</td>
+                        <td>{{ v_user.unique_number }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Имя' %}</td>
+                        <td>{{ v_user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Фамилия' %}</td>
+                        <td>{{ v_user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Страна' %}</td>
+                        <td>{{ v_user.country.title }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Email' %}</td>
+                        <td>{{ v_user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans 'Телефон' %}</td>
+                        <td>{{ v_user.phone }}</td>
+                    </tr>
+                </table>
+                <div class="card" style="{% if v_user_is_verified %}background: #e8f9e7;{% endif %}">
+                    <div class="card-body">
+                        {% if v_user.document_set.all %}
+                            <h3>{% trans 'Загруженые документы' %}</h3>
+                            <div class="documents">
+                                {% for document in v_user.document_set.all %}
+                                    <a href="{{ document.image.url }}">
+                                        <img src="{{ document.image.url }}">
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                <div class="btn-group" role="group" style="justify-content: center; width: 100%;">
+                    <button type="button" class="btn btn-lg btn-info">{% trans 'Распечатать' %}</button>
+                    {% if not v_user_is_verified %}
+                        <button id="verify_v_user" type="button" class="btn btn-lg btn-success">{% trans 'Верифицировать' %}</button>
+                    {% endif %}
+                    <button id="need_documents" type="button" class="btn btn-lg btn-warning">{% trans 'Догрузить документы' %}</button>
+                    <button id="refuse" type="button" class="btn btn-lg btn-danger">{% trans 'Отказать' %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer_scripts %}
+    <link rel="stylesheet" href="{% static '/' %}libs/photobox/photobox/photobox.css">
+    <script src="{% static '/' %}libs/photobox/photobox/jquery.photobox.js"></script>
+    <script>
+        $('.documents').photobox('a',{ time:0 });
+    </script>
+    <style>
+        .documents {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .documents a {
+            display: block;
+            position: relative;
+            background-position: center center;
+            background-size: cover;
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border-radius: 3px;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+        }
+
+        .documents a img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .documents a:hover {
+            cursor: pointer;
+        }
+    </style>
+{% endblock footer_scripts %}

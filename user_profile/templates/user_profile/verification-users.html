@@ -1,0 +1,42 @@
+
+{% extends 'cabinet.html' %}
+{% load static %}
+{% load i18n %}
+{% load user_profile %}
+
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sm table-striped table-hover">
+                    <tr>
+                        <th colspan="2">{% trans 'Пользователь' %}</th>
+                        <th>{% trans 'Действия' %}</th>
+                    </tr>
+                    {% for user in users %}
+                        {% user_has_perm user 'user_profile.is_verified' as user_is_verified %}
+                        <tr>
+                            <td>{{ user.unique_number }}</td>
+                            <td>{{ user.get_full_name }}</td>
+                            <td>
+                                {% if user_is_verified %}
+                                    <a href="{% url 'user:verification-user-detail' user.id %}" class="btn btn-success btn-sm">
+                                        {% trans 'Верифицирован' %}
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'user:verification-user-detail' user.id %}" class="btn btn-danger btn-sm">
+                                        {% trans 'Просмотреть информацию' %}
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer_scripts %}{% endblock footer_scripts %}

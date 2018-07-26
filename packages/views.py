@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, View
@@ -13,6 +13,7 @@ from finance.models import Purpose
 from binary_tree.utils import SetPoints
 from shares.models import ShareHolder, Course
 from awards.utils import start_rang_award_runner
+from cryptotrade.settings import NOT_VERIFIED_MESSAGE
 
 
 class PackageListView(LoginRequiredMixin, ListView):
@@ -22,8 +23,13 @@ class PackageListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('user:login')
 
 
-class ByPackageFormView(LoginRequiredMixin, View):
+class ByPackageFormView(PermissionRequiredMixin, LoginRequiredMixin, View):
     login_url = reverse_lazy('user:login')
+    permission_required = ['user_profile.is_verified']
+
+    def handle_no_permission(self):
+        messages.error(self.request, _(NOT_VERIFIED_MESSAGE), 'danger')
+        return super(ByPackageFormView, self).handle_no_permission()
 
     def post(self, request, package_id):
         package = get_object_or_404(Package, pk=package_id)

@@ -20,6 +20,16 @@ DIRECTION_CHOICES = (
     ('right', _('Вправо')),
 )
 
+
+VERIFICATION_CHOICES = (
+    ('1', _('Требуется верификация email и телефона')),
+    ('2', _('Запрошены документы')),
+    ('3', _('Верифицирован')),
+    ('4', _('Отказано')),
+    ('5', _('Ожидает проверки')),
+)
+
+
 def get_status_text(key):
     for i in STATUS_CHOICES:
         if i[0] == str(key):
@@ -49,11 +59,15 @@ class User(AbstractBaseUser, PermissionsMixin):
                                     default=DIRECTION_CHOICES[0][0], verbose_name=_('Направление регистрации'))
     is_admin = models.BooleanField(_('Суперпользователь'), default=False)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
-    is_verified = models.BooleanField(verbose_name=_('Верифицирован'), default=False)
+    verification = models.CharField(max_length=3, verbose_name=_('Верифицирован'), blank=True, null=True,
+                                    choices=VERIFICATION_CHOICES)
     balance = models.DecimalField(verbose_name=_('Баланс'), decimal_places=2, max_digits=10, default=0)
     package = models.ForeignKey('packages.Package', on_delete=models.CASCADE, verbose_name=_('Пакет'), blank=True, null=True)
     rang = models.ForeignKey('awards.RangAward', on_delete=models.CASCADE, verbose_name=_('Ранг'), blank=True, null=True)
     volume = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    is_valid_email = models.BooleanField(default=False, verbose_name=_('Email валидный'))
+    is_valid_phone = models.BooleanField(default=False, verbose_name=_('Телефонный номер валидный'))
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -63,6 +77,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('Пользователь')
         verbose_name_plural = _('Пользователи')
         ordering = ['-unique_number']
+        permissions = (
+            ("is_verified", "is_verified"),
+            ("can_verify", "Can verify users"),
+        )
 
     def __str__(self):
         if self.first_name and self.last_name:
@@ -113,7 +131,49 @@ class User(AbstractBaseUser, PermissionsMixin):
     def set_status_frozen(self):
         self.status = '3'
 
+    def is_verification_need_email_and_sms(self):
+        return True if self.verification == '1' else False
+
+    def is_verification_need_documents(self):
+        return True if self.verification == '2' else False
+
+    def is_verification_refuse(self):
+        return True if self.verification == '4' else False
+
+    def is_verification_verify(self):
+        return True if self.verification == '3' else False
+
+    def is_verification_need_check(self):
+        return True if self.verification == '5' else False
+
+    def set_verification_need_email_and_sms(self):
+        self.verification = '1'
+
+    def set_verification_need_documents(self):
+        self.verification = '2'
+
+    def set_verification_verify(self):
+        self.verification = '3'
+
+    def set_verification_refuse(self):
+        self.verification = '4'
+
+    def set_verification_need_check(self):
+        self.verification = '5'
+
     # def get_rang(self):
     #     if self.rang:
     #         return True, self.rang
     #     return False, 'No Rank'
+
+
+class Document(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Пользователь'))
+    image = models.ImageField(verbose_name=_('Изображение'), upload_to='verification')
+
+    class Meta:
+        verbose_name = _('Документ верификации')
+        verbose_name_plural = _('Документы верификации')
+
+    def __str__(self):
+        return self.user.unique_number

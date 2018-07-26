@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<p class="alert alert-info">
+    {% blocktrans %}
+        Загрузите в поле ниже файлы с отсканированными документами для идентификации личности,
+        а именно, паспорт главную и разворот либо ID карту, либо международные права.
+    {% endblocktrans %}
+</p>
+<form action="{% url 'user:verification-document-loader' %}" class="dropzone" id="dropFiles">
+    {% csrf_token %}
+</form>

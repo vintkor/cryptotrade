@@ -108,6 +108,30 @@
                     </a>
                 </li>
 
+                {# -------------------------------- Верификация -------------------------------- #}
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="icon-Mailbox-Empty"></i>
+                        <span class="hide-menu">{% trans 'Верификация' %}</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{% url 'user:verification' %}" class="sidebar-link">
+                                <i class="mdi mdi-email"></i>
+                                <span class="hide-menu">{% trans 'Пройти верификацию' %}</span>
+                            </a>
+                        </li>
+                        {% if perms.user_profile.can_verify %}
+                        <li class="sidebar-item">
+                            <a href="{% url 'user:verification-users' %}" class="sidebar-link">
+                                <i class="mdi mdi-email"></i>
+                                <span class="hide-menu">{% trans 'Список пользователей' %}</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+
             </ul>
         </nav>
     </div>

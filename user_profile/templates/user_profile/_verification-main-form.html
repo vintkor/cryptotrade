@@ -1,0 +1,19 @@
+<form action="" method="post" id="user-verification">
+    {% csrf_token %}
+    <div class="row">
+        {% for field in form %}
+            <div class="col-6">
+                <div class="form-group">
+                    {% if field.label %}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% endif %}
+                    {{ field }}
+                    <div class="invalid-feedback- text-danger"><small>{{ field.errors }}</small></div>
+                    {% if field.help_text %}
+                        <div><small>{{ field.help_text }}</small></div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</form>

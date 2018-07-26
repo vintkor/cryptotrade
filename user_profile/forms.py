@@ -3,6 +3,7 @@ from django.forms import Form
 from geo.models import Country
 from django.utils.translation import ugettext_lazy as _
 from django.core import validators
+from .models import User
 
 
 names_validator = validators.RegexValidator('^[a-zA-Zа-яА-Я]+$', message=_(
@@ -71,3 +72,33 @@ class AuthForm(Form):
 
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
+
+
+class VerificationForm(forms.ModelForm):
+    first_name = forms.CharField(label=_('Имя'), widget=forms.TextInput(
+        attrs={'class': 'form-control'},
+    ), validators=[names_validator])
+    last_name = forms.CharField(label=_('Фамилия'), widget=forms.TextInput(
+        attrs={'class': 'form-control'},
+    ), validators=[names_validator])
+    email = forms.EmailField(label=_('Email'), widget=forms.TextInput(
+        attrs={'class': 'form-control'},
+    ), validators=[validators.EmailValidator])
+    country = forms.ModelChoiceField(label=_('Страна'), queryset=Country.objects.filter(is_active=True),
+                                     widget=forms.Select(
+                                         attrs={'class': 'form-control select2'}
+                                     ), required=True, help_text=_(
+            'Если вы не нашли своей страны в списке, значит для вас регистрация запрещена!'))
+    phone = forms.CharField(label=_('Номер телефона'), widget=forms.TextInput(
+        attrs={'class': 'form-control'},
+    ), validators=[phone_validator])
+
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'country',
+        )

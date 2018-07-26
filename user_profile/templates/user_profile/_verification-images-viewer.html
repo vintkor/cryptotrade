@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<br>
+{% if documents %}
+    <h3>{% trans 'Загруженые документы' %}</h3>
+    <div class="documents">
+        {% for document in documents %}
+            <a href="{{ document.image.url }}">
+                <img src="{{ document.image.url }}">
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}
+

@@ -1,0 +1,151 @@
+
+{% extends 'cabinet.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+{#                    <pre>#}
+{#                        <li>{{ user.is_verification_need_email_and_sms }}</li>#}
+{#                        <li>{{ user.is_verification_need_documents }}</li>#}
+{#                        <li>{{ user.is_verification_refuse }}</li>#}
+{#                        <li>{{ user.is_verification_verify }}</li>#}
+{#                        <li>{{ user.is_verification_need_check }}</li>#}
+{#                    </pre>#}
+                        <h4 class="card-title">{% trans 'Верификация' %}</h4>
+
+                        {% if user.is_verification_need_email_and_sms %}
+
+                            {% include 'user_profile/_verification-check-phone-end-email.html' %}
+
+                        {% elif user.is_verification_need_documents %}
+
+                            {% include 'user_profile/_verification-image-form.html' %}
+                            <br>
+                            <input id="save_needed_document" type="submit" class="btn btn-success btn-block btn-lg" value="{% trans 'Сохранить' %}">
+
+                        {% elif user.is_verification_need_check %}
+
+                            <div class="text-center">
+                                <h3>{% trans 'Ожидайте верификацию' %}</h3>
+                                <p>{% trans 'При успешной верификации вы будете уведомлены по почте' %}</p>
+                            </div>
+
+                        {% elif user.is_verification_verify %}
+
+                            <div class="text-center">
+                                <h3>{% trans 'Вы были успешно верифицированы' %}</h3>
+                                <p>{% trans 'Вам был открыт полный доступ ко всему функционалу системы' %}</p>
+                            </div>
+
+                        {% elif user.is_verification_refuse %}
+
+                            <div class="text-center">
+                                <h3>{% trans 'Вам было отказано в верификации' %}</h3>
+                                <p>{% trans 'Через некоторое время ваш аккаунт будет удалён' %}</p>
+                            </div>
+
+                        {% else %}
+
+                            {% include 'user_profile/_verification-message.html' %}
+                            {% include 'user_profile/_verification-main-form.html' %}
+                            {% include 'user_profile/_verification-image-form.html' %}
+                            {% include 'user_profile/_verification-send-man-form-btn.html' %}
+                            {% include 'user_profile/_verification-images-viewer.html' %}
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer_scripts %}
+    <link rel="stylesheet" href="{% static '/' %}libs/photobox/photobox/photobox.css">
+    <script src="{% static '/' %}libs/photobox/photobox/jquery.photobox.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/basic.min.css">
+
+    {% if user.is_verification_need_email_and_sms %}
+    {% elif user.is_verification_need_documents %}
+    {% else %}
+        <script>
+            $('.documents').photobox('a',{ time:0 });
+        </script>
+    {% endif %}
+
+    <style>
+        .documents {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .documents a {
+            display: block;
+            position: relative;
+            background-position: center center;
+            background-size: cover;
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border-radius: 3px;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+        }
+
+        .documents a img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .documents a:hover {
+            cursor: pointer;
+        }
+    #dropFiles {
+        width: 100%;
+        height: 180px !important;
+        animation: width 5s infinite;
+        opacity: 1;
+        background: repeating-linear-gradient(
+              45deg,
+              #fff,
+              #fff 10px,
+              #cbdcf0 10px,
+              #cbdcf0 20px
+        );
+        border: none;
+        transition: all .4s ease-in-out;
+    }
+    #dropFiles.dz-drag-hover {
+        background: repeating-linear-gradient(
+              45deg,
+              #fff,
+              #fff 10px,
+              #97e3f0 10px,
+              #97e3f0 20px
+        );
+        transition: all .4s ease-in-out;
+    }
+
+    @keyframes width {
+        0% {
+            opacity: .5;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: .5;
+        }
+    }
+    </style>
+{% endblock footer_scripts %}

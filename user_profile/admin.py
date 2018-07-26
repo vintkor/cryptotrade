@@ -1,9 +1,15 @@
 from django.contrib import admin
-from user_profile.models import User
+from user_profile.models import User, Document
+
+
+class DocumentInline(admin.TabularInline):
+    model = Document
+    extra = 0
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+    inlines = (DocumentInline,)
     list_display = (
         'unique_number',
         'email',
@@ -15,7 +21,7 @@ class UserAdmin(admin.ModelAdmin):
         'status',
         'package',
         'rang',
-        'is_verified',
+        'verification',
         'balance',
         'volume',
         'is_admin',
@@ -28,10 +34,15 @@ class UserAdmin(admin.ModelAdmin):
     )
     list_filter = (
         'is_admin',
-        'is_verified',
+        'verification',
         'package',
         'rang',
     )
     list_editable = ('rang', 'package', 'volume')
     search_fields = ('email',)
     filter_horizontal = ('groups', 'user_permissions')
+
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    pass

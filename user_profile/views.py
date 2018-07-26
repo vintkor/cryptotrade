@@ -1,22 +1,37 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import (
     User,
+    Document,
 )
 from django.views.generic import (
     FormView,
-    DetailView)
+    DetailView,
+    UpdateView,
+    View,
+    ListView,
+)
 from .forms import (
     RegistrationByRefCodeForm,
     AuthForm,
+    VerificationForm,
 )
 from django.db.transaction import atomic
 from binary_tree.models import BinaryTree
 from linear_tree.models import LinearTree
 from django.contrib import messages
 from django.utils.translation import ugettext as _
+from django.utils.crypto import get_random_string
+from PIL import Image
+import os
+from cryptotrade.settings import MEDIA_ROOT
+from django.contrib.auth.models import Permission
+from cryptotrade.settings import DONT_HAVE_PERMISSION, ADMIN_EMAIL
+from utils.email import send_simple_email
+from utils.mobile_phone import send_simple_sms
 
 
 class NewUserByRefCodeView(FormView):
@@ -107,3 +122,215 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
         context = super(UserProfileDetailView, self).get_context_data(**kwargs)
         context['ref_link'] = reverse_lazy('user:register-by-ref', kwargs={'ref_code': self.get_object().ref_code})
         return context
+
+
+class VerificationFormView(LoginRequiredMixin, UpdateView):
+    context_object_name = 'user'
+    template_name = 'user_profile/verification.html'
+    login_url = reverse_lazy('user:login')
+    form_class = VerificationForm
+
+    def get_context_data(self, **kwargs):
+        context = super(VerificationFormView, self).get_context_data(**kwargs)
+        context['documents'] = Document.objects.filter(user=self.request.user)
+        return context
+
+    def get_object(self):
+        user = User.objects.select_related('country').get(pk=self.request.user.id)
+        return user
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+
+    def post(self, request, *args, **kwargs):
+        action = self.request.POST.get('action')
+        if action == 'need_codes':
+            email_code = get_random_string(length=5, allowed_chars='0123456789')
+            phone_code = get_random_string(length=5, allowed_chars='0123456789')
+
+            self.request.session['email_code'] = email_code
+            self.request.session['phone_code'] = phone_code
+
+            # print('-'*80)
+            # print(email_code, phone_code)
+
+            send_simple_email(
+                self.get_object().email,
+                _('Код верификации email CryptoTrade'),
+                _('Ваш код - {}'.format(email_code)),
+            )
+            send_simple_sms(
+                phone=self.get_object().phone,
+                message=_('Ваш код подтверждения: {}'.format(phone_code))
+            )
+
+            return JsonResponse({
+                'status': True,
+            })
+
+        if action == 'check_codes':
+
+            email_code = self.request.session.get('email_code')
+            phone_code = self.request.session.get('phone_code')
+
+            user_email_code = self.request.POST.get('email_code')
+            user_phone_code = self.request.POST.get('phone_code')
+
+            if email_code == user_email_code and phone_code == user_phone_code:
+                user = self.get_object()
+                user.set_verification_need_check()
+                user.is_valid_email = True
+                user.is_valid_phone = True
+                user.save(update_fields=('verification', 'is_valid_email', 'is_valid_phone',))
+
+                email_users = ADMIN_EMAIL
+                email_subject = 'Запрос на верификацию'
+                email_text = """
+                    Поступил новый запрос на верификацию от пользователя {user}
+                """.format(user=user.unique_number)
+                send_simple_email(email_users, email_subject, email_text)
+
+                return JsonResponse({
+                    'status': True,
+                })
+            else:
+                return JsonResponse({
+                    'status': False,
+                    'message': _('Коды веривикации не верные')
+                })
+
+        if action == 'check_documents':
+            user = self.get_object()
+            user.set_verification_need_check()
+            user.save(update_fields=('verification',))
+
+            email_users = ADMIN_EMAIL
+            email_subject = 'Запрос на верификацию'
+            email_text = """
+                                Поступил новый запрос на верификацию от пользователя {user}
+                            """.format(user=user.unique_number)
+            send_simple_email(email_users, email_subject, email_text)
+
+            return JsonResponse({
+                'status': True,
+            })
+
+        user = self.get_object()
+        user.set_verification_need_email_and_sms()
+        user.save(update_fields=('verification',))
+        return super(VerificationFormView, self).post(request, *args, **kwargs)
+
+
+class VerificationDocumentLoaderView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('user:login')
+
+    def post(self, request):
+        path = MEDIA_ROOT + '/verification'
+        if not os.path.isdir(path):
+            os.makedirs(path)
+
+        file = request.FILES.get('file')
+        ext = file.name.split('.')[-1]
+        file_name = 'verification/{}__{}.{}'.format(request.user.id, get_random_string(length=20), ext)
+
+        image = Image.open(file)
+        image.save(MEDIA_ROOT + '/' + file_name)
+
+        document = Document(
+            user=self.request.user,
+            image=file_name,
+        )
+        document.save()
+        return HttpResponse()
+
+
+class VerificationsListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+    template_name = 'user_profile/verification-users.html'
+    context_object_name = 'users'
+    queryset = User.objects.filter(verification='5')
+    permission_required = ['user_profile.can_verify']
+    login_url = reverse_lazy('user:login')
+
+    def handle_no_permission(self):
+        messages.error(self.request, _(DONT_HAVE_PERMISSION), 'danger')
+        return super(VerificationsListView, self).handle_no_permission()
+
+
+class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+    template_name = 'user_profile/verification-user-detail.html'
+    context_object_name = 'v_user'
+    model = User
+    permission_required = ['user_profile.can_verify']
+    login_url = reverse_lazy('user:login')
+
+    def handle_no_permission(self):
+        messages.error(self.request, _(DONT_HAVE_PERMISSION), 'danger')
+        return super(VerificationUserDetailView, self).handle_no_permission()
+
+    def post(self, request, pk):
+        action = self.request.POST.get('action')
+        actions = ['verify_user', 'refuse', 'recheck', 'need_documents']
+        user = self.get_object()
+
+        if action not in actions:
+            return JsonResponse({
+                'status': False,
+                'message': _('Неверный запрос')
+            })
+
+        # verify
+        if action == actions[0]:
+            permission = Permission.objects.get(name='is_verified')
+            user.user_permissions.add(permission)
+            user.set_verification_verify()
+            user.save(update_fields=('verification',))
+            send_simple_email(
+                user.email,
+                _('Верификация CryptoTrade'),
+                _('Вы успешно верифицированы. Теперь вам открыт полный дуступ к системе'),
+            )
+            return JsonResponse({
+                'status': True
+            })
+
+        # refuse
+        if action == actions[1]:
+            user.set_verification_refuse()
+            user.save(update_fields=('verification',))
+
+            send_simple_email(
+                user.email,
+                _('Верификация CryptoTrade'),
+                _('Вам было отказано в верификации'),
+            )
+
+            return JsonResponse({
+                'status': True,
+                'redirect_url': reverse_lazy('user:verification-users')
+            })
+
+        # recheck
+        if action == actions[2]:
+            pass
+
+        # Need some documents
+        if action == actions[3]:
+            message = self.request.POST.get('message')
+            user.set_verification_need_documents()
+            user.save(update_fields=('verification',))
+
+            send_simple_email(
+                user.email,
+                _('Верификация CryptoTrade'),
+                _('Вам необходимо добавить следующие документы: {}'.format(message)),
+            )
+
+            return JsonResponse({
+                'status': True,
+                'redirect_url': reverse_lazy('user:verification-users')
+            })
+
+        return JsonResponse({
+            'status': False,
+            'message': _('Неверный формат запроса')
+        })

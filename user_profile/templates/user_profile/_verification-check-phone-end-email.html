@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<h5>{% trans 'Проверка адреса вашей почты и номера мобильного телефона' %}</h5>
+
+
+<table class="table table-bordered">
+    <tr>
+        <td>{% trans 'Email' %}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <input id="email_code" class="form-control" type="text" value="" placeholder="{% trans 'Код проверки Email' %}">
+        </td>
+    </tr>
+    <tr>
+        <td>{% trans 'Номер телефона' %}</td>
+        <td>{{ user.phone }}</td>
+        <td>
+            <input id="phone_code" class="form-control" type="text" value="" placeholder="{% trans 'Код проверки номера телефона' %}">
+        </td>
+    </tr>
+</table>
+
+<div class="alert alert-light">
+    <p>{% trans 'Для повнорного запроса кода обновите страницу браузера и сделяйте запрос кодов верификации' %}</p>
+</div>
+<button id="get_codes" class="btn btn-info btn-lg btn-block">{% trans 'Запросить коды' %}</button>
+<button style="display: none;" id="check_codes" class="btn btn-success btn-lg btn-block">{% trans 'Проверить' %}</button>

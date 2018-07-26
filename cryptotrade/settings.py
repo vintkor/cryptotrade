@@ -176,3 +176,15 @@ except:
         }
     }
 
+    NOT_VERIFIED_MESSAGE = 'Для отображения запришиваемой страницы или совершения операции вам необходимо пройти верификацию'
+    DONT_HAVE_PERMISSION = 'У вас недостаточно прав для совершения данной операции'
+
+    MAILGUN_DOMAIN = 'sandboxb582c9fb5f8042e88540526263bd33a6.mailgun.org'
+    MAILGUN_ADDRESS = "https://api.mailgun.net/v3/{}/messages".format(MAILGUN_DOMAIN)
+    MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY')
+    MAILGUN_SYSTEM_NAME = 'CryptoTrade'
+
+    WEBPURSE_WPID = os.environ.get('WEBPURSE_WPID')
+    WEBPURSE_PASS = os.environ.get('WEBPURSE_PASS')
+
+    ADMIN_EMAIL = 'alkv84@gmail.com'

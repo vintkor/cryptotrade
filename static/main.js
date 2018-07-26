@@ -38,6 +38,156 @@ $(document).ready(function () {
         }
     });
 
+    // -------------------------------- Верификация пользователя - верифицировать --------------------------------
 
+    $('#verify_v_user').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: window.location.href,
+            data: {
+                action: 'verify_user'
+            },
+            method: 'post',
+            success: function (response) {
+                if (response.status) {
+                    window.location.reload();
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        });
+
+    });
+
+    // -------------------------------- Верификация пользователя - запрос кодов на верификацию --------------------------------
+
+    var counter_get_codes = 0;
+    var counter_check_codes = 0;
+    var get_codes_btn = $('#get_codes');
+    var check_codes_btn = $('#check_codes');
+    get_codes_btn.click(function (e) {
+        if (counter_get_codes == 0) {
+            $.ajax({
+                url: window.location.href,
+                data: {
+                    action: 'need_codes'
+                },
+                method: 'post',
+                success: function(response) {
+                    if (response.status) {
+                        get_codes_btn.hide();
+                        check_codes_btn.show();
+                    }
+                },
+                error: function() {
+                    console.log('Error');
+                },
+            });
+        }
+        counter_get_codes++;
+    });
+
+    // -------------------------------- Верификация пользователя - проверка кодов --------------------------------
+
+    check_codes_btn.click(function () {
+        if (counter_check_codes == 0) {
+            if ($('#email_code').val().length != 5 && $('#phone_code').val().length != 5) {
+                alert('Коды должны содержать 5 цифр');
+            } else {
+                check_codes_btn.hide();
+                $.ajax({
+                    url: window.location.href,
+                    data: {
+                        action: 'check_codes',
+                        email_code: $('#email_code').val(),
+                        phone_code: $('#phone_code').val()
+                    },
+                    method: 'post',
+                    success: function (response) {
+                        if (response.status) {
+                            window.location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        console.log('Error');
+                    },
+                });
+                counter_check_codes++;
+            }
+        }
+    });
+
+    $('#save_needed_document').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: window.location.href,
+            data: {
+                action: 'check_documents',
+            },
+            method: 'post',
+            success: function (response) {
+                if (response.status) {
+                    window.location.reload();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                console.log('Error');
+            },
+        });
+    });
+
+    $('#need_documents').click(function (e) {
+        e.preventDefault();
+        var message_for_user = prompt('Укажите, каки именно документов не хватает');
+
+        $.ajax({
+            url: window.location.href,
+            data: {
+                action: 'need_documents',
+                message: message_for_user
+            },
+            method: 'post',
+            success: function (response) {
+                if (response.status) {
+                    window.location.href = response.redirect_url;
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                console.log('Error');
+            },
+        });
+
+    });
+
+    $('#refuse').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: window.location.href,
+            data: {
+                action: 'refuse'
+            },
+            method: 'post',
+            success: function (response) {
+                if (response.status) {
+                    window.location.href = response.redirect_url;
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                console.log('Error');
+            },
+        });
+
+    });
 
 });

@@ -4,6 +4,10 @@ from .views import (
     AuthView,
     user_logout,
     UserProfileDetailView,
+    VerificationFormView,
+    VerificationDocumentLoaderView,
+    VerificationsListView,
+    VerificationUserDetailView,
 )
 
 
@@ -13,4 +17,8 @@ urlpatterns = [
     path('login/', AuthView.as_view(), name='login'),
     path('logout/', user_logout, name='logout'),
     path('profile/', UserProfileDetailView.as_view(), name='profile'),
+    path('verification/', VerificationFormView.as_view(), name='verification'),
+    path('verification/document-loader/', VerificationDocumentLoaderView.as_view(), name='verification-document-loader'),
+    path('verification/users/', VerificationsListView.as_view(), name='verification-users'),
+    path('verification/user/<int:pk>/', VerificationUserDetailView.as_view(), name='verification-user-detail'),
 ]
