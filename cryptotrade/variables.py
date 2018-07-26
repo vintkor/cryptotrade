@@ -1,0 +1,4 @@
+class Variables:
+    WEBPURSE_WPID = 10088769
+    WEBPURSE_PASS = 'em9ye4592e'
+    MAILGUN_API_KEY = 'key-73283a11c1d1b6fa9ef74903c23d17ec'

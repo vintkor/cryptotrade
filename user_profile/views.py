@@ -151,8 +151,8 @@ class VerificationFormView(LoginRequiredMixin, UpdateView):
             self.request.session['email_code'] = email_code
             self.request.session['phone_code'] = phone_code
 
-            # print('-'*80)
-            # print(email_code, phone_code)
+            print('-'*80)
+            print(email_code, phone_code)
 
             send_simple_email(
                 self.get_object().email,
