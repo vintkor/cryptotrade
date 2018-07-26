@@ -1,0 +1,48 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" class="send-money">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-info" style="display: none;">
+                                        <div id="recipient_fullname"></div>
+                                    </div>
+                                </div>
+                                {% for field in form %}
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            {% if field.label %}
+                                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {% endif %}
+                                            {{ field }}
+                                            <div class="invalid-feedback- text-danger"><small>{{ field.errors }}</small></div>
+                                            {% if field.help_text %}
+                                                <div><small>{{ field.help_text }}</small></div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <input id="submit-btn" disabled type="submit" class="btn-lg btn-block btn btn-success" value="{% trans 'Отправить' %}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}{% endblock footer_scripts %}

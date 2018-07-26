@@ -190,4 +190,43 @@ $(document).ready(function () {
 
     });
 
+    // -------------------------------- Финансы - перевод личных средств --------------------------------
+
+    var sendMoneyRecipient = $('.send-money #id_recipient');
+    var recipientFullname = $('#recipient_fullname');
+    var submitBtn = $('.send-money #submit-btn');
+    
+    sendMoneyRecipient.on('input', function () {
+        var recipient = $(this).val();
+        var patt = new RegExp("CT-[0-9][0-9][0-9][0-9][0-9][0-9][0-9]");
+        var isTrue = patt.test(recipient);
+
+        if (isTrue && (recipient.length === 10)) {
+            $.ajax({
+                url: window.location.href,
+                data: {
+                    recipient_js: recipient
+                },
+                method: 'post',
+                success: function (response) {
+                    if (response.status) {
+                        recipientFullname.text(response.recipient);
+                        recipientFullname.parent('.alert').show();
+                        submitBtn.removeAttr('disabled');
+                    } else {
+                        recipientFullname.text('');
+                        recipientFullname.parent('.alert').hide();
+                        submitBtn.attr('disabled', 'disabled');
+                    }
+                },
+                error: function () {
+                    console.log('Error')
+                }
+            });
+        } else {
+            recipientFullname.parent('.alert').hide();
+            submitBtn.attr('disabled', 'disabled');
+        }
+    });
+
 });
