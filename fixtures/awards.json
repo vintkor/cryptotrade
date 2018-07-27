@@ -9,7 +9,8 @@
         "lines_volume": "0.00",
         "include_rang": null,
         "include_rang_count": 0,
-        "bonus": "0.00"
+        "bonus": "0.00",
+        "is_final": false
     }
 },
 {
@@ -22,7 +23,8 @@
         "lines_volume": "1000.00",
         "include_rang": null,
         "include_rang_count": 0,
-        "bonus": "100.00"
+        "bonus": "100.00",
+        "is_final": false
     }
 },
 {
@@ -35,7 +37,8 @@
         "lines_volume": "5000.00",
         "include_rang": 2,
         "include_rang_count": 2,
-        "bonus": "500.00"
+        "bonus": "500.00",
+        "is_final": false
     }
 },
 {
@@ -48,7 +51,8 @@
         "lines_volume": "20000.00",
         "include_rang": 3,
         "include_rang_count": 2,
-        "bonus": "1000.00"
+        "bonus": "1000.00",
+        "is_final": true
     }
 }
 ]
