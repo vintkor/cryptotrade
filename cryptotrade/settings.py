@@ -34,7 +34,7 @@ except:
         'geo',
         'shares',
         'awards',
-        'dashboard_cabinet',
+        'dashboard',
     ]
 
     MIDDLEWARE = [

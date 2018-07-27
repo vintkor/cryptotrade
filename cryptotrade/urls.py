@@ -9,7 +9,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='landings/home.html'), name='landing-home'),
     path('admin/', admin.site.urls),
     path('dashboard/', include([
-        path('', include('dashboard_cabinet.urls')),
+        path('', include('dashboard.urls')),
         path('b-trees/', include('binary_tree.urls')),
         path('l-trees/', include('linear_tree.urls')),
         path('accounts/', include('user_profile.urls')),
