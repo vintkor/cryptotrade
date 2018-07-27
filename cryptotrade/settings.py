@@ -190,3 +190,5 @@ except:
     WEBPURSE_PASS = Variables.WEBPURSE_PASS
 
     ADMIN_EMAIL = 'alkv84@gmail.com'
+
+    CELERY_BROKER_URL = 'amqp://localhost'

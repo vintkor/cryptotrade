@@ -1,5 +1,6 @@
 import requests
 from cryptotrade.settings import WEBPURSE_PASS, WEBPURSE_WPID
+from cryptotrade.settings import DEBUG
 
 
 def send_simple_sms(phone, message):
@@ -13,4 +14,7 @@ def send_simple_sms(phone, message):
         'sender': 'CryptoTrade',
         'charset': 'utf-8',
     }
-    requests.get(url_endpoint, params=parameters)
+    response = requests.get(url_endpoint, params=parameters)
+
+    if DEBUG:
+        print(response)

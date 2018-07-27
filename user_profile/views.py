@@ -30,8 +30,10 @@ import os
 from cryptotrade.settings import MEDIA_ROOT
 from django.contrib.auth.models import Permission
 from cryptotrade.settings import DONT_HAVE_PERMISSION, ADMIN_EMAIL
-from utils.email import send_simple_email
-from utils.mobile_phone import send_simple_sms
+from .tasks import (
+    send_simple_email_task,
+    send_simple_sms_task,
+)
 
 
 class NewUserByRefCodeView(FormView):
@@ -154,15 +156,15 @@ class VerificationFormView(LoginRequiredMixin, UpdateView):
             print('-'*80)
             print(email_code, phone_code)
 
-            send_simple_email(
-                self.get_object().email,
-                _('Код верификации email CryptoTrade'),
-                _('Ваш код - {}'.format(email_code)),
-            )
-            send_simple_sms(
-                phone=self.get_object().phone,
-                message=_('Ваш код подтверждения: {}'.format(phone_code))
-            )
+            email_users = self.get_object().email
+            email_subject = _('Код верификации email CryptoTrade')
+            email_text = _('Ваш код - {}'.format(email_code))
+
+            send_simple_email_task.delay(email_users, email_subject, email_text)
+
+            phone = self.get_object().phone
+            message = _('Ваш код подтверждения: {}'.format(phone_code))
+            send_simple_sms_task.delay(phone, message)
 
             return JsonResponse({
                 'status': True,
@@ -188,7 +190,7 @@ class VerificationFormView(LoginRequiredMixin, UpdateView):
                 email_text = """
                     Поступил новый запрос на верификацию от пользователя {user}
                 """.format(user=user.unique_number)
-                send_simple_email(email_users, email_subject, email_text)
+                send_simple_email_task.delay(email_users, email_subject, email_text)
 
                 return JsonResponse({
                     'status': True,
@@ -209,7 +211,7 @@ class VerificationFormView(LoginRequiredMixin, UpdateView):
             email_text = """
                                 Поступил новый запрос на верификацию от пользователя {user}
                             """.format(user=user.unique_number)
-            send_simple_email(email_users, email_subject, email_text)
+            send_simple_email_task.delay(email_users, email_subject, email_text)
 
             return JsonResponse({
                 'status': True,
@@ -284,7 +286,7 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
             user.user_permissions.add(permission)
             user.set_verification_verify()
             user.save(update_fields=('verification',))
-            send_simple_email(
+            send_simple_email_task.delay(
                 user.email,
                 _('Верификация CryptoTrade'),
                 _('Вы успешно верифицированы. Теперь вам открыт полный дуступ к системе'),
@@ -298,7 +300,7 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
             user.set_verification_refuse()
             user.save(update_fields=('verification',))
 
-            send_simple_email(
+            send_simple_email_task.delay(
                 user.email,
                 _('Верификация CryptoTrade'),
                 _('Вам было отказано в верификации'),
@@ -319,7 +321,7 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
             user.set_verification_need_documents()
             user.save(update_fields=('verification',))
 
-            send_simple_email(
+            send_simple_email_task.delay(
                 user.email,
                 _('Верификация CryptoTrade'),
                 _('Вам необходимо добавить следующие документы: {}'.format(message)),

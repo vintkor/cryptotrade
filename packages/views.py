@@ -12,7 +12,7 @@ from user_profile.models import User
 from finance.models import Purpose
 from binary_tree.utils import SetPoints
 from shares.models import ShareHolder, Course
-from awards.utils import start_rang_award_runner
+from .tasks import start_rang_award_runner_task
 from cryptotrade.settings import NOT_VERIFIED_MESSAGE
 
 
@@ -93,7 +93,7 @@ class ByPackageFormView(PermissionRequiredMixin, LoginRequiredMixin, View):
 
             messages.success(request, _('Пакет успешно куплен.'))
 
-        start_rang_award_runner()
+        start_rang_award_runner_task.delay()
 
         # TODO проверить полное ли заполнение
 

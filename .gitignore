@@ -60,3 +60,4 @@ target/
 \.idea/
 
 media/
+cryptotrade/variables.py

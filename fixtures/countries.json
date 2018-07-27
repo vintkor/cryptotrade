@@ -1,0 +1,2189 @@
+[
+{
+    "model": "geo.country",
+    "pk": 1,
+    "fields": {
+        "title": "Ukraine",
+        "code": "UA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 228,
+    "fields": {
+        "title": "Afghanistan",
+        "code": "AF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 229,
+    "fields": {
+        "title": "Aland Islands",
+        "code": "AX",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 230,
+    "fields": {
+        "title": "Albania",
+        "code": "AL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 231,
+    "fields": {
+        "title": "Algeria",
+        "code": "DZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 232,
+    "fields": {
+        "title": "American Samoa",
+        "code": "AS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 233,
+    "fields": {
+        "title": "AndorrA",
+        "code": "AD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 234,
+    "fields": {
+        "title": "Angola",
+        "code": "AO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 235,
+    "fields": {
+        "title": "Anguilla",
+        "code": "AI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 236,
+    "fields": {
+        "title": "Antarctica",
+        "code": "AQ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 237,
+    "fields": {
+        "title": "Antigua and Barbuda",
+        "code": "AG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 238,
+    "fields": {
+        "title": "Argentina",
+        "code": "AR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 239,
+    "fields": {
+        "title": "Armenia",
+        "code": "AM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 240,
+    "fields": {
+        "title": "Aruba",
+        "code": "AW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 241,
+    "fields": {
+        "title": "Australia",
+        "code": "AU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 242,
+    "fields": {
+        "title": "Austria",
+        "code": "AT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 243,
+    "fields": {
+        "title": "Azerbaijan",
+        "code": "AZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 244,
+    "fields": {
+        "title": "Bahamas",
+        "code": "BS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 245,
+    "fields": {
+        "title": "Bahrain",
+        "code": "BH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 246,
+    "fields": {
+        "title": "Bangladesh",
+        "code": "BD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 247,
+    "fields": {
+        "title": "Barbados",
+        "code": "BB",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 248,
+    "fields": {
+        "title": "Belarus",
+        "code": "BY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 249,
+    "fields": {
+        "title": "Belgium",
+        "code": "BE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 250,
+    "fields": {
+        "title": "Belize",
+        "code": "BZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 251,
+    "fields": {
+        "title": "Benin",
+        "code": "BJ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 252,
+    "fields": {
+        "title": "Bermuda",
+        "code": "BM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 253,
+    "fields": {
+        "title": "Bhutan",
+        "code": "BT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 254,
+    "fields": {
+        "title": "Bolivia",
+        "code": "BO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 255,
+    "fields": {
+        "title": "Bosnia and Herzegovina",
+        "code": "BA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 256,
+    "fields": {
+        "title": "Botswana",
+        "code": "BW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 257,
+    "fields": {
+        "title": "Bouvet Island",
+        "code": "BV",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 258,
+    "fields": {
+        "title": "Brazil",
+        "code": "BR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 259,
+    "fields": {
+        "title": "British Indian Ocean Territory",
+        "code": "IO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 260,
+    "fields": {
+        "title": "Brunei Darussalam",
+        "code": "BN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 261,
+    "fields": {
+        "title": "Bulgaria",
+        "code": "BG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 262,
+    "fields": {
+        "title": "Burkina Faso",
+        "code": "BF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 263,
+    "fields": {
+        "title": "Burundi",
+        "code": "BI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 264,
+    "fields": {
+        "title": "Cambodia",
+        "code": "KH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 265,
+    "fields": {
+        "title": "Cameroon",
+        "code": "CM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 266,
+    "fields": {
+        "title": "Canada",
+        "code": "CA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 267,
+    "fields": {
+        "title": "Cape Verde",
+        "code": "CV",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 268,
+    "fields": {
+        "title": "Cayman Islands",
+        "code": "KY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 269,
+    "fields": {
+        "title": "Central African Republic",
+        "code": "CF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 270,
+    "fields": {
+        "title": "Chad",
+        "code": "TD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 271,
+    "fields": {
+        "title": "Chile",
+        "code": "CL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 272,
+    "fields": {
+        "title": "China",
+        "code": "CN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 273,
+    "fields": {
+        "title": "Christmas Island",
+        "code": "CX",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 274,
+    "fields": {
+        "title": "Cocos (Keeling) Islands",
+        "code": "CC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 275,
+    "fields": {
+        "title": "Colombia",
+        "code": "CO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 276,
+    "fields": {
+        "title": "Comoros",
+        "code": "KM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 277,
+    "fields": {
+        "title": "Congo",
+        "code": "CG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 278,
+    "fields": {
+        "title": "Congo, The Democratic Republic of the",
+        "code": "CD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 279,
+    "fields": {
+        "title": "Cook Islands",
+        "code": "CK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 280,
+    "fields": {
+        "title": "Costa Rica",
+        "code": "CR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 281,
+    "fields": {
+        "title": "Cote D'Ivoire",
+        "code": "CI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 282,
+    "fields": {
+        "title": "Croatia",
+        "code": "HR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 283,
+    "fields": {
+        "title": "Cuba",
+        "code": "CU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 284,
+    "fields": {
+        "title": "Cyprus",
+        "code": "CY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 285,
+    "fields": {
+        "title": "Czech Republic",
+        "code": "CZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 286,
+    "fields": {
+        "title": "Denmark",
+        "code": "DK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 287,
+    "fields": {
+        "title": "Djibouti",
+        "code": "DJ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 288,
+    "fields": {
+        "title": "Dominica",
+        "code": "DM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 289,
+    "fields": {
+        "title": "Dominican Republic",
+        "code": "DO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 290,
+    "fields": {
+        "title": "Ecuador",
+        "code": "EC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 291,
+    "fields": {
+        "title": "Egypt",
+        "code": "EG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 292,
+    "fields": {
+        "title": "El Salvador",
+        "code": "SV",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 293,
+    "fields": {
+        "title": "Equatorial Guinea",
+        "code": "GQ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 294,
+    "fields": {
+        "title": "Eritrea",
+        "code": "ER",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 295,
+    "fields": {
+        "title": "Estonia",
+        "code": "EE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 296,
+    "fields": {
+        "title": "Ethiopia",
+        "code": "ET",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 297,
+    "fields": {
+        "title": "Falkland Islands (Malvinas)",
+        "code": "FK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 298,
+    "fields": {
+        "title": "Faroe Islands",
+        "code": "FO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 299,
+    "fields": {
+        "title": "Fiji",
+        "code": "FJ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 300,
+    "fields": {
+        "title": "Finland",
+        "code": "FI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 301,
+    "fields": {
+        "title": "France",
+        "code": "FR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 302,
+    "fields": {
+        "title": "French Guiana",
+        "code": "GF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 303,
+    "fields": {
+        "title": "French Polynesia",
+        "code": "PF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 304,
+    "fields": {
+        "title": "French Southern Territories",
+        "code": "TF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 305,
+    "fields": {
+        "title": "Gabon",
+        "code": "GA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 306,
+    "fields": {
+        "title": "Gambia",
+        "code": "GM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 307,
+    "fields": {
+        "title": "Georgia",
+        "code": "GE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 308,
+    "fields": {
+        "title": "Germany",
+        "code": "DE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 309,
+    "fields": {
+        "title": "Ghana",
+        "code": "GH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 310,
+    "fields": {
+        "title": "Gibraltar",
+        "code": "GI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 311,
+    "fields": {
+        "title": "Greece",
+        "code": "GR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 312,
+    "fields": {
+        "title": "Greenland",
+        "code": "GL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 313,
+    "fields": {
+        "title": "Grenada",
+        "code": "GD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 314,
+    "fields": {
+        "title": "Guadeloupe",
+        "code": "GP",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 315,
+    "fields": {
+        "title": "Guam",
+        "code": "GU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 316,
+    "fields": {
+        "title": "Guatemala",
+        "code": "GT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 317,
+    "fields": {
+        "title": "Guernsey",
+        "code": "GG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 318,
+    "fields": {
+        "title": "Guinea",
+        "code": "GN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 319,
+    "fields": {
+        "title": "Guinea-Bissau",
+        "code": "GW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 320,
+    "fields": {
+        "title": "Guyana",
+        "code": "GY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 321,
+    "fields": {
+        "title": "Haiti",
+        "code": "HT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 322,
+    "fields": {
+        "title": "Heard Island and Mcdonald Islands",
+        "code": "HM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 323,
+    "fields": {
+        "title": "Holy See (Vatican City State)",
+        "code": "VA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 324,
+    "fields": {
+        "title": "Honduras",
+        "code": "HN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 325,
+    "fields": {
+        "title": "Hong Kong",
+        "code": "HK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 326,
+    "fields": {
+        "title": "Hungary",
+        "code": "HU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 327,
+    "fields": {
+        "title": "Iceland",
+        "code": "IS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 328,
+    "fields": {
+        "title": "India",
+        "code": "IN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 329,
+    "fields": {
+        "title": "Indonesia",
+        "code": "ID",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 330,
+    "fields": {
+        "title": "Iran, Islamic Republic Of",
+        "code": "IR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 331,
+    "fields": {
+        "title": "Iraq",
+        "code": "IQ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 332,
+    "fields": {
+        "title": "Ireland",
+        "code": "IE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 333,
+    "fields": {
+        "title": "Isle of Man",
+        "code": "IM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 334,
+    "fields": {
+        "title": "Israel",
+        "code": "IL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 335,
+    "fields": {
+        "title": "Italy",
+        "code": "IT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 336,
+    "fields": {
+        "title": "Jamaica",
+        "code": "JM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 337,
+    "fields": {
+        "title": "Japan",
+        "code": "JP",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 338,
+    "fields": {
+        "title": "Jersey",
+        "code": "JE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 339,
+    "fields": {
+        "title": "Jordan",
+        "code": "JO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 340,
+    "fields": {
+        "title": "Kazakhstan",
+        "code": "KZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 341,
+    "fields": {
+        "title": "Kenya",
+        "code": "KE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 342,
+    "fields": {
+        "title": "Kiribati",
+        "code": "KI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 343,
+    "fields": {
+        "title": "Korea, Democratic People'S Republic of",
+        "code": "KP",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 344,
+    "fields": {
+        "title": "Korea, Republic of",
+        "code": "KR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 345,
+    "fields": {
+        "title": "Kuwait",
+        "code": "KW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 346,
+    "fields": {
+        "title": "Kyrgyzstan",
+        "code": "KG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 347,
+    "fields": {
+        "title": "Lao People'S Democratic Republic",
+        "code": "LA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 348,
+    "fields": {
+        "title": "Latvia",
+        "code": "LV",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 349,
+    "fields": {
+        "title": "Lebanon",
+        "code": "LB",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 350,
+    "fields": {
+        "title": "Lesotho",
+        "code": "LS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 351,
+    "fields": {
+        "title": "Liberia",
+        "code": "LR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 352,
+    "fields": {
+        "title": "Libyan Arab Jamahiriya",
+        "code": "LY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 353,
+    "fields": {
+        "title": "Liechtenstein",
+        "code": "LI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 354,
+    "fields": {
+        "title": "Lithuania",
+        "code": "LT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 355,
+    "fields": {
+        "title": "Luxembourg",
+        "code": "LU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 356,
+    "fields": {
+        "title": "Macao",
+        "code": "MO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 357,
+    "fields": {
+        "title": "Macedonia, The Former Yugoslav Republic of",
+        "code": "MK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 358,
+    "fields": {
+        "title": "Madagascar",
+        "code": "MG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 359,
+    "fields": {
+        "title": "Malawi",
+        "code": "MW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 360,
+    "fields": {
+        "title": "Malaysia",
+        "code": "MY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 361,
+    "fields": {
+        "title": "Maldives",
+        "code": "MV",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 362,
+    "fields": {
+        "title": "Mali",
+        "code": "ML",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 363,
+    "fields": {
+        "title": "Malta",
+        "code": "MT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 364,
+    "fields": {
+        "title": "Marshall Islands",
+        "code": "MH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 365,
+    "fields": {
+        "title": "Martinique",
+        "code": "MQ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 366,
+    "fields": {
+        "title": "Mauritania",
+        "code": "MR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 367,
+    "fields": {
+        "title": "Mauritius",
+        "code": "MU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 368,
+    "fields": {
+        "title": "Mayotte",
+        "code": "YT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 369,
+    "fields": {
+        "title": "Mexico",
+        "code": "MX",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 370,
+    "fields": {
+        "title": "Micronesia, Federated States of",
+        "code": "FM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 371,
+    "fields": {
+        "title": "Moldova, Republic of",
+        "code": "MD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 372,
+    "fields": {
+        "title": "Monaco",
+        "code": "MC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 373,
+    "fields": {
+        "title": "Mongolia",
+        "code": "MN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 374,
+    "fields": {
+        "title": "Montserrat",
+        "code": "MS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 375,
+    "fields": {
+        "title": "Morocco",
+        "code": "MA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 376,
+    "fields": {
+        "title": "Mozambique",
+        "code": "MZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 377,
+    "fields": {
+        "title": "Myanmar",
+        "code": "MM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 378,
+    "fields": {
+        "title": "Namibia",
+        "code": "NA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 379,
+    "fields": {
+        "title": "Nauru",
+        "code": "NR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 380,
+    "fields": {
+        "title": "Nepal",
+        "code": "NP",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 381,
+    "fields": {
+        "title": "Netherlands",
+        "code": "NL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 382,
+    "fields": {
+        "title": "Netherlands Antilles",
+        "code": "AN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 383,
+    "fields": {
+        "title": "New Caledonia",
+        "code": "NC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 384,
+    "fields": {
+        "title": "New Zealand",
+        "code": "NZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 385,
+    "fields": {
+        "title": "Nicaragua",
+        "code": "NI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 386,
+    "fields": {
+        "title": "Niger",
+        "code": "NE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 387,
+    "fields": {
+        "title": "Nigeria",
+        "code": "NG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 388,
+    "fields": {
+        "title": "Niue",
+        "code": "NU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 389,
+    "fields": {
+        "title": "Norfolk Island",
+        "code": "NF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 390,
+    "fields": {
+        "title": "Northern Mariana Islands",
+        "code": "MP",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 391,
+    "fields": {
+        "title": "Norway",
+        "code": "NO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 392,
+    "fields": {
+        "title": "Oman",
+        "code": "OM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 393,
+    "fields": {
+        "title": "Pakistan",
+        "code": "PK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 394,
+    "fields": {
+        "title": "Palau",
+        "code": "PW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 395,
+    "fields": {
+        "title": "Palestinian Territory, Occupied",
+        "code": "PS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 396,
+    "fields": {
+        "title": "Panama",
+        "code": "PA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 397,
+    "fields": {
+        "title": "Papua New Guinea",
+        "code": "PG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 398,
+    "fields": {
+        "title": "Paraguay",
+        "code": "PY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 399,
+    "fields": {
+        "title": "Peru",
+        "code": "PE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 400,
+    "fields": {
+        "title": "Philippines",
+        "code": "PH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 401,
+    "fields": {
+        "title": "Pitcairn",
+        "code": "PN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 402,
+    "fields": {
+        "title": "Poland",
+        "code": "PL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 403,
+    "fields": {
+        "title": "Portugal",
+        "code": "PT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 404,
+    "fields": {
+        "title": "Puerto Rico",
+        "code": "PR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 405,
+    "fields": {
+        "title": "Qatar",
+        "code": "QA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 406,
+    "fields": {
+        "title": "Reunion",
+        "code": "RE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 407,
+    "fields": {
+        "title": "Romania",
+        "code": "RO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 408,
+    "fields": {
+        "title": "Russian Federation",
+        "code": "RU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 409,
+    "fields": {
+        "title": "RWANDA",
+        "code": "RW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 410,
+    "fields": {
+        "title": "Saint Helena",
+        "code": "SH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 411,
+    "fields": {
+        "title": "Saint Kitts and Nevis",
+        "code": "KN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 412,
+    "fields": {
+        "title": "Saint Lucia",
+        "code": "LC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 413,
+    "fields": {
+        "title": "Saint Pierre and Miquelon",
+        "code": "PM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 414,
+    "fields": {
+        "title": "Saint Vincent and the Grenadines",
+        "code": "VC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 415,
+    "fields": {
+        "title": "Samoa",
+        "code": "WS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 416,
+    "fields": {
+        "title": "San Marino",
+        "code": "SM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 417,
+    "fields": {
+        "title": "Sao Tome and Principe",
+        "code": "ST",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 418,
+    "fields": {
+        "title": "Saudi Arabia",
+        "code": "SA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 419,
+    "fields": {
+        "title": "Senegal",
+        "code": "SN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 420,
+    "fields": {
+        "title": "Serbia and Montenegro",
+        "code": "CS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 421,
+    "fields": {
+        "title": "Seychelles",
+        "code": "SC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 422,
+    "fields": {
+        "title": "Sierra Leone",
+        "code": "SL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 423,
+    "fields": {
+        "title": "Singapore",
+        "code": "SG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 424,
+    "fields": {
+        "title": "Slovakia",
+        "code": "SK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 425,
+    "fields": {
+        "title": "Slovenia",
+        "code": "SI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 426,
+    "fields": {
+        "title": "Solomon Islands",
+        "code": "SB",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 427,
+    "fields": {
+        "title": "Somalia",
+        "code": "SO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 428,
+    "fields": {
+        "title": "South Africa",
+        "code": "ZA",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 429,
+    "fields": {
+        "title": "South Georgia and the South Sandwich Islands",
+        "code": "GS",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 430,
+    "fields": {
+        "title": "Spain",
+        "code": "ES",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 431,
+    "fields": {
+        "title": "Sri Lanka",
+        "code": "LK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 432,
+    "fields": {
+        "title": "Sudan",
+        "code": "SD",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 433,
+    "fields": {
+        "title": "Suriname",
+        "code": "SR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 434,
+    "fields": {
+        "title": "Svalbard and Jan Mayen",
+        "code": "SJ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 435,
+    "fields": {
+        "title": "Swaziland",
+        "code": "SZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 436,
+    "fields": {
+        "title": "Sweden",
+        "code": "SE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 437,
+    "fields": {
+        "title": "Switzerland",
+        "code": "CH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 438,
+    "fields": {
+        "title": "Syrian Arab Republic",
+        "code": "SY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 439,
+    "fields": {
+        "title": "Taiwan, Province of China",
+        "code": "TW",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 440,
+    "fields": {
+        "title": "Tajikistan",
+        "code": "TJ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 441,
+    "fields": {
+        "title": "Tanzania, United Republic of",
+        "code": "TZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 442,
+    "fields": {
+        "title": "Thailand",
+        "code": "TH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 443,
+    "fields": {
+        "title": "Timor-Leste",
+        "code": "TL",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 444,
+    "fields": {
+        "title": "Togo",
+        "code": "TG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 445,
+    "fields": {
+        "title": "Tokelau",
+        "code": "TK",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 446,
+    "fields": {
+        "title": "Tonga",
+        "code": "TO",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 447,
+    "fields": {
+        "title": "Trinidad and Tobago",
+        "code": "TT",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 448,
+    "fields": {
+        "title": "Tunisia",
+        "code": "TN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 449,
+    "fields": {
+        "title": "Turkey",
+        "code": "TR",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 450,
+    "fields": {
+        "title": "Turkmenistan",
+        "code": "TM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 451,
+    "fields": {
+        "title": "Turks and Caicos Islands",
+        "code": "TC",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 452,
+    "fields": {
+        "title": "Tuvalu",
+        "code": "TV",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 453,
+    "fields": {
+        "title": "Uganda",
+        "code": "UG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 454,
+    "fields": {
+        "title": "United Arab Emirates",
+        "code": "AE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 455,
+    "fields": {
+        "title": "United Kingdom",
+        "code": "GB",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 456,
+    "fields": {
+        "title": "United States",
+        "code": "US",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 457,
+    "fields": {
+        "title": "United States Minor Outlying Islands",
+        "code": "UM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 458,
+    "fields": {
+        "title": "Uruguay",
+        "code": "UY",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 459,
+    "fields": {
+        "title": "Uzbekistan",
+        "code": "UZ",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 460,
+    "fields": {
+        "title": "Vanuatu",
+        "code": "VU",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 461,
+    "fields": {
+        "title": "Venezuela",
+        "code": "VE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 462,
+    "fields": {
+        "title": "Viet Nam",
+        "code": "VN",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 463,
+    "fields": {
+        "title": "Virgin Islands, British",
+        "code": "VG",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 464,
+    "fields": {
+        "title": "Virgin Islands, U.S.",
+        "code": "VI",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 465,
+    "fields": {
+        "title": "Wallis and Futuna",
+        "code": "WF",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 466,
+    "fields": {
+        "title": "Western Sahara",
+        "code": "EH",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 467,
+    "fields": {
+        "title": "Yemen",
+        "code": "YE",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 468,
+    "fields": {
+        "title": "Zambia",
+        "code": "ZM",
+        "is_active": true
+    }
+},
+{
+    "model": "geo.country",
+    "pk": 469,
+    "fields": {
+        "title": "Zimbabwe",
+        "code": "ZW",
+        "is_active": true
+    }
+}
+]
