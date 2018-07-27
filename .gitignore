@@ -61,3 +61,6 @@ target/
 
 media/
 cryptotrade/variables.py
+celerybeat-schedule.db
+celerybeat.pid
+db.sqlite3
