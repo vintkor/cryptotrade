@@ -1,0 +1,15 @@
+[
+{
+    "model": "linear_tree.lineartree",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "parent": null,
+        "created": "2018-07-27T14:12:51.258",
+        "lft": 1,
+        "rght": 2,
+        "tree_id": 1,
+        "level": 0
+    }
+}
+]

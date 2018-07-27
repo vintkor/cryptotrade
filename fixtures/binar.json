@@ -1,0 +1,19 @@
+[
+{
+    "model": "binary_tree.binarytree",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "parent": null,
+        "left_node": null,
+        "right_node": null,
+        "left_points": 0,
+        "right_points": 0,
+        "created": "2018-07-27T14:12:36.985",
+        "lft": 1,
+        "rght": 2,
+        "tree_id": 1,
+        "level": 0
+    }
+}
+]
