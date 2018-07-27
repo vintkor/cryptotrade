@@ -64,3 +64,5 @@ cryptotrade/variables.py
 celerybeat-schedule.db
 celerybeat.pid
 db.sqlite3
+
+static/adminbite/assets/images/dbeaver-ce-5\.1\.3-installer\.pkg
