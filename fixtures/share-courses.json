@@ -1,0 +1,9 @@
+[
+{
+    "model": "shares.course",
+    "pk": 1,
+    "fields": {
+        "course": "1.00000"
+    }
+}
+]
