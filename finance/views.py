@@ -58,10 +58,10 @@ class SendMoneyFormView(LoginRequiredMixin, FormView):
             return redirect(self.request.META.get('HTTP_REFERER'))
 
         with atomic():
-            sender.balance = sender.balance - decimal.Decimal(amount)
+            sender.balance -= decimal.Decimal(amount)
             sender.save(update_fields=('balance',))
 
-            user_recipient.balance = user_recipient.balance - decimal.Decimal(amount)
+            user_recipient.balance += decimal.Decimal(amount)
             user_recipient.save(update_fields=('balance',))
 
             sender_purpose = Purpose.objects.get(code=14)
