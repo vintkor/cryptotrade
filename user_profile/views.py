@@ -338,3 +338,21 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
             'status': False,
             'message': _('Неверный формат запроса')
         })
+
+
+class ChangeDirectionView(View):
+
+    def post(self, request):
+        direction = self.request.POST.get('action')
+
+        if direction and direction in ['left', 'right']:
+            self.request.user.registration_direction = direction
+            self.request.user.save(update_fields=('registration_direction',))
+
+            return JsonResponse({
+                'status': True,
+            })
+
+        return JsonResponse({
+            'status': False,
+        })

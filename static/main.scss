@@ -1,0 +1,39 @@
+.change-direction-link {
+  border: none;
+  width: 34px;
+  height: 34px;
+  background: #dee;
+  background-size: cover;
+  transition: filter .2s ease-in-out;
+}
+.change-direction-link:active,
+.change-direction-link:visited,
+.change-direction-link:focus {
+  outline: none;
+}
+.change-direction-link.left {
+  background-image: url("adminbite/assets/images/left-direction.png");
+}
+.change-direction-link.right {
+  background-image: url("adminbite/assets/images/right-direction.png");
+}
+.change-direction-link:hover {
+  cursor: pointer;
+  filter: grayscale(0);
+}
+.change-direction-link:disabled:hover {
+  cursor: inherit;
+  filter: grayscale(0);
+}
+.change-direction-link:enabled {
+  filter: grayscale(1);
+}
+.change-direction-link:enabled:hover {
+  filter: grayscale(0);
+}
+.change-direction__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 84%;
+}

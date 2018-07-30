@@ -229,4 +229,24 @@ $(document).ready(function () {
         }
     });
 
+    // -------------------------------- Смена направления регистрации --------------------------------
+    $('.change-direction-link').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('data-path'),
+            method: 'POST',
+            data: {
+                action: $(this).attr('data-action')
+            },
+            success: function (response) {
+                if (response.status) {
+                    window.location.reload()
+                }
+            },
+            error: function () {
+                console.log('Error')
+            }
+        });
+    })
+
 });

@@ -15,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
         'email',
         'first_name',
         'last_name',
+        'balance',
         'phone',
         'country',
         'is_in_tree',
@@ -22,7 +23,6 @@ class UserAdmin(admin.ModelAdmin):
         'package',
         'rang',
         'verification',
-        'balance',
         'volume',
         'is_admin',
     )
