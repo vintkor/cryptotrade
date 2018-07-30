@@ -10,7 +10,7 @@ names_validator = validators.RegexValidator('^[a-zA-Zа-яА-Я]+$', message=_(
         'Допускаются только латинские и кирилические символы нижнего и верхнего регистра'
     ))
 
-phone_validator = validators.RegexValidator('^[0-9+]+')
+phone_validator = validators.RegexValidator('^[0-9]+')
 password_validator = validators.MinLengthValidator(10)
 
 
@@ -40,7 +40,7 @@ class RegistrationByRefCodeForm(forms.Form):
     ), required=True, help_text=_('Если вы не нашли своей страны в списке, значит для вас регистрация запрещена!'))
     phone = forms.CharField(label=_('Номер телефона'), widget=forms.TextInput(
         attrs={'class': 'form-control'},
-    ), validators=[phone_validator])
+    ), validators=[phone_validator], help_text=_('Номер телефона должен быть в международном формате но без знака +'))
     password = forms.CharField(label=_('Пароль'), widget=forms.PasswordInput(
         attrs={'class': 'form-control'}), validators=[password_validator])
     repeat_password = forms.CharField(label=_('Пароль ещё раз'), widget=forms.PasswordInput(
@@ -64,6 +64,14 @@ class RegistrationByRefCodeForm(forms.Form):
             raise forms.ValidationError(_('Пароли не совпадают'), code='invalid')
 
         return password
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+
+        if User.objects.filter(phone=phone).exists():
+            raise forms.ValidationError(_('Такой номер телефона уже используется'))
+        else:
+            return phone
 
 
 class AuthForm(Form):

@@ -46,6 +46,11 @@ class NewUserByRefCodeView(FormView):
         kwargs['parent'] = parent
         return kwargs
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard:dashboard')
+        return super(NewUserByRefCodeView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         parent = User.objects.get(ref_code=form.cleaned_data['parent'])
         password = form.cleaned_data['password']
@@ -152,9 +157,6 @@ class VerificationFormView(LoginRequiredMixin, UpdateView):
 
             self.request.session['email_code'] = email_code
             self.request.session['phone_code'] = phone_code
-
-            print('-'*80)
-            print(email_code, phone_code)
 
             email_users = self.get_object().email
             email_subject = _('Код верификации email CryptoTrade')
