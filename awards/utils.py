@@ -1,9 +1,11 @@
 from finance.models import Purpose
-from .models import RangAward
+from .models import RangAward, MultiLevelBonus, MultiLevelBonusHistory
 from linear_tree.models import LinearTree
 from user_profile.models import User
 from django.db.transaction import atomic
 from finance.utils import set_transaction_to_finance_history, make_uuid
+import decimal
+from prettytable import PrettyTable
 
 
 class RangAwardRunner:
@@ -81,6 +83,9 @@ def get_rules():
 
 
 def start_rang_award_runner():
+    """
+    Просчёт рангового бонуса
+    """
     users = User.objects.select_related('rang').filter(is_in_tree=True).iterator()
 
     rules = get_rules()
@@ -89,7 +94,6 @@ def start_rang_award_runner():
     recipient_purpose = Purpose.objects.get(code=13)
 
     for user in users:
-        print('---->', user.unique_number)
         runner = RangAwardRunner(user, rules)
         status, rang = runner.check_user()
 
@@ -97,15 +101,96 @@ def start_rang_award_runner():
             with atomic():
 
                 if user.rang != rang:
-                    user.rang = rang
-                    user.balance += rang.bonus
-                    user.save(update_fields=('balance', 'rang'))
+                    if rang.bonus > 0:
+                        user.rang = rang
+                        user.balance += rang.bonus
+                        user.save(update_fields=('balance', 'rang'))
 
-                    set_transaction_to_finance_history(
-                        amount=rang.bonus,
-                        sender_id=system_balance.id,
-                        recipient_id=user.id,
-                        sender_purpose_id=sender_purpose.id,
-                        recipient_purpose_id=recipient_purpose.id,
-                        uuid=make_uuid(),
-                    )
+                        set_transaction_to_finance_history(
+                            amount=rang.bonus,
+                            sender_id=system_balance.id,
+                            recipient_id=user.id,
+                            sender_purpose_id=sender_purpose.id,
+                            recipient_purpose_id=recipient_purpose.id,
+                            uuid=make_uuid(),
+                        )
+
+
+def start_multi_level_bonus_runner(user_id, amount, package_history_id):
+    """
+    просчё многоуровневого бонуса
+    :param user_id: int
+    :param amount: int
+    :param package_history_id: int
+    """
+    l_user = LinearTree.objects.get(user_id=user_id)
+    amount = decimal.Decimal(amount)
+
+    bonuses = dict()
+    for bonus in MultiLevelBonus.objects.select_related('rang').all():
+        bonuses[bonus.rang] = {
+            'level_1': bonus.bonus_for_line_1,
+            'level_2': bonus.bonus_for_line_2,
+            'level_3': bonus.bonus_for_line_3,
+            'level_4': bonus.bonus_for_line_4,
+            'level_5': bonus.bonus_for_line_5,
+            'level_6': bonus.bonus_for_line_6,
+            'level_7': bonus.bonus_for_line_7,
+            'level_8': bonus.bonus_for_line_8,
+            'level_9': bonus.bonus_for_line_9,
+            'level_10': bonus.bonus_for_line_10,
+        }
+
+    x = PrettyTable(["User", "Rang", "level_to_initiator", "percent", "bonus"])
+
+    l_user_level = l_user.level
+    levels = [l_user_level - i for i in range(1, 11) if l_user_level - i >= 0]
+    ancestors = l_user.get_ancestors().prefetch_related('user').filter(level__in=levels)
+    candidates = dict()
+    for ancestor in ancestors:
+        if ancestor.user.rang:
+            ancestor_user = ancestor.user
+            level_to_initiator = l_user_level - ancestor.level
+            ancestor_rang = ancestor_user.rang
+            percent = sum([v for k, v in bonuses[ancestor_rang].items() if k == 'level_{}'.format(level_to_initiator)])
+            bonus = (amount * percent) / 100
+
+            candidates[ancestor_user] = dict()
+            candidates[ancestor_user]['bonus'] = bonus
+
+            x.add_row([
+                ancestor_user.unique_number,
+                ancestor_rang,
+                level_to_initiator,
+                str(percent),
+                bonus,
+            ])
+
+    system_balance = User.objects.get(login='SYSTEM_BALANCE')
+    sender_purpose = Purpose.objects.get(code=16)
+    recipient_purpose = Purpose.objects.get(code=17)
+
+    with atomic():
+        multi_level_bonus_history = MultiLevelBonusHistory(
+            package_history_id=package_history_id,
+            text=x.get_html_string(),
+        )
+        multi_level_bonus_history.save()
+
+        for candidate, bonus in candidates.items():
+            if bonus['bonus'] > 0:
+                candidate.balance += bonus['bonus']
+                candidate.save(update_fields=('balance',))
+
+                uuid = make_uuid()
+
+                set_transaction_to_finance_history(
+                    amount=bonus['bonus'],
+                    sender_id=system_balance.id,
+                    recipient_id=candidate.id,
+                    sender_purpose_id=sender_purpose.id,
+                    recipient_purpose_id=recipient_purpose.id,
+                    uuid=uuid,
+                )
+
+

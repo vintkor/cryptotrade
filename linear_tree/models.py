@@ -12,6 +12,8 @@ class LinearTree(MPTTModel):
     parent = TreeForeignKey('self', null=True, blank=True, verbose_name=_('Родитель'), db_index=True, on_delete=models.SET_NULL)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
 
+    objects = models.Manager()
+
     class Meta:
         verbose_name = _('Линейное дерево')
         verbose_name_plural = _('Линейныу деревья')

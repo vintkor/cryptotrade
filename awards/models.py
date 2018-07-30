@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class RangAward(models.Model):
@@ -50,3 +51,16 @@ class MultiLevelBonus(models.Model):
 
     def __str__(self):
         return self.rang.title
+
+
+class MultiLevelBonusHistory(models.Model):
+    package_history = models.ForeignKey('packages.PackageHistory', on_delete=models.CASCADE, verbose_name=_('Запись в истории'))
+    text = RichTextUploadingField()
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
+
+    class Meta:
+        verbose_name = _('Отчёт по многоуровневому бонусу')
+        verbose_name_plural = _('Отчёты по многоуровневому бонусу')
+
+    def __str__(self):
+        return '{} > {}'.format(self.package_history.user.unique_number, self.package_history.package.title)

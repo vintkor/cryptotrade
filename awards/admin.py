@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RangAward, MultiLevelBonus
+from .models import RangAward, MultiLevelBonus, MultiLevelBonusHistory
 
 
 @admin.register(RangAward)
@@ -31,3 +31,8 @@ class MultiLevelBonusAdmin(admin.ModelAdmin):
         'bonus_for_line_9',
         'bonus_for_line_10',
     )
+
+
+@admin.register(MultiLevelBonusHistory)
+class MultiLevelBonusHistoryAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'created',)
