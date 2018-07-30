@@ -19,3 +19,34 @@ class RangAward(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class MultiLevelBonus(models.Model):
+    rang = models.ForeignKey(RangAward, on_delete=models.CASCADE, verbose_name=_('Ранг'))
+    bonus_for_line_1 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 1'), default=0)
+    bonus_for_line_2 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 2'), default=0)
+    bonus_for_line_3 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 3'), default=0)
+    bonus_for_line_4 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 4'), default=0)
+    bonus_for_line_5 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 5'), default=0)
+    bonus_for_line_6 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 6'), default=0)
+    bonus_for_line_7 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 7'), default=0)
+    bonus_for_line_8 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 8'), default=0)
+    bonus_for_line_9 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 9'), default=0)
+    bonus_for_line_10 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name=_('Бонус за линию 10'), default=0)
+
+    class Meta:
+        verbose_name = _('Многоуровневый бонус')
+        verbose_name_plural = _('Многоуровневые бонусы')
+
+    def __str__(self):
+        return self.rang.title
