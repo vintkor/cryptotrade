@@ -34,12 +34,12 @@ class ByPackageFormView(PermissionRequiredMixin, LoginRequiredMixin, View):
     def post(self, request, package_id):
         package = get_object_or_404(Package, pk=package_id)
         user = self.request.user
+        amount = package.make_price_for_user(user)
 
-        if user.balance < package.price:
+        if user.balance < amount:
             messages.error(request, _('На Вашем счету недостаточно средств. Вам необходимо пополнить баланс.'), 'danger')
             return redirect(self.request.META['HTTP_REFERER'])
 
-        amount = package.make_price_for_user(user)
         balance = user.balance - amount
         old_package = user.package
         amount_tokens = package.make_tokens_for_user(user)
