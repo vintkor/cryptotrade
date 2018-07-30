@@ -185,7 +185,7 @@ except:
 
     from .variables import Variables
 
-    MAILGUN_DOMAIN = 'sandboxb582c9fb5f8042e88540526263bd33a6.mailgun.org'
+    MAILGUN_DOMAIN = 'fbt.world'
     MAILGUN_ADDRESS = "https://api.mailgun.net/v3/{}/messages".format(MAILGUN_DOMAIN)
     MAILGUN_API_KEY = Variables.MAILGUN_API_KEY
     MAILGUN_SYSTEM_NAME = 'CryptoTrade'

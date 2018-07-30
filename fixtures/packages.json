@@ -1,0 +1,38 @@
+[
+{
+    "model": "packages.package",
+    "pk": 1,
+    "fields": {
+        "title": "Standart",
+        "price": "300.00",
+        "tokens": 2000,
+        "points": 100,
+        "bonuses": 10,
+        "weight": 10
+    }
+},
+{
+    "model": "packages.package",
+    "pk": 2,
+    "fields": {
+        "title": "Medium",
+        "price": "1000.00",
+        "tokens": 8000,
+        "points": 400,
+        "bonuses": 10,
+        "weight": 20
+    }
+},
+{
+    "model": "packages.package",
+    "pk": 3,
+    "fields": {
+        "title": "VIP",
+        "price": "5000.00",
+        "tokens": 50000,
+        "points": 2500,
+        "bonuses": 10,
+        "weight": 30
+    }
+}
+]
