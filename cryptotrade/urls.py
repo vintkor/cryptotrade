@@ -4,6 +4,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from cryptotrade.settings import MEDIA_ROOT, MEDIA_URL
 from django.conf.urls.static import static
+from django.http import HttpResponse
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='landings/home.html'), name='landing-home'),
@@ -17,6 +18,7 @@ urlpatterns = [
         path('finance/', include('finance.urls')),
         path('news/', include('news.urls')),
     ])),
+    path('payeer_619318825.txt', lambda request: HttpResponse("619318825", content_type="text/plain")),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 
