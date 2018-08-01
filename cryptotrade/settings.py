@@ -24,6 +24,8 @@ except:
         'mptt',
         'ckeditor',
         'ckeditor_uploader',
+        'jsoneditor',
+        'colorfield',
 
         'user_profile',
         'binary_tree',

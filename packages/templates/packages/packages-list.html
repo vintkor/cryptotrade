@@ -11,7 +11,7 @@
             {% for package in packages %}
 
                 <div class="col-12">
-                    <div class="card {% if user.package and user.package.price >= package.price %}bg-success{% else %}bg-dark{% endif %}">
+                    <div class="card" style="background-color: {% if user.package and user.package.price >= package.price %}{{ package.color }}{% else %}#343a40{% endif %}">
                         <div class="card-body text-white">
                             <div class="d-flex flex-row">
                                 <div class="p-10 align-self-center">

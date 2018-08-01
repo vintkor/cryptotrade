@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from user_profile.models import User
+from colorfield.fields import ColorField
 
 
 class Package(models.Model):
@@ -10,6 +11,7 @@ class Package(models.Model):
     points = models.PositiveIntegerField(verbose_name=_('Баллы'))
     bonuses = models.PositiveIntegerField(verbose_name=_('Бонусы'))
     weight = models.PositiveSmallIntegerField(verbose_name=_('Вес'), default=1)
+    color = ColorField(default='#000000', verbose_name=_('Цвет пакета'))
 
     class Meta:
         verbose_name = _('Пакет')
