@@ -36,3 +36,15 @@
   justify-content: center;
   align-items: center;
   height: 84%; }
+
+.package-Standart {color: green;}
+.package-Medium {color: blue;}
+.package-VIP {color: #d22;}
+.rang-No {display: none;}
+.rang-Diamond {color: blue;}
+.rang-Gold {color: #d22;}
+.rang-Silver {color: green;}
+
+.hidden {
+  display: none;
+}

@@ -166,12 +166,13 @@
             enableZoomOnNodeDoubleClick: true,
             linkType: "M",
             primaryFields: [
-                "name",
+                {#"name",#}
                 "full_name",
                 "left_points",
                 "right_points",
+                "look_tree",
                 "package_weight",
-                "look_tree"
+                "rang"
             ],
             photoFields: ["image"],
             expandToLevel: 30,
@@ -186,6 +187,9 @@
                 }
                 if (args.content[i].indexOf(args.node.data["package_weight"]) != -1) {
                     args.content[i] = "<foreignObject x='0' y='-45' width='54' height='42'>" + args.node.data["package_weight"] + "</foreignObject>";
+                }
+                if (args.content[i].indexOf(args.node.data["rang"]) != -1) {
+                    args.content[i] = "<foreignObject x='460' y='-45' width='54' height='42'>" + args.node.data["rang"] + "</foreignObject>";
                 }
             }
         }

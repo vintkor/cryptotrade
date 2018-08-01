@@ -75,6 +75,9 @@ class BinaryTreeView(LoginRequiredMixin, View):
             element['created'] = i.created
             element['image'] = i.user.avatar.url if i.user.avatar else None
             element['full_name'] = i.user.get_full_name()
+            icon_template = "<span class='package_weight'><i class='fa fa-3x fa-{} {}-{}'></i></span>"
+            element['package_weight'] = icon_template.format('battery', 'package', i.user.package.title) if i.user.package else "<span class='hidden'>1</span>"
+            element['rang'] = icon_template.format('circle', 'rang', i.user.rang.title) if i.user.rang else "<span class='hidden'>1</span>"
 
             if node.left_node or node.right_node:
                 element[
