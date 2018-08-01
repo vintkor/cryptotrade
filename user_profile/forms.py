@@ -73,6 +73,12 @@ class RegistrationByRefCodeForm(forms.Form):
         else:
             return phone
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email__contains=email).exists():
+            raise forms.ValidationError(_('Такой адрес електронной почты уже используется'))
+        return email
+
 
 class AuthForm(Form):
     email = forms.CharField(widget=forms.TextInput(
