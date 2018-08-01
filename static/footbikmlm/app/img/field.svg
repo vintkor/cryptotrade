@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="914px" height="354px" viewBox="0 0 914 354" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>BOARD</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-8.7%" y="-18.2%" width="117.5%" height="154.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="1" dy="24" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="20.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.233667346 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="landing2" transform="translate(-726.000000, -5483.000000)">
+            <g id="our_team" transform="translate(-7.000000, 5127.000000)">
+                <g id="Group-24" transform="translate(282.000000, 50.000000)">
+                    <g id="BOARD" filter="url(#filter-1)" transform="translate(488.000000, 323.000000)">
+                        <g id="XMLID_33_">
+                            <polygon id="XMLID_31_" fill="#006837" fill-rule="nonzero" points="837.213146 263.834495 0.78685446 263.834495 102.094366 0 735.905634 0"></polygon>
+                            <polygon id="XMLID_30_" fill="#419D4B" fill-rule="nonzero" points="107.20892 263.834495 0.78685446 263.834495 102.094366 0 182.746948 0"></polygon>
+                            <polygon id="XMLID_29_" fill="#419D4B" fill-rule="nonzero" points="320.053052 263.834495 213.630986 263.834495 263.399531 0 344.052113 0"></polygon>
+                            <polygon id="XMLID_28_" fill="#419D4B" fill-rule="nonzero" points="532.897183 263.834495 426.475117 263.834495 424.704695 0 505.357277 0"></polygon>
+                            <polygon id="XMLID_27_" fill="#419D4B" fill-rule="nonzero" points="745.741315 263.834495 639.319249 263.834495 586.009859 0 666.662441 0"></polygon>
+                            <polygon id="XMLID_26_" fill="#FFFFFF" fill-rule="nonzero" points="426.475117 257.726302 422.737559 257.726302 421.753991 4.33484606 424.704695 4.33484606"></polygon>
+                            <polygon id="XMLID_25_" fill="#FFFFFF" fill-rule="nonzero" points="19.0812207 257.726302 15.343662 257.726302 109.766197 4.33484606 112.520188 4.33484606"></polygon>
+                            <polygon id="XMLID_24_" fill="#FFFFFF" fill-rule="nonzero" points="728.233803 4.33484606 728.823944 5.71411527 109.176056 5.71411527 109.766197 4.33484606"></polygon>
+                            <polygon id="XMLID_23_" fill="#FFFFFF" fill-rule="nonzero" points="821.67277 255.164802 822.656338 257.726302 15.343662 257.726302 16.32723 255.164802"></polygon>
+                            <polygon id="XMLID_22_" fill="#FFFFFF" fill-rule="nonzero" points="822.656338 257.726302 818.918779 257.726302 725.283099 4.33484606 728.233803 4.33484606"></polygon>
+                            <path d="M510.865258,113.69119 C514.012676,145.808459 472.899531,173.393843 419,173.393843 C365.100469,173.393843 323.987324,145.808459 327.134742,113.69119 C330.085446,83.7413444 371.001878,60.6878449 419,60.6878449 C466.801408,60.6878449 507.914554,83.7413444 510.865258,113.69119 Z" id="XMLID_21_" stroke="#FFFFFF" stroke-width="1.9344"></path>
+                            <path d="M427.655399,114.282305 C427.655399,115.661575 425.884977,116.646767 423.721127,116.646767 C421.557277,116.646767 419.786854,115.661575 419.786854,114.282305 C419.786854,112.903036 421.557277,111.917844 423.524413,111.917844 C425.884977,111.917844 427.655399,112.903036 427.655399,114.282305 Z" id="XMLID_20_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                            <g id="XMLID_15_" transform="translate(645.220657, 39.407691)">
+                                <path d="M91.2751174,71.919037 C93.4389671,71.919037 95.4061033,72.9042293 95.9962441,74.2834985 C96.3896714,75.6627677 95.0126761,76.6479599 93.0455399,76.6479599 C90.8816901,76.6479599 88.914554,75.6627677 88.3244131,74.2834985 C87.7342723,73.1012677 89.1112676,71.919037 91.2751174,71.919037 Z" id="XMLID_19_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                                <polygon id="XMLID_18_" stroke="#FFFFFF" stroke-width="1.9344" points="93.2422535 0.394076915 153.043192 161.965612 42.6868545 161.965612 0.196713615 0.394076915"></polygon>
+                                <path d="M2.36056338,74.2834985 C5.31126761,86.6969213 14.7535211,98.5192287 28.5234742,108.174113 L11.4093897,42.5603068 C2.95070423,51.2299989 -0.590140845,62.2641526 2.36056338,74.2834985 Z" id="XMLID_17_" stroke="#FFFFFF" stroke-width="1.9344"></path>
+                                <polygon id="XMLID_16_" stroke="#FFFFFF" stroke-width="0.9194" points="107.012207 37.6343454 135.338967 114.085267 85.1769953 114.085267 60.9812207 37.6343454"></polygon>
+                            </g>
+                            <g id="XMLID_10_" transform="translate(39.342723, 39.407691)">
+                                <path d="M61.9647887,72.5101523 C59.800939,72.5101523 57.8338028,73.4953446 57.243662,74.8746138 C56.8502347,76.253883 58.22723,77.2390753 60.1943662,77.2390753 C62.358216,77.2390753 64.3253521,76.253883 64.915493,74.8746138 C65.5056338,73.4953446 64.1286385,72.5101523 61.9647887,72.5101523 Z" id="XMLID_14_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                                <polygon id="XMLID_13_" stroke="#FFFFFF" stroke-width="1.9344" points="59.9976526 0.78815383 0.196713615 162.556727 110.749765 162.556727 153.043192 0.78815383"></polygon>
+                                <path d="M151.076056,74.8746138 C148.125352,87.2880366 138.486385,99.1103441 124.913146,108.962267 L142.02723,43.1514222 C150.289202,51.8211143 154.026761,62.6582295 151.076056,74.8746138 Z" id="XMLID_12_" stroke="#FFFFFF" stroke-width="1.9344"></path>
+                                <polygon id="XMLID_11_" stroke="#FFFFFF" stroke-width="0.9194" points="46.2276995 38.2254607 17.900939 114.676382 68.0629108 114.676382 92.2586854 38.2254607"></polygon>
+                            </g>
+                            <path d="M717.414554,5.71411527 L714.857277,5.71411527 C716.234272,9.45784596 722.135681,12.4134228 728.823944,13.2015766 L728.233803,11.8223074 C722.922535,11.2311921 718.398122,8.66969213 717.414554,5.71411527 Z" id="XMLID_9_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                            <path d="M110.356338,10.4430382 L109.766197,11.8223074 C116.651174,11.8223074 123.142723,9.2608075 125.7,5.71411527 L123.142723,5.71411527 C120.978873,8.47265367 115.667606,10.4430382 110.356338,10.4430382 Z" id="XMLID_8_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                            <path d="M31.0807512,255.164802 L34.4248826,255.164802 C36.5887324,249.05661 32.2610329,243.93361 24.3924883,242.75138 L23.6056338,245.115841 C29.7037559,246.298072 32.8511737,250.238841 31.0807512,255.164802 Z" id="XMLID_7_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                            <path d="M815.181221,247.283264 L814.394366,244.918803 C805.738967,244.918803 799.837559,249.253649 800.230986,254.967764 L803.575117,254.967764 C803.575117,250.632918 808.296244,247.283264 815.181221,247.283264 Z" id="XMLID_6_" fill="#FFFFFF" fill-rule="nonzero"></path>
+                            <rect id="XMLID_2_" fill="#0D3F25" fill-rule="nonzero" x="0.78685446" y="263.834495" width="836.229577" height="8.07857676"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

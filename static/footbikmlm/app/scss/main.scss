@@ -1,0 +1,22 @@
+@import "variables-functions-and-mixins";
+@import "fonts";
+@import "smart-grid.sass";
+@import "header.scss";
+@import "index.scss";
+* {
+  //font-family: $main-font, Serif;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+

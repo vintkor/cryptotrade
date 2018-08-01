@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="47px" height="47px" viewBox="0 0 47 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>579C4BCF-CA8B-456B-8BEF-E431F7DFCB6B</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-5.9%" y="-3.6%" width="111.7%" height="107.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="landing" transform="translate(-585.000000, -2851.000000)" stroke="#FFFFFF">
+            <g id="Group-3" filter="url(#filter-1)" transform="translate(407.000000, 2392.000000)">
+                <g id="star_stroke" transform="translate(178.000000, 459.000000)">
+                    <polygon id="Star-Copy-3" points="23.6142132 28.4102246 16.78755 32.2029395 18.0913266 24.1698405 12.5684401 18.4807682 20.2008816 17.3087549 23.6142132 10 27.0275448 17.3087549 34.6599863 18.4807682 29.1370998 24.1698405 30.4408764 32.2029395"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

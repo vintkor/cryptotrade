@@ -247,6 +247,40 @@ $(document).ready(function () {
                 console.log('Error')
             }
         });
-    })
+    });
+
+    // -------------------------------- Пополнение баланса --------------------------------
+
+    var paymentFormWrapper = $('#paymentWrapper');
+    var payment_amount = $('#payment-summ');
+
+    payment_amount.on('change input', function () {
+        console.log(3213);
+        paymentFormWrapper.html('');
+    });
+
+    $('.payment-add-money').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: window.location.href,
+            method: 'post',
+            data: {
+                payment_system_id: $(this).data('payment-system'),
+                amount: payment_amount.val()
+            },
+            success: function (response) {
+                if (response.status) {
+                    paymentFormWrapper.html(response.merchant_form);
+                } else {
+                    alert('Something wrong')
+                }
+            },
+            error: function (e) {
+                console.log('Error');
+            }
+        });
+
+    });
 
 });

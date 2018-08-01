@@ -1,0 +1,36 @@
+
+$main-font: 'Helvetica Neue';
+$bold-font: 'HelveticaBold';
+$main-size: 17px;
+$medium-size: 25px;
+$big-size: 54px;
+$main-color: #ffffff;
+
+$custom-height: 18px;
+$medium-height: 29px;
+$big-height: 72px;
+
+
+$opacity-border-color:rgba(255, 255, 255, 0.12);
+$bg-color: #222A43;
+
+$mini-size: 16px;
+
+$dark-color: rgba(0, 0, 0, 0.19);
+$cards-color: rgba(38, 198, 206, 0.44);
+@mixin btn (){
+  border-radius: 9px;
+  text-align: center;
+  color: $main-color;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 13px;
+  display: inline-block;
+  letter-spacing: 1.42px;
+  &:hover,
+  &:active,
+  &:focus {
+    color: $main-color;
+  }
+}

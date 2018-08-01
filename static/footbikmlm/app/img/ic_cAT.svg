@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>4BC41BAD-5EFA-4C4B-97C7-D0C8A0F24868</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <circle id="path-1" cx="20" cy="20" r="20"></circle>
+        <filter x="-62.5%" y="-122.5%" width="350.0%" height="350.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="25" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="12.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.729562953 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-1054.000000, -46.000000)">
+            <g id="1" transform="translate(-142.000000, -7.000000)">
+                <g id="content" transform="translate(547.000000, 43.000000)">
+                    <g id="ic_cc" transform="translate(639.000000, 0.000000)">
+                        <g id="Oval-3-Copy-10" opacity="0.185858243">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#26D5A3" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M10,20.000625 C10,24.418125 12.865,28.16625 16.839375,29.48875 C17.339375,29.580625 17.521875,29.271875 17.521875,29.006875 C17.521875,28.769375 17.513125,28.140625 17.508125,27.30625 C14.72625,27.910625 14.139375,25.965625 14.139375,25.965625 C13.685,24.810625 13.029375,24.503125 13.029375,24.503125 C12.12125,23.8825 13.098125,23.895 13.098125,23.895 C14.10125,23.965625 14.629375,24.925625 14.629375,24.925625 C15.521875,26.45375 16.97,26.0125 17.54,25.75625 C17.630625,25.11 17.889375,24.669375 18.175,24.419375 C15.954375,24.166875 13.62,23.309375 13.62,19.4775 C13.62,18.385625 14.009375,17.493125 14.649375,16.79375 C14.54625,16.540625 14.203125,15.524375 14.746875,14.1475 C14.746875,14.1475 15.586875,13.87875 17.496875,15.1725 C18.295,14.950625 19.15,14.84 20.000625,14.835625 C20.85,14.84 21.705625,14.950625 22.504375,15.1725 C24.413125,13.87875 25.25125,14.1475 25.25125,14.1475 C25.796875,15.524375 25.45375,16.540625 25.350625,16.79375 C25.991875,17.493125 26.37875,18.385625 26.37875,19.4775 C26.37875,23.31875 24.040625,24.164375 21.813125,24.411875 C22.171875,24.720625 22.491875,25.330625 22.491875,26.26375 C22.491875,27.600625 22.479375,28.67875 22.479375,29.006875 C22.479375,29.274375 22.659375,29.585625 23.166875,29.4875 C27.1375,28.1625 30,24.416875 30,20.000625 C30,14.476875 25.5225,10 19.999375,10 C14.4775,10 10,14.476875 10,20.000625 Z" id="ic_cAT" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
