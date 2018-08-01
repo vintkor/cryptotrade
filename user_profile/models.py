@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext as _
 from .managers import UserManager
 from geo.models import Country
+from django.db.models import Sum
 
 
 STATUS_CHOICES = (
@@ -160,6 +161,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def set_verification_need_check(self):
         self.verification = '5'
+
+    def get_count_tokens(self):
+        from shares.models import ShareHolder
+        count_tokens = ShareHolder.objects.filter(user=self).aggregate(total=Sum('amount'))
+        return count_tokens['total']
 
     # def get_rang(self):
     #     if self.rang:

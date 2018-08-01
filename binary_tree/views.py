@@ -69,8 +69,8 @@ class BinaryTreeView(LoginRequiredMixin, View):
             element['level'] = i.level
             element['left_node'] = i.left_node if i.left_node else False
             element['right_node'] = i.right_node if i.right_node else False
-            element['left_points'] = 'Левая структура - {}'.format(i.left_points)
-            element['right_points'] = 'Правая структура - {}'.format(i.right_points)
+            element['left_points'] = 'Left - {}'.format(i.left_points)
+            element['right_points'] = 'Right - {}'.format(i.right_points)
             element['status'] = i.user.status
             element['created'] = i.created
             element['image'] = i.user.avatar.url if i.user.avatar else None

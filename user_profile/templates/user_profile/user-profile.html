@@ -48,6 +48,14 @@
                                 <td>{{ user.package.title }}</td>
                             </tr>
                             <tr>
+                                <td>{% trans 'Ранг' %}</td>
+                                <td>{{ user.rang }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Количество FBT' %}</td>
+                                <td>{{ user.get_count_tokens }}</td>
+                            </tr>
+                            <tr>
                                 <td>{% trans 'Страна' %}</td>
                                 <td>{{ user.country.title }}</td>
                             </tr>
@@ -74,7 +82,6 @@
                         <br>
 
                         <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Редактировать профиль' %}</button>
                             <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Сменить аватар' %}</button>
                             <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Сменить пароль' %}</button>
                         </div>

@@ -16,9 +16,10 @@
                             {% endif %}
                         </div>
                         <div class="user-content hide-menu m-t-10">
+                            <h5 class="m-b-10 user-name font-medium">FBT {{ user.get_count_tokens }}</h5>
                             <h5 class="m-b-10 user-name font-medium">FBC {{ user.balance }}</h5>
                             <h5 class="m-b-10 user-name font-medium">{{ user.unique_number }}</h5>
-                            <h5 class="m-b-10 user-name font-medium"><small>{{ user.package }}</small></h5>
+                            <h5 class="m-b-10 user-name font-medium"><small>{{ user.package }}{% if user.rang %} / {{ user.rang }}{% endif %}</small></h5>
                         </div>
                     </div>
 
@@ -54,6 +55,12 @@
                             <a href="{% url 'finance:send-money' %}" class="sidebar-link">
                                 <i class="mdi mdi-email"></i>
                                 <span class="hide-menu">{% trans 'Перевод средств' %}</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'finance:add-money' %}" class="sidebar-link">
+                                <i class="mdi mdi-email"></i>
+                                <span class="hide-menu">{% trans 'Пополнение баланса' %}</span>
                             </a>
                         </li>
                     </ul>
