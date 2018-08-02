@@ -1,5 +1,5 @@
 from finance.models import Purpose
-from .models import RangAward, MultiLevelBonus, MultiLevelBonusHistory
+from .models import RangAward, MultiLevelBonus, MultiLevelBonusHistory, RangAwardHistory
 from linear_tree.models import LinearTree
 from user_profile.models import User
 from django.db.transaction import atomic
@@ -43,29 +43,71 @@ class RangAwardRunner:
         self._include_rang_count = include_rang_count
 
     def check_user(self):
+        log = PrettyTable([
+            "current rule",
+            "user",
+            "volume own sum",
+            "volume lines sum",
+            "count rang partners",
+            "new rang",
+        ])
+
         for rule in self._rules:
-            print('----------------', rule['object'].title, '----------------')
+            # print('----------------', rule['object'].title, '----------------')
+
+            log.add_row([
+                rule['object'].title,
+                self._user.unique_number,
+                self._volume,
+                '',
+                '',
+                '',
+            ])
 
             # Проверка объёма
             if self._volume < rule.get('volume', 0):
-                print('Проверка объёма', self._volume)
                 continue
+
+            log.add_row([
+                rule['object'].title,
+                self._user.unique_number,
+                self._volume,
+                self._lines_volume,
+                '',
+                '',
+            ])
 
             # Проверка объёма в линиях
             self._get_lines_volume(rule.get('max_lines', 0))
             if self._lines_volume < rule.get('lines_volume', 0):
-                print('Проверка объёма в линиях', self._lines_volume)
                 continue
 
             # Проверка количества ранговых партнёров
             self._get_include_rang_count(rule.get('object'))
+
+            log.add_row([
+                rule['object'].title,
+                self._user.unique_number,
+                self._volume,
+                self._lines_volume,
+                self._include_rang_count,
+                '',
+            ])
+
             if self._include_rang_count < rule.get('include_rang_count'):
-                print('Проверка количества ранговых партнёров', self._include_rang_count)
                 continue
 
-            print(rule['object'])
-            return True, rule.get('object')
-        return False, 0
+            log.add_row([
+                rule['object'].title,
+                self._user.unique_number,
+                self._volume,
+                self._lines_volume,
+                self._include_rang_count,
+                rule['object'],
+            ])
+            print(log.get_string())
+            return True, rule.get('object'), log.get_html_string(), self._user.id
+        return False, 0, log.get_html_string(), self._user.id
 
 
 def get_rules():
@@ -95,7 +137,7 @@ def start_rang_award_runner():
 
     for user in users:
         runner = RangAwardRunner(user, rules)
-        status, rang = runner.check_user()
+        status, rang, log, user_id = runner.check_user()
 
         if status:
             with atomic():
@@ -114,6 +156,11 @@ def start_rang_award_runner():
                             recipient_purpose_id=recipient_purpose.id,
                             uuid=make_uuid(),
                         )
+
+        rah = RangAwardHistory()
+        rah.user_id = user_id
+        rah.text = log
+        rah.save()
 
 
 def start_multi_level_bonus_runner(user_id, amount, package_history_id):

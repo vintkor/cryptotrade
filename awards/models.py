@@ -22,6 +22,19 @@ class RangAward(models.Model):
         return self.title
 
 
+class RangAwardHistory(models.Model):
+    user = models.ForeignKey('user_profile.User', on_delete=models.CASCADE, verbose_name=_('Пользователь'))
+    text = RichTextUploadingField()
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
+
+    class Meta:
+        verbose_name = _('История начисления рангового бонуса')
+        verbose_name_plural = _('Истории начисления рангового бонуса')
+
+    def __str__(self):
+        return self.user.unique_number
+
+
 class MultiLevelBonus(models.Model):
     rang = models.ForeignKey(RangAward, on_delete=models.CASCADE, verbose_name=_('Ранг'))
     bonus_for_line_1 = models.DecimalField(
