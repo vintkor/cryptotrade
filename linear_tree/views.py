@@ -22,5 +22,7 @@ class LinearTreeListView(LoginRequiredMixin, ListView):
             'user_id',
             'user__parent',
             'id',
+            'user__rang__title',
+            'user__package__title',
         )
         return linear

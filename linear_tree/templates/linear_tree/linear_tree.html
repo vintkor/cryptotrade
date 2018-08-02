@@ -13,15 +13,27 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript">
 
+        function renderNodeHandler(sender, args) {
+            for (i = 0; i < args.content.length; i++) {
+                if (args.content[i].indexOf(args.node.data["rang"]) != -1) {
+                    args.content[i] = "<foreignObject x='460' y='-45' width='54' height='42'>" + args.node.data["rang"] + "</foreignObject>";
+                }
+                if (args.content[i].indexOf(args.node.data["package_title"]) != -1) {
+                    args.content[i] = "<foreignObject x='0' y='-45' width='54' height='42'>" + args.node.data["package_title"] + "</foreignObject>";
+                }
+            }
+        }
+
         var peopleElement = document.getElementById("tree");
         var orgChart = new getOrgChart(peopleElement, {
+            renderNodeEvent: renderNodeHandler,
             color: "green",
             enableEdit: false,
             enableSearch: true,
             enableDetailsView: false,
             enableZoomOnNodeDoubleClick: true,
             linkType: "M", //"B"
-            primaryFields: ["full_name", "name"],
+            primaryFields: ["full_name", "name", "rang", "package_title"],
             photoFields: ["image"],
             expandToLevel: 15,
             scale: 0.4,
@@ -32,7 +44,9 @@
                         parentId: {% if node.parent %}{{ node.parent }}{% else %}null{% endif %},
                         name: "{{ node.user__unique_number }}",
                         full_name: "{{ node.user__first_name }} {{ node.user__last_name }}",
-                        image: "{% if node.user__avatar %}/media/{{ node.user__avatar }}{% else %}{% endif %}"
+                        image: "{% if node.user__avatar %}/media/{{ node.user__avatar }}{% else %}{% endif %}",
+                        rang: "{% if node.user__rang__title %}<span class='package_weight'><i class='fa fa-3x fa-circle rang-{{ node.user__rang__title }}'></i></span>{% else %}<span class='hidden'>1</span>{% endif %}",
+                        package_title: "{% if node.user__package__title %}<span class='package_weight'><i class='fa fa-3x fa-battery package-{{ node.user__package__title }}'></i></span>{% else %}<span class='hidden'>1</span>{% endif %}"
                     },
                 {% endfor %}
             ],
