@@ -38,6 +38,7 @@ class RangAwardRunner:
         include_rang_count = 0
 
         for i in self._linear_nodes_for_count:
+            print('-->', rang, i['node'].user.unique_number, i['node'].user.rang)
             if i['node'].user.rang == rang:
                 include_rang_count += 1
 
