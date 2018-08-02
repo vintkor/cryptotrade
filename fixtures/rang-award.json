@@ -34,7 +34,7 @@
         "title": "Gold",
         "volume": "1000.00",
         "max_lines": 3,
-        "lines_volume": "5000.00",
+        "lines_volume": "10000.00",
         "include_rang": 2,
         "include_rang_count": 2,
         "bonus": "500.00",

@@ -104,7 +104,6 @@ class RangAwardRunner:
                 '({}) {} / {}'.format(rule['object'].include_rang, rule['object'].include_rang_count, self._include_rang_count),
                 rule['object'],
             ])
-            print(log.get_string())
             return True, rule.get('object'), log.get_html_string(), self._user.id
         return False, 0, log.get_html_string(), self._user.id
 

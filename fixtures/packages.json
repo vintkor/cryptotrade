@@ -8,7 +8,8 @@
         "tokens": 2000,
         "points": 100,
         "bonuses": 10,
-        "weight": 10
+        "weight": 1,
+        "color": "#0B9419"
     }
 },
 {
@@ -20,7 +21,8 @@
         "tokens": 8000,
         "points": 400,
         "bonuses": 10,
-        "weight": 20
+        "weight": 2,
+        "color": "#242BFF"
     }
 },
 {
@@ -32,7 +34,8 @@
         "tokens": 50000,
         "points": 2500,
         "bonuses": 10,
-        "weight": 30
+        "weight": 4,
+        "color": "#DD2222"
     }
 }
 ]

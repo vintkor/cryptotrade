@@ -62,5 +62,21 @@
         "code": 17,
         "title": "\u041f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u0435. \u041c\u043d\u043e\u0433\u043e\u0443\u0440\u043e\u0432\u043d\u0435\u0432\u044b\u0439 \u0431\u043e\u043d\u0443\u0441"
     }
+},
+{
+    "model": "finance.purpose",
+    "pk": 9,
+    "fields": {
+        "code": 18,
+        "title": "\u041f\u0435\u0440\u0435\u0432\u043e\u0434 \u0441\u0440\u0435\u0434\u0441\u0442\u0432 \u0441 Payeer"
+    }
+},
+{
+    "model": "finance.purpose",
+    "pk": 10,
+    "fields": {
+        "code": 19,
+        "title": "\u041f\u043e\u043b\u0443\u0447\u0435\u043d\u0438\u0435. \u041f\u043e\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u0435 \u0441\u0440\u0435\u0434\u0441\u0442\u0432 \u0441 \u043f\u043e\u043c\u043e\u0449\u044c\u044e Payeer"
+    }
 }
 ]
