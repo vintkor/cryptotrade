@@ -1,0 +1,53 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">{% trans 'Пополнение баланса' %}</h3>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" value="1000" id="payment-summ" min="10" step="10">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <select name="currency" class="form-control">
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="RUB">RUB</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <p>{% trans 'Выберите платъжную систему, с помощью которой, вы сможете пополнить ваш баланс' %}</p>
+                        <div class="list-group">
+                            {% for payment_system in payment_systems %}
+                                <a class="list-group-item payment-add-money" href="#" data-payment-system="{{ payment_system.id }}">
+                                    <span class="">{{ payment_system.title }}</span>
+                                    {% if payment_system.logo %}
+                                        <img src="{{ payment_system.logo.url }}" alt="{{ payment_system.title }}" style="float: right" width="80px;">
+                                    {% endif %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                        <br>
+                        <div id="paymentWrapper"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}{% endblock footer_scripts %}
