@@ -90,7 +90,7 @@ class RangAwardRunner:
                 self._user.unique_number,
                 '{} / {}'.format(rule['object'].volume, self._volume),
                 '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
-                '({}) {} / {}'.format(rule['object'].include_rang.title, rule['object'].include_rang_count, self._include_rang_count),
+                '({}) {} / {}'.format(rule['object'].include_rang, rule['object'].include_rang_count, self._include_rang_count),
                 '',
             ])
 
@@ -102,7 +102,7 @@ class RangAwardRunner:
                 self._user.unique_number,
                 '{} / {}'.format(rule['object'].volume, self._volume),
                 '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
-                '({}) {} / {}'.format(rule['object'].include_rang.title, rule['object'].include_rang_count, self._include_rang_count),
+                '({}) {} / {}'.format(rule['object'].include_rang, rule['object'].include_rang_count, self._include_rang_count),
                 rule['object'],
             ])
             print(log.get_string())
