@@ -141,11 +141,12 @@ def start_rang_award_runner():
             with atomic():
 
                 if user.rang != rang:
+                    user.rang = rang
                     if rang.bonus > 0:
-                        user.rang = rang
                         user.balance += rang.bonus
-                        user.save(update_fields=('balance', 'rang'))
+                    user.save(update_fields=('balance', 'rang'))
 
+                    if rang.bonus > 0:
                         set_transaction_to_finance_history(
                             amount=rang.bonus,
                             sender_id=system_balance.id,
