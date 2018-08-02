@@ -34,6 +34,7 @@ class RangAwardRunner:
         self._lines_volume = lines_volume
 
     def _get_include_rang_count(self, rang):
+        self._set_linear_nodes_for_count(rang.max_lines)
         include_rang_count = 0
 
         for i in self._linear_nodes_for_count:
@@ -53,7 +54,6 @@ class RangAwardRunner:
         ])
 
         for rule in self._rules:
-            # print('----------------', rule['object'].title, '----------------')
 
             log.add_row([
                 rule['object'].title,
