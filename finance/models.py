@@ -26,7 +26,10 @@ class UsersFinanceHistory(models.Model):
     user = models.ForeignKey(User, verbose_name=_('Пользователь'), on_delete=models.CASCADE, blank=True, null=True)
     amount = models.DecimalField(verbose_name=_('Сумма'), max_digits=12, decimal_places=2)
     purpose = models.ForeignKey(Purpose, verbose_name=_('Назначение платежа'), on_delete=models.CASCADE)
-    second_user = models.ForeignKey(User, related_name='second_user', verbose_name=_('Второй пользователь'), on_delete=models.CASCADE)
+    second_user = models.ForeignKey(
+        User, related_name='second_user', verbose_name=_('Второй пользователь'),
+        on_delete=models.CASCADE, blank=True, null=True
+    )
     uuid = models.CharField(max_length=60)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
 

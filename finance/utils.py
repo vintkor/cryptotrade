@@ -30,6 +30,16 @@ def set_transaction_to_finance_history(
     :return none
     """
 
+    print('-'*80)
+    print(
+        amount,
+        sender_purpose_id,
+        recipient_purpose_id,
+        uuid,
+        sender_id,
+        recipient_id
+    )
+
     if amount < 0:
         raise ValueError(_('Сумма должно быть не меньше 0'))
 
@@ -39,22 +49,24 @@ def set_transaction_to_finance_history(
         else:
             raise ValueError(_('Параметры sender_id, recipient_id и sender_purpose_id должны быть целочисленными'))
 
-    ufh = UsersFinanceHistory(
-        amount=-amount,
-        second_user_id=recipient_id,
-        purpose_id=sender_purpose_id,
-        uuid=uuid,
-    )
+    ufh = UsersFinanceHistory()
+    ufh.amount = -amount
+    ufh.second_user_id = recipient_id
+    ufh.purpose_id = sender_purpose_id
+    ufh.uuid = uuid
+
     if sender_id:
         ufh.user_id = sender_id
+
     ufh.save()
 
-    ufh2 = UsersFinanceHistory(
-        amount=amount,
-        user_id=recipient_id,
-        purpose_id=recipient_purpose_id,
-        uuid=uuid,
-    )
+    ufh2 = UsersFinanceHistory()
+    ufh2.amount = amount
+    ufh2.user_id = recipient_id
+    ufh2.purpose_id = recipient_purpose_id
+    ufh2.uuid = uuid
+
     if sender_id:
         ufh.second_user_id = sender_id
+
     ufh2.save()
