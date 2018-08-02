@@ -22,7 +22,6 @@ class RangAwardRunner:
         linear_user_node = LinearTree.objects.get(user=self._user)
         level = lines + linear_user_node.level
         queryset = linear_user_node.get_descendants().filter(level__lte=level).select_related('user')
-        print('_set_linear_nodes_for_count', lines, queryset.count())
         for node in queryset:
             self._linear_nodes_for_count.append({
                 'node': node,
@@ -38,7 +37,6 @@ class RangAwardRunner:
         include_rang_count = 0
 
         for i in self._linear_nodes_for_count:
-            print('-->', rang, i['node'].user.unique_number, i['node'].user.rang)
             if i['node'].user.rang == rang.include_rang:
                 include_rang_count += 1
 
