@@ -58,7 +58,7 @@ class RangAwardRunner:
             log.add_row([
                 rule['object'].title,
                 self._user.unique_number,
-                self._volume,
+                '{} / {}'.format(rule['object'].volume, self._volume),
                 '',
                 '',
                 '',
@@ -71,8 +71,8 @@ class RangAwardRunner:
             log.add_row([
                 rule['object'].title,
                 self._user.unique_number,
-                self._volume,
-                self._lines_volume,
+                '{} / {}'.format(rule['object'].volume, self._volume),
+                '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
                 '',
                 '',
             ])
@@ -88,9 +88,9 @@ class RangAwardRunner:
             log.add_row([
                 rule['object'].title,
                 self._user.unique_number,
-                self._volume,
-                self._lines_volume,
-                self._include_rang_count,
+                '{} / {}'.format(rule['object'].volume, self._volume),
+                '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
+                '({}) {} / {}'.format(rule['object'].include_rang.title, rule['object'].include_rang_count, self._include_rang_count),
                 '',
             ])
 
@@ -100,9 +100,9 @@ class RangAwardRunner:
             log.add_row([
                 rule['object'].title,
                 self._user.unique_number,
-                self._volume,
-                self._lines_volume,
-                self._include_rang_count,
+                '{} / {}'.format(rule['object'].volume, self._volume),
+                '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
+                '({}) {} / {}'.format(rule['object'].include_rang.title, rule['object'].include_rang_count, self._include_rang_count),
                 rule['object'],
             ])
             print(log.get_string())
