@@ -39,7 +39,7 @@ class UserAdmin(admin.ModelAdmin):
         'rang',
     )
     list_editable = ('rang', 'package', 'volume')
-    search_fields = ('email',)
+    search_fields = ('email', 'unique_number',)
     filter_horizontal = ('groups', 'user_permissions')
 
 

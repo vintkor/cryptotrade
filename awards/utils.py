@@ -16,12 +16,13 @@ class RangAwardRunner:
         self._lines_volume = 0
         self._include_rang_count = 0
         self._rules = rules
-        self._linear_nodes_for_count = []
+
 
     def _set_linear_nodes_for_count(self, lines):
         linear_user_node = LinearTree.objects.get(user=self._user)
         level = lines + linear_user_node.level
         queryset = linear_user_node.get_descendants().filter(level__lte=level).select_related('user')
+        self._linear_nodes_for_count = []
         for node in queryset:
             self._linear_nodes_for_count.append({
                 'node': node,
@@ -33,11 +34,12 @@ class RangAwardRunner:
         lines_volume = sum([i['volume'] for i in self._linear_nodes_for_count])
         self._lines_volume = lines_volume
 
-    def _get_include_rang_count(self, rang):
+    def _get_include_rang_count(self, checked_rang):
         include_rang_count = 0
 
         for i in self._linear_nodes_for_count:
-            if i['node'].user.rang == rang.include_rang:
+            print(checked_rang, i['node'].user.unique_number, i['node'].user.rang, '+++' if i['node'].user.rang == checked_rang else '')
+            if i['node'].user.rang == checked_rang:
                 include_rang_count += 1
 
         self._include_rang_count = include_rang_count
@@ -82,7 +84,8 @@ class RangAwardRunner:
                 continue
 
             # Проверка количества ранговых партнёров
-            self._get_include_rang_count(rule.get('object'))
+            # Передаём какой ранг нужно посчитать
+            self._get_include_rang_count(rule.get('object').include_rang)
 
             log.add_row([
                 rule['object'].title,
@@ -102,7 +105,7 @@ class RangAwardRunner:
                 '{} / {}'.format(rule['object'].volume, self._volume),
                 '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
                 '({}) {} / {}'.format(rule['object'].include_rang, rule['object'].include_rang_count, self._include_rang_count),
-                rule['object'],
+                rule['object'] if self._user.package else str(rule['object']) + ' - not package',
             ])
             return True, rule.get('object'), log.get_html_string(), self._user.id
         return False, 0, log.get_html_string(), self._user.id
@@ -140,7 +143,7 @@ def start_rang_award_runner():
         if status:
             with atomic():
 
-                if user.rang != rang:
+                if user.rang != rang and user.package:
                     user.rang = rang
                     if rang.bonus > 0:
                         user.balance += rang.bonus

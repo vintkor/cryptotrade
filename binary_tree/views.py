@@ -57,7 +57,7 @@ class BinaryTreeView(LoginRequiredMixin, View):
         for ind, i in enumerate(nodes):
             element = dict()
             element['id'] = i.id
-            element['name'] = i.user.unique_number
+            # element['name'] = i.user.unique_number
             element['parentId'] = i.parent.id if i.parent else None
 
             if ind == 0:
@@ -74,7 +74,7 @@ class BinaryTreeView(LoginRequiredMixin, View):
             element['status'] = i.user.status
             element['created'] = i.created
             element['image'] = i.user.avatar.url if i.user.avatar else None
-            element['full_name'] = i.user.get_full_name()
+            element['full_name'] = '{} {}'.format(i.user.unique_number, i.user.get_full_name())
             icon_template = "<span class='package_weight'><i class='fa fa-3x fa-{} {}-{}'></i></span>"
             element['package_weight'] = icon_template.format('battery', 'package', i.user.package.title) if i.user.package else "<span class='hidden'>1</span>"
             element['rang'] = icon_template.format('circle', 'rang', i.user.rang.title) if i.user.rang else "<span class='hidden'>1</span>"

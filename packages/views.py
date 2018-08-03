@@ -2,6 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, View
+
+from awards.utils import start_rang_award_runner
 from .models import Package, PackageHistory
 from django.contrib import messages
 from django.utils.translation import ugettext as _
@@ -58,7 +60,7 @@ class ByPackageFormView(PermissionRequiredMixin, LoginRequiredMixin, View):
             user.package = package
             user.set_status_active()
             user.balance = balance
-            user.volume += amount
+            user.volume = user.volume + amount
             user.save(update_fields=('package', 'status', 'balance', 'volume',))
 
             package_history = PackageHistory(
@@ -93,7 +95,7 @@ class ByPackageFormView(PermissionRequiredMixin, LoginRequiredMixin, View):
 
             messages.success(request, _('Пакет успешно куплен.'))
 
-        start_rang_award_runner_task.delay()
+        start_rang_award_runner()
         start_multi_level_bonus_runner_task.delay(user.id, amount, package_history.pk)
 
         # TODO проверить полное ли заполнение
