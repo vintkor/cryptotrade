@@ -192,6 +192,9 @@ class PayeerStatusView(View):
                         user.balance += amount
                         user.save(update_fields=('balance',))
 
+                        ph.is_success = True
+                        ph.save(update_fields=('is_success',))
+
                         sender_purpose = Purpose.objects.get(code=18)
                         recipient_purpose = Purpose.objects.get(code=19)
 
