@@ -167,9 +167,10 @@ class PayeerStatusView(View):
             m_status = request.POST.get('m_status')
             m_key = ps.settings.get('m_key')
 
-            result_string = "{}:{}:{}:{}:{}:{}".format(
-                m_operation_id, m_operation_ps, m_operation_date, m_operation_pay_date,
-                m_status, m_shop, m_orderid, m_amount, m_curr, m_desc, m_status, m_key)
+            result_string = "{}:{}:{}:{}:{}:{}:{}:{}:{}:{}:{}".format(m_operation_id, m_operation_ps, m_operation_date,
+                                                                      m_operation_pay_date,
+                                                                      m_shop, m_orderid, m_amount, m_curr, m_desc,
+                                                                      m_status, m_key)
 
             sign_hash = sha256(result_string.encode())
             sing = sign_hash.hexdigest().upper()
