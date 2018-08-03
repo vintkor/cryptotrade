@@ -221,4 +221,5 @@ class PayeerSucceessView(LoginRequiredMixin, View):
     login_url = reverse_lazy('user:login')
 
     def post(self, request):
+        messages.success(request, _('Ваш счёт успешно пополнен'))
         return redirect(reverse_lazy('finance:finance-history'))
