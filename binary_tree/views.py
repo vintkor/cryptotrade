@@ -55,7 +55,6 @@ class BinaryTreeView(LoginRequiredMixin, View):
         nodes = node.get_descendants(include_self=True).filter(level__lte=(node.level + tree_deep))
 
         for ind, i in enumerate(nodes):
-            print(i.user.unique_number)
             element = dict()
             element['id'] = i.id
             element['parentId'] = i.parent.id if i.parent else None
@@ -79,7 +78,7 @@ class BinaryTreeView(LoginRequiredMixin, View):
             element['package_weight'] = icon_template.format('battery', 'package', i.user.package.title) if i.user.package else "<span class='hidden'>1</span>"
             element['rang'] = icon_template.format('circle', 'rang', i.user.rang.title) if i.user.rang else "<span class='hidden'>1</span>"
 
-            if node.left_node or node.right_node:
+            if i.left_node or i.right_node:
                 element[
                     'look_tree'] = "<a class='look_tree' href='{}'><i class='fa fa-3x fa-chevron-down'></i></a>".format(
                     i.user.unique_number)
