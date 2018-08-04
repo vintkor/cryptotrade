@@ -1,0 +1,57 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <form action="" method="POST" id="editImageProfileForm" enctype="multipart/form-data" data-redirect="{% url 'user:profile' %}">
+                            {% csrf_token %}
+                            <input type="file" class="hidden" id="editProfileFileInput">
+                            <label for="editProfileFileInput" class="choicePhotoButton btn btn-lg btn-flat btn-info">{% trans 'Выбрать изображение' %}</label>
+                            <div>
+                                <img id="phothoPreview" src="">
+                            </div>
+                        </form>
+
+                        <br>
+
+                        <div>
+                            <div class="btn-group" style="display: none" role="group" aria-label="...">
+                                <button id="turnLeft" type="button" class="btn btn-default">{% trans 'Повернуть в лево' %}</button>
+                                <button id="turnRight" type="button" class="btn btn-default">{% trans 'Повернуть в право' %}</button>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <button id="saveProfileImage" form="editImageProfileForm" class="btn-success btn btn-flat btn-lg" disabled>{% trans 'Сохранить' %}</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}
+    <script src="{% static "cropperjs/cropper.min.js" %}"></script>
+    <link rel="stylesheet" href="{% static "cropperjs/cropper.min.css" %}">
+    <style>
+        form {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>
+{% endblock footer_scripts %}

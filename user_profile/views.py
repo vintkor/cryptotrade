@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from .models import (
     User,
@@ -27,7 +27,7 @@ from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
 from PIL import Image
 import os
-from cryptotrade.settings import MEDIA_ROOT
+from cryptotrade.settings import MEDIA_ROOT, MEDIA_URL
 from django.contrib.auth.models import Permission
 from cryptotrade.settings import DONT_HAVE_PERMISSION, ADMIN_EMAIL
 from .tasks import (
@@ -385,3 +385,43 @@ class UserChangePasswordView(FormView):
         )
 
         return redirect(reverse_lazy('user:profile'))
+
+
+class ChangoProfilePhotoView(View):
+
+    def get(self, request):
+        context = {}
+        return render(request, 'user_profile/change-profile-photo.html', context)
+
+    def post(self, request):
+
+        if request.POST.get('imageWidth', False):
+            image_width = int(float(request.POST.get('imageWidth')))
+            image_height = int(float(request.POST.get('imageHeight')))
+            image_x = int(float(request.POST.get('image_x')))
+            image_y = int(float(request.POST.get('image_y')))
+            image_file = request.FILES.get('image')
+            rotate_deg = request.POST.get('rotate')
+
+            ext = image_file.name.split('.')[-1]
+
+            image = Image.open(image_file)
+            rotate_image = image.rotate(int(rotate_deg))
+            cropped_image = rotate_image.crop((image_x, image_y, image_width + image_x, image_height + image_y))
+            resized_image = cropped_image.resize((image_width, image_height), Image.ANTIALIAS)
+
+            file_name = 'user/avatar/profile__{}__{}.{}'.format(request.user.pk, get_random_string(length=10), ext)
+
+            resized_image.save('{}/{}'.format(MEDIA_ROOT, file_name))
+
+            request.user.avatar = file_name
+            request.user.save(update_fields=('avatar',))
+
+            return JsonResponse({
+                'status': 1,
+                'image_url': MEDIA_URL + file_name
+            })
+
+        return JsonResponse({
+            'status': 0,
+        })

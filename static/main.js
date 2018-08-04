@@ -195,7 +195,7 @@ $(document).ready(function () {
     var sendMoneyRecipient = $('.send-money #id_recipient');
     var recipientFullname = $('#recipient_fullname');
     var submitBtn = $('.send-money #submit-btn');
-    
+
     sendMoneyRecipient.on('input', function () {
         var recipient = $(this).val();
         var patt = new RegExp("CT-[0-9][0-9][0-9][0-9][0-9][0-9][0-9]");
@@ -284,3 +284,81 @@ $(document).ready(function () {
     });
 
 });
+
+(function () {
+  // --------------------------- Редактирование фотографии профиля пользователя --------------------------- //
+
+  var editProfileFileInput = $('#editProfileFileInput');
+  var image = document.getElementById('phothoPreview');
+  var imageData = {};
+  var turnLeft = $('#turnLeft');
+  var turnRight = $('#turnRight');
+  var cropper;
+  var saveProfileImage = $('#saveProfileImage');
+  var form = $('#editImageProfileForm');
+  var redirectUrl = form.data('redirect');
+
+  editProfileFileInput.change(function () {
+
+      var file = this.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('.btn-group').show();
+          image.src = e.target.result;
+          cropper = new Cropper(image, {
+              aspectRatio: 1,
+              zoomable: false,
+              viewMode: 1,
+              movable: false,
+              crop: function crop(event) {
+
+                  imageData.imageWidth = event.detail.width;
+                  imageData.imageHeight = event.detail.height;
+                  imageData.image_x = event.detail.x;
+                  imageData.image_y = event.detail.y;
+                  imageData.rotate = event.detail.rotate;
+
+                  saveProfileImage.removeAttr('disabled');
+              }
+          });
+      };
+      reader.readAsDataURL(file);
+  });
+
+  turnLeft.click(function () {
+      cropper.rotate(-90);
+  });
+
+  turnRight.click(function () {
+      cropper.rotate(90);
+  });
+
+  saveProfileImage.click(function (e) {
+      e.preventDefault();
+
+      var formdata = new FormData();
+
+      formdata.append('image', document.getElementById('editProfileFileInput').files[0]);
+      formdata.append('imageWidth', imageData.imageWidth);
+      formdata.append('imageHeight', imageData.imageHeight);
+      formdata.append('image_x', imageData.image_x);
+      formdata.append('image_y', imageData.image_y);
+      formdata.append('rotate', imageData.rotate);
+
+      $.ajax({
+          method: 'post',
+          url: window.location.href,
+          data: formdata,
+          processData: false,
+          contentType: false,
+          success: function success() {
+              window.location.href = window.location.protocol + '//' + window.location.host + redirectUrl;
+          },
+          error: function error(e) {
+              console.log(e);
+              console.log('Error');
+          }
+      });
+  });
+})();
