@@ -6,23 +6,31 @@ from django.db.transaction import atomic
 from finance.utils import set_transaction_to_finance_history, make_uuid
 import decimal
 from prettytable import PrettyTable
+import datetime
 
 
-class RangAwardRunner:
-
+class RangAwardRunnerV2:
+    
     def __init__(self, user, rules):
         self._user = user
-        self._volume = user.volume
-        self._lines_volume = 0
-        self._include_rang_count = 0
         self._rules = rules
+        self._volume = user.volume
+        self._include_rang_count = 0
 
+    def _can_get_rang(self):
+        """
+        Претендент может участвовать в присвоении рангов
+        """
+        if self._user.rang:
+            return True
+        return False
 
     def _set_linear_nodes_for_count(self, lines):
-        linear_user_node = LinearTree.objects.get(user=self._user)
-        level = lines + linear_user_node.level
-        queryset = linear_user_node.get_descendants().filter(level__lte=level).select_related('user')
+        l_user = LinearTree.objects.get(user=self._user)
+        level = lines + l_user.level
+        queryset = l_user.get_descendants().filter(level__lte=level).select_related('user')
         self._linear_nodes_for_count = []
+
         for node in queryset:
             self._linear_nodes_for_count.append({
                 'node': node,
@@ -32,83 +40,46 @@ class RangAwardRunner:
     def _get_lines_volume(self, lines):
         self._set_linear_nodes_for_count(lines)
         lines_volume = sum([i['volume'] for i in self._linear_nodes_for_count])
-        self._lines_volume = lines_volume
+        return lines_volume
 
     def _get_include_rang_count(self, checked_rang):
         include_rang_count = 0
 
         for i in self._linear_nodes_for_count:
-            print(checked_rang, i['node'].user.unique_number, i['node'].user.rang, '+++' if i['node'].user.rang == checked_rang else '')
-            if i['node'].user.rang == checked_rang:
-                include_rang_count += 1
+            if i['node'].user.rang:
+                if i['node'].user.rang.weight >= checked_rang.weight:
+                    include_rang_count += 1
 
         self._include_rang_count = include_rang_count
 
     def check_user(self):
-        log = PrettyTable([
-            "current rule",
-            "user",
-            "volume own sum",
-            "volume lines sum",
-            "count rang partners",
-            "new rang",
-        ])
+        if self._can_get_rang():
 
-        for rule in self._rules:
+            for idx, rule in enumerate(self._rules):
+                if idx == 0:
+                    continue
 
-            log.add_row([
-                rule['object'].title,
-                self._user.unique_number,
-                '{} / {}'.format(rule['object'].volume, self._volume),
-                '',
-                '',
-                '',
-            ])
+                if self._user.rang.weight >= rule['object'].weight:
+                    continue
 
-            # Проверка объёма
-            if self._volume < rule.get('volume', 0):
-                continue
+                lines_volume = self._get_lines_volume(rule['object'].max_lines)
+                if self._volume < rule['object'].volume or lines_volume < rule['object'].lines_volume:
+                    return False, None
+                
+                self._get_include_rang_count(rule['object'].include_rang)
+                if self._include_rang_count < rule['object'].include_rang_count:
+                    return False, None
 
-            log.add_row([
-                rule['object'].title,
-                self._user.unique_number,
-                '{} / {}'.format(rule['object'].volume, self._volume),
-                '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
-                '',
-                '',
-            ])
+                l_parent = LinearTree.objects.get(user=self._user)
+                children = l_parent.get_children().select_related('user')
+                count = sum([1 for i in children if i.user.package])
 
-            # Проверка объёма в линиях
-            self._get_lines_volume(rule.get('max_lines', 0))
-            if self._lines_volume < rule.get('lines_volume', 0):
-                continue
+                if count > 1:
+                    return True, rule['object']
+                else:
+                    return False
 
-            # Проверка количества ранговых партнёров
-            # Передаём какой ранг нужно посчитать
-            self._get_include_rang_count(rule.get('object').include_rang)
-
-            log.add_row([
-                rule['object'].title,
-                self._user.unique_number,
-                '{} / {}'.format(rule['object'].volume, self._volume),
-                '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
-                '({}) {} / {}'.format(rule['object'].include_rang, rule['object'].include_rang_count, self._include_rang_count),
-                '',
-            ])
-
-            if self._include_rang_count < rule.get('include_rang_count'):
-                continue
-
-            log.add_row([
-                rule['object'].title,
-                self._user.unique_number,
-                '{} / {}'.format(rule['object'].volume, self._volume),
-                '{} / {}'.format(rule['object'].lines_volume, self._lines_volume),
-                '({}) {} / {}'.format(rule['object'].include_rang, rule['object'].include_rang_count, self._include_rang_count),
-                rule['object'] if self._user.package else str(rule['object']) + ' - not package',
-            ])
-            return True, rule.get('object'), log.get_html_string(), self._user.id
-        return False, 0, log.get_html_string(), self._user.id
+        return False, None
 
 
 def get_rules():
@@ -116,11 +87,6 @@ def get_rules():
     for item in RangAward.objects.all():
         rules.append({
             'object': item,
-            'volume': item.volume,
-            'max_lines': item.max_lines,
-            'lines_volume': item.lines_volume,
-            'include_rang': item.include_rang,
-            'include_rang_count': item.include_rang_count,
         })
     return rules
 
@@ -137,13 +103,14 @@ def start_rang_award_runner():
     recipient_purpose = Purpose.objects.get(code=13)
 
     for user in users:
-        runner = RangAwardRunner(user, rules)
-        status, rang, log, user_id = runner.check_user()
+
+        runner = RangAwardRunnerV2(user, rules)
+        status, rang = runner.check_user()
 
         if status:
             with atomic():
 
-                if user.rang != rang and user.package:
+                if rang.weight > user.rang.weight:
                     user.rang = rang
                     if rang.bonus > 0:
                         user.balance += rang.bonus
@@ -159,10 +126,30 @@ def start_rang_award_runner():
                             uuid=make_uuid(),
                         )
 
-        rah = RangAwardHistory()
-        rah.user_id = user_id
-        rah.text = log
-        rah.save()
+                    if rang.is_final:
+                        now = datetime.datetime.now()
+                        finish_date = user.created + datetime.timedelta(days=rang.quick_days)
+
+                    if rang.is_final and finish_date >= now:
+                        user.balance += rang.quick_bonus
+                        user.save(update_fields=('balance', 'rang'))
+
+                        sender_quick_bonus_purpose = Purpose.object.get(code=20)
+                        recipient_quick_bonus_purpose = Purpose.object.get(code=21)
+
+                        set_transaction_to_finance_history(
+                            amount=rang.quick_bonus,
+                            sender_id=system_balance.id,
+                            recipient_id=user.id,
+                            sender_purpose_id=sender_quick_bonus_purpose.id,
+                            recipient_purpose_id=recipient_quick_bonus_purpose.id,
+                            uuid=make_uuid(),
+                        )
+
+        # rah = RangAwardHistory()
+        # rah.user_id = user_id
+        # rah.text = log
+        # rah.save()
 
 
 def start_multi_level_bonus_runner(user_id, amount, package_history_id):
@@ -241,5 +228,3 @@ def start_multi_level_bonus_runner(user_id, amount, package_history_id):
                     recipient_purpose_id=recipient_purpose.id,
                     uuid=uuid,
                 )
-
-

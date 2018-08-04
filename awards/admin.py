@@ -13,6 +13,9 @@ class RangAwardAdmin(admin.ModelAdmin):
         'include_rang_count',
         'bonus',
         'is_final',
+        'is_start',
+        'quick_days',
+        'quick_bonus',
     )
 
 

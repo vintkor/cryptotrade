@@ -16,6 +16,7 @@ from binary_tree.utils import SetPoints
 from shares.models import ShareHolder, Course
 from .tasks import start_rang_award_runner_task, start_multi_level_bonus_runner_task
 from cryptotrade.settings import NOT_VERIFIED_MESSAGE
+from awards.models import RangAward
 
 
 class PackageListView(LoginRequiredMixin, ListView):
@@ -55,13 +56,15 @@ class ByPackageFormView(PermissionRequiredMixin, LoginRequiredMixin, View):
         sender_purpose = Purpose.objects.get(code=10)
         recipient_purpose = Purpose.objects.get(code=11)
         uuid = make_uuid()
+        start_rang = RangAward.objects.get(is_start=True)
 
         with atomic():
             user.package = package
             user.set_status_active()
             user.balance = balance
+            user.rang = start_rang
             user.volume = user.volume + amount
-            user.save(update_fields=('package', 'status', 'balance', 'volume',))
+            user.save(update_fields=('package', 'status', 'balance', 'volume', 'rang'))
 
             package_history = PackageHistory(
                 user=user,

@@ -12,11 +12,15 @@ class RangAward(models.Model):
     include_rang_count = models.PositiveSmallIntegerField(verbose_name=_('Количество партнёров с указаным рангом'))
     bonus = models.DecimalField(verbose_name=_('Бонус'), max_digits=10, decimal_places=2)
     is_final = models.BooleanField(default=False)
+    is_start = models.BooleanField(default=False)
+    quick_days = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name=_('К-во дней с момента регистрации'))
+    quick_bonus = models.DecimalField(blank=True, null=True, verbose_name=_('Бонус быстрого старта'), decimal_places=2, max_digits=10)
+    weight = models.PositiveSmallIntegerField(default=10, verbose_name=_('Вес'))
 
     class Meta:
         verbose_name = _('Ранговый бонус')
         verbose_name_plural = _('Ранговые бонусы')
-        ordering = ('-volume',)
+        ordering = ('volume',)
 
     def __str__(self):
         return self.title
