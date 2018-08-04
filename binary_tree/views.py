@@ -52,12 +52,12 @@ class BinaryTreeView(LoginRequiredMixin, View):
             return bad_request()
 
         tree = list()
-        nodes = node.get_descendants(include_self=True).filter(level__lte=tree_deep)
+        nodes = node.get_descendants(include_self=True).filter(level__lte=(node.level + tree_deep))
 
         for ind, i in enumerate(nodes):
+            print(i.user.unique_number)
             element = dict()
             element['id'] = i.id
-            # element['name'] = i.user.unique_number
             element['parentId'] = i.parent.id if i.parent else None
 
             if ind == 0:
@@ -86,7 +86,7 @@ class BinaryTreeView(LoginRequiredMixin, View):
             else:
                 element['look_tree'] = "<span class='hidden'>1</span>"
 
-            if i.level == tree_deep:
+            if i.level == tree_deep + node.level:
                 element['skip_children'] = True
 
             tree.append(element)

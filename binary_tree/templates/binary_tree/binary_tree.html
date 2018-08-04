@@ -57,6 +57,7 @@
 
 
     var my_tree_data;
+    var peopleElement = document.getElementById("tree");
     var settings = {
         "async": false,
         "url": "{% url 'binary_tree:binary_tree' %}",
@@ -75,10 +76,8 @@
         });
     }
 
-    loadData();
-
     function startTree() {
-
+        loadData();
         var not_active = {};
         function traverseTree(orgChart, inputArray) {
             return traverseNode(orgChart, inputArray, outputArray, inputArray[0].id);
@@ -151,9 +150,10 @@
             }
             return outputArray;
         }
-        var peopleElement = document.getElementById("tree");
+
         var outputArray = [generateRootNode(my_tree_data)];
         traverseTree(null, my_tree_data, outputArray);
+
         var orgChart = new getOrgChart(peopleElement, {
             renderNodeEvent: renderNodeHandler,
             color: "neutralgrey",
@@ -166,7 +166,6 @@
             enableZoomOnNodeDoubleClick: true,
             linkType: "M",
             primaryFields: [
-                {#"name",#}
                 "full_name",
                 "left_points",
                 "right_points",
@@ -180,6 +179,7 @@
             dataSource: outputArray,
             customize: nodes_customize
         });
+
         function renderNodeHandler(sender, args) {
             for (i = 0; i < args.content.length; i++) {
                 if (args.content[i].indexOf(args.node.data["look_tree"]) != -1) {
@@ -197,12 +197,12 @@
         traverseTree(orgChart, my_tree_data);
 
     }
+
     startTree();
+
     $('body').on('click', '.look_tree', function(e){
         e.preventDefault();
-        {#$(peopleElement).text('');#}
         settings.data = "{\"root_node\": \"" + $(this).attr('href') + "\"}";
-        loadData();
         startTree();
     });
 
