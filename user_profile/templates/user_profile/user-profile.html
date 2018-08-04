@@ -83,7 +83,7 @@
 
                         <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Сменить аватар' %}</button>
-                            <button type="button" class="btn btn-secondary btn-outline-info">{% trans 'Сменить пароль' %}</button>
+                            <a href="{% url 'user:change-password' %}" class="btn btn-secondary btn-outline-info">{% trans 'Сменить пароль' %}</a>
                         </div>
 
                     </div>

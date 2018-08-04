@@ -18,7 +18,7 @@ from .forms import (
     RegistrationByRefCodeForm,
     AuthForm,
     VerificationForm,
-)
+    AuthChangePasswordForm)
 from django.db.transaction import atomic
 from binary_tree.models import BinaryTree
 from linear_tree.models import LinearTree
@@ -356,3 +356,32 @@ class ChangeDirectionView(View):
         return JsonResponse({
             'status': False,
         })
+
+
+class UserChangePasswordView(FormView):
+    template_name = 'user_profile/change-password.html'
+    form_class = AuthChangePasswordForm
+
+    def get_form_kwargs(self):
+        kwargs = super(UserChangePasswordView, self).get_form_kwargs()
+        user = self.request.user
+        if user:
+            kwargs['user'] = user
+        return kwargs
+
+    def form_valid(self, form):
+        user = self.request.user
+        new_pass = form.cleaned_data.get('new_password')
+
+        user.set_password(new_pass)
+        user.save()
+
+        send_simple_email_task.delay(
+            user.email,
+            _('CryptoTrade - смена пароля'),
+            'Ваш пароль успешно изменён на >> {} <<. Сохраните этот пароль и удалите пожалуйста это письмо.'.format(
+                new_pass
+            ),
+        )
+
+        return redirect(reverse_lazy('user:profile'))

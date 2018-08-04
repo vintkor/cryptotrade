@@ -9,6 +9,7 @@ from .views import (
     VerificationsListView,
     VerificationUserDetailView,
     ChangeDirectionView,
+    UserChangePasswordView,
 )
 
 
@@ -23,4 +24,5 @@ urlpatterns = [
     path('verification/users/', VerificationsListView.as_view(), name='verification-users'),
     path('verification/user/<int:pk>/', VerificationUserDetailView.as_view(), name='verification-user-detail'),
     path('change-direction/', ChangeDirectionView.as_view(), name='change-direction'),
+    path('change-password/', UserChangePasswordView.as_view(), name='change-password'),
 ]

@@ -4,6 +4,7 @@ from geo.models import Country
 from django.utils.translation import ugettext_lazy as _
 from django.core import validators
 from .models import User
+from django.contrib.auth.hashers import check_password
 
 
 names_validator = validators.RegexValidator('^[a-zA-Zа-яА-Я]+$', message=_(
@@ -116,3 +117,36 @@ class VerificationForm(forms.ModelForm):
             'phone',
             'country',
         )
+
+
+class AuthChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': _('Текущий пароль')}), label=_('Текущий пароль'))
+    new_password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': _('Новый пароль')}), label=_('Новый пароль'))
+    repeat_new_password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': _('Повторите новый пароль')}), label=_('Повторите новый пароль'))
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AuthChangePasswordForm, self).__init__(*args, **kwargs)
+
+    def clean_old_password(self):
+        old_pass = self.cleaned_data['old_password']
+
+        if not check_password(old_pass, self.user.password):
+            raise forms.ValidationError(_('Не верный старый пароль'), code='invalid')
+
+        return old_pass
+
+    def get_repeat_pass(self):
+        return self.data.get('repeat_new_password')
+
+    def clean_new_password(self):
+        new_pass = self.cleaned_data['new_password']
+        repeat_pass = self.get_repeat_pass()
+
+        if new_pass != repeat_pass:
+            raise forms.ValidationError(_('Пароли не совпадают'), code='invalid')
+
+        return new_pass
