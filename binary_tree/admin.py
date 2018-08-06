@@ -19,6 +19,10 @@ class BinaryTreeAdmin(DraggableMPTTAdmin):
         'right_points',
         'created',
     )
+    list_editable = (
+        'left_points',
+        'right_points',
+    )
 
 
 @admin.register(Reason)
