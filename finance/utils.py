@@ -1,6 +1,8 @@
 from .models import UsersFinanceHistory
 from django.utils.translation import ugettext as _
 from django.utils.crypto import get_random_string
+from django.db.transaction import atomic
+from finance.models import BlockIOWallet, Purpose
 
 
 def make_uuid():
@@ -29,16 +31,6 @@ def set_transaction_to_finance_history(
     :param uuid: string
     :return none
     """
-
-    print('-'*80)
-    print(
-        amount,
-        sender_purpose_id,
-        recipient_purpose_id,
-        uuid,
-        sender_id,
-        recipient_id
-    )
 
     if amount < 0:
         raise ValueError(_('Сумма должно быть не меньше 0'))
@@ -70,3 +62,34 @@ def set_transaction_to_finance_history(
         ufh.second_user_id = sender_id
 
     ufh2.save()
+
+
+def blockio_transfer_usd_to_user_balance():
+    wallets = BlockIOWallet.objects.filter(
+        is_done=False,
+        balance_usd__gt=0,
+    )
+
+    sender_purpose = Purpose.objects.get(code=22)
+    recipient_purpose = Purpose.objects.get(code=23)
+
+    with atomic():
+
+        for wallet in wallets:
+
+            user = wallet.user
+            user.balance = user.balance + wallet.balance_usd
+            user.save(update_fields=('balance',))
+
+            wallet.is_done = True
+            wallet.save(update_fields=('is_done',))
+
+            uuid = make_uuid()
+
+            set_transaction_to_finance_history(
+                amount=wallet.balance_usd,
+                sender_purpose_id=sender_purpose.id,
+                recipient_purpose_id=recipient_purpose.id,
+                uuid=uuid,
+                recipient_id=user.id,
+            )

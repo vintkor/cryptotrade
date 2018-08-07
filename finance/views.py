@@ -1,27 +1,31 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
-from django.views.generic import ListView, FormView, View
-from .models import (
-    UsersFinanceHistory,
-    Purpose,
-    PaymentSystem,
-    PaymentHistory,
-)
-from .forms import (
-    SendMoneyForm,
-)
-from user_profile.models import User
-from .utils import set_transaction_to_finance_history, make_uuid
-from django.db.transaction import atomic
+import datetime
 import decimal
-from django.contrib import messages
-from django.utils.translation import ugettext as _
-from .payments_utils.payeer import Payeer
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 from hashlib import sha256
+import requests
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.transaction import atomic
+from django.http import HttpResponse, JsonResponse
+from django.middleware.csrf import get_token
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template import Context, Template
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import FormView, ListView, View
+from cryptotrade.settings import BITCOIN_CODE, PAYEER_CODE
+from user_profile.models import User
+from .forms import SendMoneyForm
+from .models import (
+    BlockIOWallet,
+    PaymentHistory,
+    PaymentSystem,
+    Purpose,
+    UsersFinanceHistory,
+)
+from .payments_utils.payeer import Payeer
+from .utils import make_uuid, set_transaction_to_finance_history
 
 
 class FinanceHistoryListView(LoginRequiredMixin, ListView):
@@ -97,7 +101,7 @@ class AddMoneyBaseView(LoginRequiredMixin, ListView):
 
     def post(self, request):
         payment_system_id = request.POST.get('payment_system_id')
-        amount = request.POST.get('amount')
+        amount = decimal.Decimal(request.POST.get('amount'))
 
         try:
             ps = PaymentSystem.objects.get(id=payment_system_id)
@@ -107,14 +111,14 @@ class AddMoneyBaseView(LoginRequiredMixin, ListView):
                 'message': _('Платёжной системы не существует')
             })
 
-        ph = PaymentHistory(
-            user=self.request.user,
-            payment_system=ps,
-            amount=decimal.Decimal(amount),
-        )
-        ph.save()
+        if ps.code == PAYEER_CODE:
+            ph = PaymentHistory(
+                user=self.request.user,
+                payment_system=ps,
+                amount=amount,
+            )
+            ph.save()
 
-        if ps.title == 'Payeer':
             payeer = Payeer(
                 m_amount=amount,
                 m_curr='USD',
@@ -131,6 +135,59 @@ class AddMoneyBaseView(LoginRequiredMixin, ListView):
                 'merchant_form': merchant_form,
             })
 
+        if ps.code == BITCOIN_CODE:
+            course_path = 'https://blockchain.info/tobtc?currency=USD&value={}'
+
+            response = requests.get(course_path.format(amount))
+            need_btc = decimal.Decimal(response.text)
+
+            context = {}
+            context['currency'] = 'BTC'
+            context['amount_usd'] = amount
+            context['need_btc'] = need_btc
+            context['course_path'] = course_path.format(amount)
+
+            t = Template("{% include 'finance/_blockio_template.html' %}")
+
+            try:
+                wallet = BlockIOWallet.objects.get(
+                    currency=ps,
+                    user=self.request.user,
+                    end_date__gt=datetime.datetime.now(),
+                    is_done=False,
+                )
+                context['wallet'] = wallet
+                context['end_date'] = datetime.datetime.timestamp(wallet.end_date)
+                template = t.render(Context(context))
+            
+                return JsonResponse({
+                    'status': True,
+                    'merchant_form': template,
+                })
+            except BlockIOWallet.DoesNotExist:
+
+                wallet = BlockIOWallet()
+                wallet.currency=ps
+                wallet.user=self.request.user
+                wallet.save()
+
+                from block_io import BlockIo
+                version = 2
+                block_io = BlockIo(ps.settings['api_key'], ps.settings['secret_pin'], version)
+                response = block_io.get_new_address(label='{}_{}'.format(self.request.user.unique_number, wallet.pk))
+
+                if response['status'] == 'success':
+                    wallet.wallet = response['data']['address']
+                    wallet.save()
+
+                    context['wallet'] = wallet
+                    context['end_date'] = datetime.datetime.timestamp(wallet.end_date)
+                    template = t.render(Context(context))
+                    return JsonResponse({
+                        'status': True,
+                        'merchant_form': template,
+                    })
+            
         return JsonResponse({
             'status': False,
             'message': _('Неверный запрос')
@@ -150,7 +207,6 @@ class PayeerStatusView(View):
 
     def post(self, request):
         ps = ps = PaymentSystem.objects.get(code=110)
-        print('-'*80)
         response_for_payeer = 'error'
 
         if request.POST.get('m_operation_id', None) and request.POST.get('m_sign', None):

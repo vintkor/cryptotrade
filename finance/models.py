@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from user_profile.models import User
 from django.contrib.postgres.fields import JSONField
+import datetime
+from cryptotrade.settings import BLOCKIO_TIME
 
 
 class Purpose(models.Model):
@@ -41,7 +43,7 @@ class UsersFinanceHistory(models.Model):
         return "{}".format(self.user)
 
     def get_number(self):
-        return self.user.unique_number
+        return self.user.unique_number if self.user else '---'
 
     get_number.short_description = _('Пользователь')
 
@@ -79,6 +81,7 @@ class PaymentHistory(models.Model):
     payment_system = models.ForeignKey(PaymentSystem, verbose_name=_('Платёжная система'), on_delete=models.CASCADE)
     amount = models.DecimalField(verbose_name=_('Сумма'), decimal_places=2, max_digits=10)
     is_success = models.BooleanField(verbose_name=_('Является успешной'), default=False)
+    info = JSONField(verbose_name=_('Дополнительная информация'), blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
 
     class Meta:
@@ -86,4 +89,30 @@ class PaymentHistory(models.Model):
         verbose_name_plural = _('Истории платежей')
 
     def __str__(self):
-        return self.amount
+        return str(self.amount)
+
+
+class BlockIOWallet(models.Model):
+    """
+    Кошельки пользователей для пополнения баланса в системе через сервис Block.io
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Пользователь'))
+    wallet = models.CharField(max_length=200, verbose_name=_('Кошелёк'))
+    currency = models.ForeignKey(PaymentSystem, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=30, decimal_places=12, default=0)
+    balance_usd = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
+    end_date = models.DateTimeField(verbose_name=_('Дата создания'), blank=True, null=True)
+    is_done = models.BooleanField(default=False)
+    
+    class Meta:
+        verbose_name = _('Кошелёк пользователя')
+        verbose_name_plural = _('Bitcoin кошелёки пользователей')
+
+    def __str__(self):
+        return self.user.unique_number
+
+    def save(self, *args, **kwargs):
+        if not self.end_date:
+            self.end_date = datetime.datetime.now() + datetime.timedelta(seconds=BLOCKIO_TIME)            
+        return super(BlockIOWallet, self).save(*args, **kwargs)

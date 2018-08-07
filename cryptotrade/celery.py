@@ -9,8 +9,12 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    # 'check-award-every-each-thursday-at-16-00': {
-    #     'task': 'awards.tasks.check_award3',
-    #     'schedule': crontab(hour=13, minute=00, day_of_week=5)
-    # },
+    'start_block_io_checker-each-5-minutes': {
+        'task': 'finance.start_block_io_checker_task',
+        'schedule': crontab(minute='*/1')
+    },
+    'blockio_transfer_usd_to_user_balance-each-5-minutes': {
+        'task': 'finance.blockio_transfer_usd_to_user_balance_task',
+        'schedule': crontab(minute='*/1')
+    },
 }

@@ -4,6 +4,7 @@ from .models import (
     UsersFinanceHistory,
     PaymentSystem,
     PaymentHistory,
+    BlockIOWallet,
 )
 from django.contrib.postgres.fields import JSONField
 from jsoneditor.forms import JSONEditor
@@ -46,4 +47,22 @@ class PaymentHistoryAdmin(admin.ModelAdmin):
         'amount',
         'is_success',
         'created',
+    )
+    formfield_overrides = {
+        JSONField: {'widget': JSONEditor},
+    }
+    list_filter=('payment_system',)
+
+
+@admin.register(BlockIOWallet)
+class BlockIOWallet(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'wallet',
+        'currency',
+        'balance',
+        'balance_usd',
+        'created',
+        'end_date',
+        'is_done',
     )

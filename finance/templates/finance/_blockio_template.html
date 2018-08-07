@@ -1,0 +1,10 @@
+{% load qr_code %}
+
+<div style="text-align: center;" id="blockio-info" data-end-time="{{ end_date  }}">
+    <h2>Этот кошелёк доступен в течении <code id="blockio-time"></code></h2>
+    {% qr_from_text wallet.wallet image_format="png" size="S" %}
+    <br>
+    <h3><code>{{ wallet.wallet }}</code></h3>
+    <p>Вам необходимо оплатить <code id="blockio-amount">{{ need_btc }}</code> {{ currency }}</p>
+    <p>Вы получите на баланс <code id="blockio-usd" data-path="{{ course_path }}">{{ amount_usd }}</code> FBC</p>
+</div>

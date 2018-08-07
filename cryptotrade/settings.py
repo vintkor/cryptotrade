@@ -26,6 +26,7 @@ except:
         'ckeditor_uploader',
         'jsoneditor',
         'colorfield',
+        'qr_code',
 
         'user_profile',
         'binary_tree',
@@ -198,3 +199,14 @@ except:
     ADMIN_EMAIL = 'alkv84@gmail.com'
 
     CELERY_BROKER_URL = 'amqp://localhost'
+
+    PAYEER_CODE = 110
+    BITCOIN_CODE = 120
+    DOGECOIN_CODE = 130
+    LITECOIN_CODE = 140
+    BLOCKIO_TIME = 2400
+
+    BLOCKIO_SECRET_PIN = 'vintkor71084'
+    BLOCKIO_BITCOIN_API_KEY = '9169-2eea-75f4-7384'
+    BLOCKIO_LITECOIN_API_KEY = 'b04d-cf61-30cf-d45a'
+    BLOCKIO_DOGECOIN_API_KEY = '2bc6-ce96-74a1-a968'

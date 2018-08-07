@@ -251,16 +251,37 @@ $(document).ready(function () {
 
     // -------------------------------- Пополнение баланса --------------------------------
 
+
+    function changeBlockIOInfo() {
+        var blockIO = $(document).find('#blockio-info');
+        var endTime = parseFloat(blockIO.data('end-time'));
+        var dateNow = Date.now();
+
+        var diffTime = endTime - dateNow / 1000;
+        var duration = moment.duration(diffTime * 1000, 'milliseconds');
+        var interval = 1000;
+
+        setInterval(function () {
+            duration = moment.duration(duration - interval, 'milliseconds');
+            blockIO.find('#blockio-time').text(duration.hours() + ":" + duration.minutes() + ":" + duration.seconds());
+            if (duration.hours() < 1 && duration.minutes() < 1 && duration.seconds() < 1) {
+                blockIO.html('<h1 class="text-danger">Запросите новый кошелёк</h1>');
+            }
+        }, interval);
+
+    }
+
+
     var paymentFormWrapper = $('#paymentWrapper');
     var payment_amount = $('#payment-summ');
 
     payment_amount.on('change input', function () {
-        console.log(3213);
         paymentFormWrapper.html('');
     });
 
     $('.payment-add-money').click(function (e) {
         e.preventDefault();
+        paymentFormWrapper.html('');
 
         $.ajax({
             url: window.location.href,
@@ -272,6 +293,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status) {
                     paymentFormWrapper.html(response.merchant_form);
+                    changeBlockIOInfo();
                 } else {
                     alert('Something wrong')
                 }
