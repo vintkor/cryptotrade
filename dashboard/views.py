@@ -5,6 +5,7 @@ from django.views.generic import View
 from linear_tree.models import LinearTree
 from binary_tree.models import BinaryTree
 from news.models import News
+from finance.models import UsersFinanceHistory
 
 
 class DashboardView(LoginRequiredMixin, View):
@@ -20,5 +21,6 @@ class DashboardView(LoginRequiredMixin, View):
         context['my_stucture'] = l_parent.get_descendant_count()
         context['points'] = BinaryTree.objects.values('left_points', 'right_points').get(user=self.request.user)
         context['last_news'] = News.objects.all()[:10]
+        context['last_finanses'] = UsersFinanceHistory.objects.filter(user=self.request.user)[:20]
 
         return render(request, 'dashboard/dashboard.html', context)

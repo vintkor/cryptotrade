@@ -38,6 +38,7 @@ class UsersFinanceHistory(models.Model):
     class Meta:
         verbose_name_plural = _('Финансы пользователя')
         verbose_name = _('Финансы пользователей')
+        ordering = ('-id',)
 
     def __str__(self):
         return "{}".format(self.user)
