@@ -1,0 +1,98 @@
+{% extends "cabinet.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block header_scripts %}{% endblock header_scripts %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card-group">
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="m-r-10">
+                                <span class="btn btn-circle btn-lg bg-danger">
+                                    <i class="ti-clipboard text-white"></i>
+                                </span>
+                            </div>
+                            <div>
+                                 {% trans 'Всего людей в структуре' %}
+                            </div>
+                            <div class="ml-auto">
+                                <h2 class="m-b-0 font-light">{{ my_stucture }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="m-r-10">
+                                <span class="btn btn-circle btn-lg btn-info">
+                                    <i class="ti-wallet text-white"></i>
+                                </span>
+                            </div>
+                            <div>
+                                 {% trans 'Лично приглашённых' %}
+                            </div>
+                            <div class="ml-auto">
+                                <h2 class="m-b-0 font-light">{{ my_people }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="m-r-10">
+                                <span class="btn btn-circle btn-lg bg-success">
+                                    <i class="ti-shopping-cart text-white"></i>
+                                </span>
+                            </div>
+                            <div>
+                                 {% trans 'Баллы' %}
+                            </div>
+                            <div class="ml-auto">
+                                <h2 class="m-b-0 font-light">{{ points.left_points }} / {{ points.right_points }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="m-r-10">
+                                <span class="btn btn-circle btn-lg bg-warning">
+                                    <i class="mdi mdi-currency-usd text-white"></i>
+                                </span>
+                            </div>
+                            <div>
+                                 {% trans 'Ранг' %}
+                            </div>
+                            <div class="ml-auto">
+                                <h2 class="m-b-0 font-light">{{ user.rang }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <!-- Column -->
+            
+            
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer_scripts %}{% endblock footer_scripts %}
