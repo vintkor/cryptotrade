@@ -12,7 +12,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     {% if news.image %}
-                        <img class="card-img-top img-responsive" src="{{ news.image.url }}">
+                        <div class="news-image" style="text-align: center;">
+                            <img class="img-responsive" style="max-width: 100%;" src="{{ news.image.url }}">
+                        </div>
                     {% endif %}
                     <div class="card-body">
                         <div class="d-flex no-block align-items-center m-b-15">
