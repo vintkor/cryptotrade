@@ -104,7 +104,7 @@
                                     <div class="feed-icon bg-info">
                                         <i class="far fa-bell"></i>
                                     </div>
-                                    <a href="#">{{ news.title }}</a>
+                                    <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
                                     <span class="ml-auto font-12 text-muted">{{ news.created }}</span>
                                 </li>
                             {% endfor %}
