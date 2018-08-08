@@ -17,4 +17,8 @@ app.conf.beat_schedule = {
         'task': 'finance.blockio_transfer_usd_to_user_balance_task',
         'schedule': crontab(minute='*/1')
     },
+    'points-awars-each-thursday-in-6h-10m': {
+        'task': 'award.start_point_awadr_task',
+        'schedule': crontab(hour=6, minute=10, day_of_week=2)
+    },
 }

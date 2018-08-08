@@ -1,6 +1,7 @@
 from finance.models import Purpose
-from .models import RangAward, MultiLevelBonus, MultiLevelBonusHistory, RangAwardHistory
+from .models import RangAward, MultiLevelBonus, MultiLevelBonusHistory, RangAwardHistory, PointAward
 from linear_tree.models import LinearTree
+from binary_tree.models import BinaryTree, BinaryPointsHistory, Reason
 from user_profile.models import User
 from django.db.transaction import atomic
 from finance.utils import set_transaction_to_finance_history, make_uuid
@@ -228,3 +229,76 @@ def start_multi_level_bonus_runner(user_id, amount, package_history_id):
                     recipient_purpose_id=recipient_purpose.id,
                     uuid=uuid,
                 )
+
+
+def start_point_awadr():
+    reason = Reason.objects.get(code=10)
+    system_balance = User.objects.get(login='SYSTEM_BALANCE')
+    sender_purpose = Purpose.objects.get(code=24)
+    recipient_purpose = Purpose.objects.get(code=25)
+
+    award_conditions = [{
+        'rang_title': i.rang.title,
+        'percent': i.rang.bonus,
+    } for i in PointAward.objects.all()]
+
+    award_conditions = {}
+    for i in PointAward.objects.all():
+        award_conditions['{}'.format(i.rang.id)] = i.bonus
+
+    nodes_with_points = BinaryTree.objects.select_related(
+        'user',
+        'user__rang',
+    ).filter(
+        left_points__gt=0,
+        right_points__gt=0,
+        user__rang__weight__gt=0,
+    ).iterator()
+
+    def get_leg_with_min_points(node):
+        left = 'left_points'
+        right = 'right_points'
+        if getattr(node, left) >= getattr(node, right):
+            return right
+        elif getattr(node, left) <= getattr(node, right):
+            return left
+
+    system_balance_total = 0
+    with atomic():
+        for node in nodes_with_points:
+            leg = get_leg_with_min_points(node)
+            points = getattr(node, leg)
+            node_rang_id = node.user.rang.id
+            percent = award_conditions['{}'.format(node_rang_id)]
+            bonus = decimal.Decimal((points * percent) / 100)
+            user = node.user
+
+            system_balance_total += bonus
+
+            node.left_points -= points
+            node.right_points -= points
+            node.save(update_fields=('left_points', 'right_points'))
+
+            points_history = BinaryPointsHistory()
+            points_history.left_points = -points
+            points_history.right_points = -points
+            points_history.reason = reason
+            points_history.tree_node = node
+            points_history.save()
+
+            user.balance = user.balance + bonus
+            user.save(update_fields=('balance',))
+
+            uuid = make_uuid()
+
+            set_transaction_to_finance_history(
+                amount=bonus,
+                sender_id=system_balance.id,
+                recipient_id=user.id,
+                sender_purpose_id=sender_purpose.id,
+                recipient_purpose_id=recipient_purpose.id,
+                uuid=uuid,
+            )
+
+        system_balance.balance = system_balance.balance - decimal.Decimal(system_balance_total)
+        system_balance.save(update_fields=('balance',))

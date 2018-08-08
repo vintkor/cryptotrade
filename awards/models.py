@@ -81,3 +81,17 @@ class MultiLevelBonusHistory(models.Model):
 
     def __str__(self):
         return '{} > {}'.format(self.package_history.user.unique_number, self.package_history.package.title)
+
+
+class PointAward(models.Model):
+    rang = models.ForeignKey(RangAward, on_delete=models.CASCADE, verbose_name=_('Ранг'))
+    bonus = models.DecimalField(verbose_name=_('Бонус'), max_digits=10, decimal_places=2)
+
+    max_money = 10000
+
+    class Meta:
+        verbose_name = _('Схема конвертации баллов в FBC')
+        verbose_name_plural = _('Схемы конвертации баллов в FBC')
+
+    def __str__(self):
+        return self.rang.title
