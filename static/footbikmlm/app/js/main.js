@@ -1403,23 +1403,23 @@ $(document).ready(function () {
 
     // =================================================== whitelist ===================================================
 
-    $('.whitelist').on('click', function (e) {
+    // $('.whitelist').on('click', function (e) {
 
-        e.preventDefault();
-        $('body').addClass('modal-open');
-        $('.whitelist__form__wrapper').addClass('active');
+    //     e.preventDefault();
+    //     $('body').addClass('modal-open');
+    //     $('.whitelist__form__wrapper').addClass('active');
 
-    });
+    // });
 
 
-    $('.whitelist__cross').on('click', function (e) {
+    // $('.whitelist__cross').on('click', function (e) {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        $('body').removeClass('modal-open');
-        $('.whitelist__form__wrapper').removeClass('active');
+    //     $('body').removeClass('modal-open');
+    //     $('.whitelist__form__wrapper').removeClass('active');
 
-    });
+    // });
 
 
     // =================================================== whitelist ===================================================
