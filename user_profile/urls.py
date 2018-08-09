@@ -11,6 +11,8 @@ from .views import (
     ChangeDirectionView,
     UserChangePasswordView,
     ChangoProfilePhotoView,
+    ForgotPasswordFormView,
+    NewPasswordView,
 )
 
 
@@ -19,6 +21,8 @@ urlpatterns = [
     path('register-by-ref/<str:ref_code>/', NewUserByRefCodeView.as_view(), name='register-by-ref'),
     path('login/', AuthView.as_view(), name='login'),
     path('logout/', user_logout, name='logout'),
+    path('forgot-password/', ForgotPasswordFormView.as_view(), name='forgot-password'),
+    path('forgot-password/<str:ref_code>/', NewPasswordView.as_view(), name='forgot-password-step2'),
     path('profile/', UserProfileDetailView.as_view(), name='profile'),
     path('verification/', VerificationFormView.as_view(), name='verification'),
     path('verification/document-loader/', VerificationDocumentLoaderView.as_view(), name='verification-document-loader'),

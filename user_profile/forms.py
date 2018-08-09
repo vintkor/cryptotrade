@@ -81,6 +81,25 @@ class RegistrationByRefCodeForm(forms.Form):
         return email
 
 
+class ForgotPasswordForm(Form):
+    """
+    Форма востановления пароля
+    """
+
+    error_css_class = 'is-invalid'
+    errors_class = 'is-invalid'
+
+    email = forms.EmailField(label=_('Email'), widget=forms.TextInput(
+        attrs={'class': 'form-control'},
+    ), validators=[validators.EmailValidator])
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email__contains=email).exists():
+            return email
+        raise forms.ValidationError(_('Такой адрес електронной почты не используется'))
+
+
 class AuthForm(Form):
     email = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control', 'type': 'email'}), validators=[validators.EmailValidator])

@@ -18,7 +18,9 @@ from .forms import (
     RegistrationByRefCodeForm,
     AuthForm,
     VerificationForm,
-    AuthChangePasswordForm)
+    AuthChangePasswordForm,
+    ForgotPasswordForm,
+)
 from django.db.transaction import atomic
 from binary_tree.models import BinaryTree
 from linear_tree.models import LinearTree
@@ -159,7 +161,7 @@ class VerificationFormView(LoginRequiredMixin, UpdateView):
             self.request.session['phone_code'] = phone_code
 
             email_users = self.get_object().email
-            email_subject = _('Код верификации email CryptoTrade')
+            email_subject = _('Код верификации email Footbik.MLM')
             email_text = _('Ваш код - {}'.format(email_code))
 
             send_simple_email_task.delay(email_users, email_subject, email_text)
@@ -290,7 +292,7 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
             user.save(update_fields=('verification',))
             send_simple_email_task.delay(
                 user.email,
-                _('Верификация CryptoTrade'),
+                _('Верификация Footbik.MLM'),
                 _('Вы успешно верифицированы. Теперь вам открыт полный дуступ к системе'),
             )
             return JsonResponse({
@@ -304,7 +306,7 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
 
             send_simple_email_task.delay(
                 user.email,
-                _('Верификация CryptoTrade'),
+                _('Верификация Footbik.MLM'),
                 _('Вам было отказано в верификации'),
             )
 
@@ -325,7 +327,7 @@ class VerificationUserDetailView(PermissionRequiredMixin, LoginRequiredMixin, De
 
             send_simple_email_task.delay(
                 user.email,
-                _('Верификация CryptoTrade'),
+                _('Верификация Footbik.MLM'),
                 _('Вам необходимо добавить следующие документы: {}'.format(message)),
             )
 
@@ -378,13 +380,84 @@ class UserChangePasswordView(FormView):
 
         send_simple_email_task.delay(
             user.email,
-            _('CryptoTrade - смена пароля'),
+            _('Footbik.MLM - смена пароля'),
             'Ваш пароль успешно изменён на >> {} <<. Сохраните этот пароль и удалите пожалуйста это письмо.'.format(
                 new_pass
             ),
         )
 
         return redirect(reverse_lazy('user:profile'))
+
+
+class ForgotPasswordFormView(FormView):
+    form_class = ForgotPasswordForm
+    template_name = 'user_profile/forgot-password.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard:dashboard')
+
+        return super(ForgotPasswordFormView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        url = self.request.META.get('HTTP_HOST')
+
+        user = User.objects.get(email__contains=email)
+        link = reverse_lazy('user:forgot-password-step2', kwargs={'ref_code': user.ref_code})
+
+        path = '{}{}'.format(url, link)
+        
+        send_simple_email_task.delay(
+            user.email,
+            _('Footbik.MLM - смена пароля'),
+            '',
+            '''
+                <h2>Footbik.MLM - смена пароля</h2>
+                <p>Был совершён запрос на смену пароля. Если это сделали вы, перейдите по этой ссылке <a style="color: #d22;" target="_blank" href="//{path}">{path}</a></p>.
+                <p>А если вы этого не делали, просто удалите это письмо.</p>
+            '''.format(path=path),
+        )
+        messages.success(
+            self.request,
+            _('На указанный Вами аддрес электронной почты отправленно письмо. Откройте его и следуйте инструкциям')
+        )
+
+        return redirect(reverse_lazy('user:login'))
+
+
+class NewPasswordView(View):
+    
+    def get(self, request, ref_code):
+        try:
+            user = User.objects.get(ref_code=ref_code)
+        except User.DoesNotExcist:
+            messages.error(
+                self.request,
+                _('Не верный адрес'),
+                'danger'
+            )
+            return redirect(reverse_lazy('user:login'))
+
+        new_password = get_random_string(10)
+
+        send_simple_email_task.delay(
+            user.email,
+            _('Footbik.MLM - Ваш новый пароль'),
+            'Footbik.MLM - Ваш новый пароль {}'.format(new_password),
+            '''
+                <h2>Footbik.MLM - Ваш новый пароль <span style="color: #d22;">{}<span></h2>
+            '''.format(new_password),
+        )
+
+        user.set_password(new_password)
+        user.save()
+
+        messages.success(
+            self.request,
+            _('На вашу почту было выстано письмо с новым паролем'),
+        )
+        return redirect(reverse_lazy('user:login'))
 
 
 class ChangoProfilePhotoView(View):
