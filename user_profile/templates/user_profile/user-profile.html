@@ -70,8 +70,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>{% trans 'Реферальная ссылка для регистрации' %}</td>
+                                <td>{% trans 'Реферальная ссылка (Форма регистрации)' %}</td>
                                 <td><a target="_blank" href="//{{ request.META.HTTP_HOST }}{{ ref_link }}">//{{ request.META.HTTP_HOST }}{{ ref_link }}</a></td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Реферальная ссылка (На fbt.world)' %}</td>
+                                <td><a target="_blank" href="//{{ request.META.HTTP_HOST }}{{ ref_link }}">//{{ request.META.HTTP_HOST }}{{ ref_link_home }}</a></td>
                             </tr>
                             <tr>
                                 <td>{% trans 'Дата регистрации' %}</td>

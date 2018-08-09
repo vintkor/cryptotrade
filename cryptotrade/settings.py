@@ -38,6 +38,7 @@ except:
         'shares',
         'awards',
         'dashboard',
+        'landing',
     ]
 
     MIDDLEWARE = [

@@ -170,11 +170,13 @@
         </div>
     </main>
 </div>
+{% if not user.is_authenticated %}
 <div class="main-button">
-    <a class="button-invite whitelist" href="#">
+    <a class="button-invite whitelist" href="{% if register_url %}{{ register_url }}{% else %}#{% endif %}">
         РЕГИСТРАЦИЯ
     </a>
 </div>
+{% endif %}
 
 <!--1st block ends here-->
 </section>

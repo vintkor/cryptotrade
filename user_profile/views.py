@@ -130,6 +130,7 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserProfileDetailView, self).get_context_data(**kwargs)
         context['ref_link'] = reverse_lazy('user:register-by-ref', kwargs={'ref_code': self.get_object().ref_code})
+        context['ref_link_home'] = reverse_lazy('landing:home-ref', kwargs={'ref_code': self.get_object().ref_code})
         return context
 
 

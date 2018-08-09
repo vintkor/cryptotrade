@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='landings/index.html'), name='landing-home'),
+    path('', include('landing.urls')),
     path('admin/', admin.site.urls),
     path('dashboard/', include([
         path('', include('dashboard.urls')),
