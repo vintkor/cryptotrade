@@ -1403,23 +1403,23 @@ $(document).ready(function () {
 
     // =================================================== whitelist ===================================================
 
-    // $('.whitelist').on('click', function (e) {
-    //
-    //     e.preventDefault();
-    //     $('body').addClass('modal-open');
-    //     $('.whitelist__form__wrapper').addClass('active');
-    //
-    // });
-    //
-    //
-    // $('.whitelist__cross').on('click', function (e) {
-    //
-    //     e.preventDefault();
-    //
-    //     $('body').removeClass('modal-open');
-    //     $('.whitelist__form__wrapper').removeClass('active');
-    //
-    // });
+    $('.whitelist').on('click', function (e) {
+
+        e.preventDefault();
+        $('body').addClass('modal-open');
+        $('.whitelist__form__wrapper').addClass('active');
+
+    });
+
+
+    $('.whitelist__cross').on('click', function (e) {
+
+        e.preventDefault();
+
+        $('body').removeClass('modal-open');
+        $('.whitelist__form__wrapper').removeClass('active');
+
+    });
 
 
     // =================================================== whitelist ===================================================
@@ -1544,8 +1544,8 @@ $(document).ready(function () {
         });
 
         $('.team__player[data-id="13"]').css({
-            top: parseInt(playersPosition.backFrontCenter.top),
-            left: parseInt(playersPosition.backFrontCenter.left)
+            top: parseInt(playersPosition.attackExtra.top),
+            left: parseInt(playersPosition.attackExtra.left)
         });
 
         $('.team__player[data-id="14"]').css({
@@ -1620,6 +1620,10 @@ $(document).ready(function () {
             attackTop: {
                 top: parseInt(fieldCoords.attackLine.top) + parseInt(tshirtGabarites.height) * 1.2,
                 left: parseInt(fieldCoords.attackLine.left)
+            },
+            attackExtra: {
+                top: parseInt(fieldCoords.attackLine.top) + parseInt(tshirtGabarites.height) * 1.3,
+                left: parseInt(fieldCoords.attackLine.left) - parseInt(tshirtGabarites.width)
             },
             attackCenter: {
                 top: parseInt(fieldCoords.attackLine.top) + parseInt(tshirtGabarites.height) * 2,
