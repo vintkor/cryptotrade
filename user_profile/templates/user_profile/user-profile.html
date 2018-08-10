@@ -72,14 +72,14 @@
                             <tr>
                                 <td>{% trans 'Реферальная ссылка (Форма регистрации)' %}</td>
                                 <td>
-                                    <a class="ref-link" target="_blank" href="https://{{ request.META.HTTP_HOST }}{{ ref_link }}">https://{{ request.META.HTTP_HOST }}{{ ref_link }}</a>
+                                    <code>https://{{ request.META.HTTP_HOST }}{{ ref_link }}</code>
                                     <button style="float: right;" class="js-textareacopybtn btn btn-info btn-sm">{% trans 'Скопировать ссылку' %}</button>
                                 </td>
                             </tr>
                             <tr>
                                 <td>{% trans 'Реферальная ссылка (На fbt.world)' %}</td>
                                 <td>
-                                    <a class="ref-link" target="_blank" href="https://{{ request.META.HTTP_HOST }}{{ ref_link }}">https://{{ request.META.HTTP_HOST }}{{ ref_link_home }}</a>
+                                    <code>https://{{ request.META.HTTP_HOST }}{{ ref_link_home }}</code>
                                     <button style="float: right;" class="js-textareacopybtn btn btn-info btn-sm">{% trans 'Скопировать ссылку' %}</button>
                                 </td>
                             </tr>
