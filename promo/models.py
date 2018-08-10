@@ -45,3 +45,15 @@ class Lesson(models.Model):
 
     def get_absolute_url(self):
         return reverse('promo:lesson-detail', kwargs={'pk': self.id})
+
+
+class PosMaterial(models.Model):
+    title = models.CharField(max_length=250, verbose_name=_('Заголовок'))
+    image = models.ImageField(verbose_name=_('Изображение'), upload_to='promo/POS/')
+
+    class Meta:
+        verbose_name = _('POS материал')
+        verbose_name_plural = _('POS материалы')
+
+    def __str__(self):
+        return self.title

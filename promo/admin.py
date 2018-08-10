@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import (
     LessonCategory,
     Lesson,
+    PosMaterial,
 )
 
 
@@ -17,3 +18,8 @@ class LessonAdmin(admin.ModelAdmin):
         'category',
     )
     list_filter = ('category',)
+
+
+@admin.register(PosMaterial)
+class PosMaterialAdmin(admin.ModelAdmin):
+    pass

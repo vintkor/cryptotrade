@@ -1,0 +1,49 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <tr>
+                        <td>{% trans 'Заголовок' %}</td>
+                        <td>{% trans 'Предпросмотр' %}</td>
+                        <td>{% trans 'Ссылка на загрузку' %}</td>
+                    </tr>
+                    {% for pos in pos_materials %}
+                        <tr>
+                            <td>{{ pos.title }}</td>
+                            <td>
+                                <div class="pos">
+                                    <a href="{{ pos.image.url }}">
+                                        <div class="pos__preview" style="background-image: url('{{ pos.image.url }}');"></div>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ pos.image.url }}" target="_blank">{% trans 'Скачать' %}</a>
+                                <br>
+                                <code>https://{{ request.META.HTTP_HOST }}{{ pos.image.url }}</code>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}
+    <link rel="stylesheet" href="{% static '/' %}libs/photobox/photobox/photobox.css">
+    <script src="{% static '/' %}libs/photobox/photobox/jquery.photobox.js"></script>
+    <script>
+        $('.pos').photobox('a',{ time:0 });
+    </script>
+{% endblock footer_scripts %}
