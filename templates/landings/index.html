@@ -350,10 +350,10 @@
                         </p>
                         <div class="sell__price">
                                     <span class="sell__price__value">
-                                        $300
+                                        $<span class="amount">300</span>
                                     </span>
                             <span class="sell__price__text">
-                                        0.036911776 BTC
+                                <span class="amount-to-btc">0.036911776</span> BTC
                                     </span>
                         </div>
                         <ul class="sell__list">
@@ -397,10 +397,10 @@
                         </p>
                         <div class="sell__price">
                                     <span class="sell__price__value">
-                                        $1000
+                                        $<span class="amount">1000</span>
                                     </span>
                             <span class="sell__price__text">
-                                        0.036911776 BTC
+                                <span class="amount-to-btc">0.036911776</span> BTC
                                     </span>
                         </div>
                         <ul class="sell__list">
@@ -444,10 +444,10 @@
                         </p>
                         <div class="sell__price">
                                     <span class="sell__price__value">
-                                        $5000
+                                        $<span class="amount">5000</span>
                                     </span>
                             <span class="sell__price__text">
-                                        0.036911776 BTC
+                                <span class="amount-to-btc">0.036911776</span> BTC
                                     </span>
                         </div>
                         <ul class="sell__list">
@@ -1693,7 +1693,7 @@
                             <a class="news__author" href="https://people.in.ua/2018/07/sport/vadim-kulik-o-proekte-football-global-net-llc/">
                             <img src="{% static '' %}footbikmlm/app/img/logonews.png">
                         </a>
-                        <a class="news__link" href="#">
+                        <a class="news__link" href="https://people.in.ua/2018/07/sport/vadim-kulik-o-proekte-football-global-net-llc/">
                             Читать
                         </a>
                     </div>
@@ -1708,7 +1708,7 @@
                             <a class="news__author" href="https://people.in.ua/wp-content/uploads/2018/07/peoplein-summer_2018_final.pdf">
                             <img src="{% static '' %}footbikmlm/app/img/logonews.png">
                         </a>
-                        <a class="news__link" href="#">
+                        <a class="news__link" href="https://people.in.ua/wp-content/uploads/2018/07/peoplein-summer_2018_final.pdf">
                             Читать
                         </a>
                     </div>
@@ -1824,22 +1824,28 @@
                    href="https://www.linkedin.com/in/football-global-net-plc-185811167/">
                     <img src="{% static '' %}footbikmlm/app/img/ic_linked.png">
                 </a>
-                <a class="social__item" target="_blank" href="https://medium.com/@footballglobalnetplc">
-                    <img src="{% static '' %}footbikmlm/app/img/Medium-logo.png">
-                </a>
                 <a class="social__item" target="_blank" href="#">
                     <img src="{% static '' %}footbikmlm/app/img/ic_z.png">
+                </a>
+                <a class="social__item" target="_blank" href="https://medium.com/@footballglobalnetplc">
+                    <img src="/img/Medium-logo.png">
+                </a>
+                <a class="social__item" target="_blank" href="#">
+                    <img src="/img/ic_z.png">
                 </a>
                 <a class="social__item" target="_blank" href="https://t.me/footballglobalnet">
                     <img src="{% static '' %}footbikmlm/app/img/telegram-logo.svg">
                 </a>
-                <a class="social__item" target="_blank" href="https://bitcointalk.org/index.php?action=profile">
-                    <img src="{% static '' %}footbikmlm/app/img/ic_b.svg">
-                </a>
                 <a class="social__item" target="_blank" href="https://github.com/footballglobalnet">
                     <img src="{% static '' %}footbikmlm/app/img/ic_cAT.png">
                 </a>
-            </div>
+                    <a class="social__item" target="_blank" href="https://bitcointalk.org/index.php?action=profile">
+                        <img src="/img/ic_b.svg">
+                    </a>
+                    <a class="social__item" target="_blank" href="https://github.com/footballglobalnet">
+                        <img src="/img/ic_cAT.png">
+                    </a>
+                </div>
 
         </div>
     </div>
@@ -2029,6 +2035,18 @@
             $('.mail-popup-second__success').show(300);
 
         }
+
+        $('.sell__price').each(function(ind, el) {
+            var amount = $(el).find('.amount').text();
+            $.ajax({
+                url: 'https://blockchain.info/tobtc?currency=USD&value='+amount,
+                method: 'get',
+                success: function(response) {
+                    $(el).find('.amount-to-btc').text(response);
+                },
+                error: function(e) {},
+            })
+        });
 
     });
 
