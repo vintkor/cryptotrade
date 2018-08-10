@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load promo %}
 
 <aside class="left-sidebar">
     <div class="scroll-sidebar">
@@ -35,7 +36,7 @@
                 {# -------------------------------- Мои финансы -------------------------------- #}
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="icon-Mailbox-Empty"></i>
+                        <i class="ti-money"></i>
                         <span class="hide-menu">{% trans 'Мои финансы' %}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
@@ -122,7 +123,7 @@
                 {# -------------------------------- Новости -------------------------------- #}
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'news:list' %}" aria-expanded="false">
-                        <i class="sl-icon-loop"></i>
+                        <i class="ti-pencil-alt"></i>
                         <span class="hide-menu">{% trans 'Новости' %}</span>
                     </a>
                 </li>
@@ -130,7 +131,7 @@
                 {# -------------------------------- Верификация -------------------------------- #}
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <i class="icon-Mailbox-Empty"></i>
+                        <i class="ti-unlock"></i>
                         <span class="hide-menu">{% trans 'Верификация' %}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
@@ -148,6 +149,36 @@
                             </a>
                         </li>
                         {% endif %}
+                    </ul>
+                </li>
+
+                {# -------------------------------- Промоматериалы -------------------------------- #}
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-announcement"></i>
+                        <span class="hide-menu">{% trans 'Промоматериалы' %}</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+
+                        <li class="sidebar-item">
+                            <a class="has-arrow sidebar-link" href="javascript:void(0)" aria-expanded="false">
+                                <i class="mdi mdi-playlist-plus"></i>
+                                <span class="hide-menu">{% trans 'Обучение' %}</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse second-level">
+                                {% get_lesson_categories as lesson_categories %}
+                                {% for category in lesson_categories %}
+                                    <li class="sidebar-item">
+                                        <a href="{{ category.get_absolute_url }}" class="sidebar-link">
+                                            <i class="mdi mdi-octagram"></i>
+                                            <span class="hide-menu">{{ category.title }}</span>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+
                     </ul>
                 </li>
 

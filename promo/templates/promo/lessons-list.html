@@ -1,0 +1,40 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            {% for lesson in lessons %}
+                <div class="col-lg-3">
+                    <div class="card">
+                        {% if lesson.is_video %}
+                            <div class="lesson-video-badge">{% trans 'Видео' %}</div>
+                        {% endif %}
+                        {% if lesson.image %}
+                            <img class="card-img-top img-responsive" src="{{ lesson.image.url }}">
+                        {% else %}
+                            <img class="card-img-top img-responsive" src="{% static 'adminbite/' %}assets/images/no_image.gif">
+                        {% endif %}
+                        <div class="card-body">
+                            {% comment %} <div class="d-flex no-block align-items-center m-b-15">
+                                <span><i class="ti-calendar"></i> {{ lesson.created }}</span>
+                            </div> {% endcomment %}
+                            <a href="{{ lesson.get_absolute_url }}">
+                                <h3 class="font-normal">{{ lesson.title }}</h3>
+                            </a>
+                            <p class="m-b-0 m-t-10">{{ lesson.description | safe | truncatewords:20 }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}{% endblock footer_scripts %}

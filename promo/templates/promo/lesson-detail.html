@@ -1,0 +1,42 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    {% if lesson.video %}
+                        <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="{{ lesson.video }}"></div>
+                    {% endif %}
+                    {% if lesson.image and not lesson.video %}
+                        <div class="news-image" style="text-align: center;">
+                            <img class="img-responsive" style="max-width: 100%;" src="{{ lesson.image.url }}">
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        {% comment %} <div class="d-flex no-block align-items-center m-b-15">
+                            <span><i class="ti-calendar"></i> {{ lesson.created }}</span>
+                        </div> {% endcomment %}
+                        <h3 class="font-normal">{{ lesson.title }}</h3>
+                        <p class="m-b-0 m-t-10">{{ lesson.description | safe }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block footer_scripts %}
+    <script src="{% static 'libs/plyr/plyr.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'libs/plyr/plyr.css' %}">
+    <script>
+        const player = new Plyr('#player');
+    </script>
+{% endblock footer_scripts %}

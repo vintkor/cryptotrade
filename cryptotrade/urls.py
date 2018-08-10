@@ -17,6 +17,7 @@ urlpatterns = [
         path('packages/', include('packages.urls')),
         path('finance/', include('finance.urls')),
         path('news/', include('news.urls')),
+        path('promo/', include('promo.urls')),
     ])),
     path('payeer_619318825.txt', lambda request: HttpResponse("619318825", content_type="text/plain")),
     path('ckeditor/', include('ckeditor_uploader.urls')),
