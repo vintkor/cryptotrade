@@ -183,3 +183,15 @@ class Document(models.Model):
 
     def __str__(self):
         return self.user.unique_number
+
+
+class TopUsers(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Пользователь'))
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
+
+    class Meta:
+        verbose_name = _('Привелигиированый пользователь')
+        verbose_name_plural = _('Привелигиированые пользователи')
+
+    def __str__(self):
+        return self.user.unique_number

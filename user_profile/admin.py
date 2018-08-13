@@ -1,5 +1,5 @@
 from django.contrib import admin
-from user_profile.models import User, Document
+from user_profile.models import User, Document, TopUsers
 
 
 class DocumentInline(admin.TabularInline):
@@ -46,3 +46,8 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(TopUsers)
+class TopUsersAdmin(admin.ModelAdmin):
+    list_display = ('user', 'created')

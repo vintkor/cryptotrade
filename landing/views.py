@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from user_profile.models import User
+from user_profile.models import User, TopUsers
+from random import choice
 
 
 class LandingView(View):
@@ -17,6 +18,10 @@ class LandingView(View):
                 context['register_url'] = reverse_lazy('user:register-by-ref', kwargs={'ref_code': ref_code})
             except User.DoesNotExist:
                 pass
+        else:
+            top_user_id = choice([i['id'] for i in TopUsers.objects.values('id').all()])
+            user_ref_code = User.objects.values('ref_code').get(id=top_user_id)
+            context['register_url'] = reverse_lazy('user:register-by-ref', kwargs={'ref_code': user_ref_code.get('ref_code')})
 
         return render(request, 'landings/index.html', context)
 
