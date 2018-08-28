@@ -1792,19 +1792,23 @@
             </div>
             <hr>
             <div class="contact__terms">
-                <a class="contact__terms__item" target="_blank" href="/assets/Правила_оборота_цифровых_активов.pdf">
+                <div class="col-md-3"><a class="contact__terms__item" target="_blank" href="{% static 'footbikmlm/app' %}/assets/Правила_оборота_цифровых_активов.pdf">
                     Правила оборота ЦА
-                </a>
-                <a class="contact__terms__item" target="_blank"
-                   href="/assets/Правила_и_условия компании FGN-PLC.pdf">
+                </a></div>
+                <div class="col-md-3"><a class="contact__terms__item" target="_blank"
+                   href="{% static 'footbikmlm/app' %}/assets/Правила_и_условия компании FGN-PLC.pdf">
                     Условия компании
-                </a>
-                <a class="contact__terms__item" target="_blank" href="/assets/Политика_конфедициальности.pdf">
+                </a></div>
+                <div class="col-md-3"><a class="contact__terms__item" target="_blank" href="{% static 'footbikmlm/app' %}/assets/Политика_конфедициальности.pdf">
                     Политика конфиденциальности
-                </a>
-                <a class="contact__terms__item" target="_blank" href="/assets/Основы бизнес системы FGN PLC.pdf">
+                </a></div>
+                <div class="col-md-3"><a class="contact__terms__item" target="_blank" href="{% static 'footbikmlm/app' %}/assets/Основы бизнес системы FGN PLC.pdf">
                     Основы бизнес системы FGN PLC
-                </a>                
+                </a> </div>
+
+
+
+
             </div>
             <div class="social social-foot">
                 <a class="social__item" target="_blank"
@@ -1829,9 +1833,12 @@
         </div>
     </div>
 </section>
-<div class="contact__terms">
-    Football Global Net PLC , регистрационный номер: 14523871, адрес: Harju maakond, Tallinn, Lasnamäe linnaosa,
-    Peterburi tee 47, 11415
+<div class="contact__terms" style="flex-direction: column">
+    <p>Football Global Net PLC , регистрационный номер: 14523871, адрес: Harju maakond, Tallinn, Lasnamäe linnaosa,
+    Peterburi tee 47, 11415</p><br>
+    <p>
+        <a href="https://ariregister.rik.ee/ettevotja" target="_blank">Проверить компанию в реестре</a>
+    </p>
 </div>
 <nav class="navigation" id="main__nav">
     <ul class="navigation__list">
