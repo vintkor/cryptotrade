@@ -3,7 +3,7 @@ from cryptotrade.settings import (
     BLOCKIO_BITCOIN_API_KEY,
     # BLOCKIO_LITECOIN_API_KEY,
     # BLOCKIO_DOGECOIN_API_KEY,
-    # BLOCKIO_SECRET_PIN,
+    BLOCKIO_SECRET_PIN,
 )
 from block_io import BlockIo
 from finance.models import BlockIOWallet
@@ -57,7 +57,7 @@ def start_block_io_checker():
         course = decimal.Decimal(response['USD']['last'])
 
         for api_key in [BLOCKIO_BITCOIN_API_KEY]:
-            checker = BlockIOChecker('9169-2eea-75f4-7384', 'vintkor71084')
+            checker = BlockIOChecker(BLOCKIO_BITCOIN_API_KEY, BLOCKIO_SECRET_PIN)
             data = checker.get_wallets_data()
 
             for i in data:
