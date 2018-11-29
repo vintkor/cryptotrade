@@ -18,7 +18,7 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute='*/1')
     },
     'points-awars-each-friday-in-6h-10m': {
-        'task': 'award.tasks.start_point_awadr_task',
+        'task': 'awards.tasks.start_point_awadr_task',
         'schedule': crontab(hour=6, minute=10, day_of_week=5)
     },
 }
