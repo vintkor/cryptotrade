@@ -131,21 +131,21 @@ def start_rang_award_runner():
                         now = datetime.datetime.now()
                         finish_date = user.created + datetime.timedelta(days=rang.quick_days)
 
-                    if rang.is_final and finish_date >= now:
-                        user.balance += rang.quick_bonus
-                        user.save(update_fields=('balance', 'rang'))
+                        if finish_date >= now:
+                            user.balance += rang.quick_bonus
+                            user.save(update_fields=('balance', 'rang'))
 
-                        sender_quick_bonus_purpose = Purpose.object.get(code=20)
-                        recipient_quick_bonus_purpose = Purpose.object.get(code=21)
+                            sender_quick_bonus_purpose = Purpose.objects.get(code=20)
+                            recipient_quick_bonus_purpose = Purpose.objects.get(code=21)
 
-                        set_transaction_to_finance_history(
-                            amount=rang.quick_bonus,
-                            sender_id=system_balance.id,
-                            recipient_id=user.id,
-                            sender_purpose_id=sender_quick_bonus_purpose.id,
-                            recipient_purpose_id=recipient_quick_bonus_purpose.id,
-                            uuid=make_uuid(),
-                        )
+                            set_transaction_to_finance_history(
+                                amount=rang.quick_bonus,
+                                sender_id=system_balance.id,
+                                recipient_id=user.id,
+                                sender_purpose_id=sender_quick_bonus_purpose.id,
+                                recipient_purpose_id=recipient_quick_bonus_purpose.id,
+                                uuid=make_uuid(),
+                            )
 
         # rah = RangAwardHistory()
         # rah.user_id = user_id
