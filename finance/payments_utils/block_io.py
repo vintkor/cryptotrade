@@ -1,9 +1,9 @@
 from cryptotrade.settings import (
-    BITCOIN_CODE, 
+    # BITCOIN_CODE,
     BLOCKIO_BITCOIN_API_KEY,
-    BLOCKIO_LITECOIN_API_KEY,
-    BLOCKIO_DOGECOIN_API_KEY,
-    BLOCKIO_SECRET_PIN,
+    # BLOCKIO_LITECOIN_API_KEY,
+    # BLOCKIO_DOGECOIN_API_KEY,
+    # BLOCKIO_SECRET_PIN,
 )
 from block_io import BlockIo
 from finance.models import BlockIOWallet
