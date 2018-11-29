@@ -8,6 +8,12 @@ app = Celery('cryptotrade')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 
+CELERY_IMPORTS = (
+    "finance.tasks.start_block_io_checker_task",
+    "finance.tasks.blockio_transfer_usd_to_user_balance_task",
+    "award.tasks.start_point_awadr_task",
+)
+
 app.conf.beat_schedule = {
     'start_block_io_checker-each-5-minutes': {
         'task': 'finance.tasks.start_block_io_checker_task',
