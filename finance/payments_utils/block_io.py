@@ -44,7 +44,7 @@ class BlockIOChecker:
 
         return wallets_data_list
 
-    def delete_wallets():
+    def delete_wallets(self):
         pass
 
 
