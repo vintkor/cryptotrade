@@ -6,8 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.transaction import atomic
 from django.http import HttpResponse, JsonResponse
-from django.middleware.csrf import get_token
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
 from django.template import Context, Template
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -28,6 +27,8 @@ from .models import (
 )
 from .payments_utils.payeer import Payeer
 from .utils import make_uuid, set_transaction_to_finance_history
+from user_profile.tasks import send_simple_email_task
+from django.conf import settings
 
 
 class FinanceHistoryListView(LoginRequiredMixin, ListView):
@@ -352,6 +353,16 @@ class MoneyHandRequestFormView(LoginRequiredMixin, FormView):
             user.save(update_fields=('balance', 'freeze_balance'))
 
         messages.success(self.request, _('Запрос на вывод средств успешно создан'))
-        # TODO Отправить письмо о новом запросе суперадминистратору
+
+        if settings.DEBUG:
+            send_simple_email_task.delay(
+                settings.ADMIN_EMAIL,
+                'Вывод средств',
+                'От пользователя {unique_number} ({name}) получен запрос на вывод средств в разиере FBC{amount}'.format(
+                    unique_number=user.unique_number,
+                    name=user.get_full_name(),
+                    amount=amount,
+                ),
+            )
 
         return super(MoneyHandRequestFormView, self).form_valid(form)
