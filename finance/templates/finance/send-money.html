@@ -45,4 +45,10 @@
 {% endblock content %}
 
 
-{% block footer_scripts %}{% endblock footer_scripts %}
+{% block footer_scripts %}
+    <script src="{% static '' %}libs/inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="{% static '' %}libs/inputmask/jquery.inputmask.min.js"></script>
+    <script>
+        $('#id_recipient').inputmask("CT-9999999");
+    </script>
+{% endblock footer_scripts %}
