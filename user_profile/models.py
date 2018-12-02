@@ -1,3 +1,5 @@
+import decimal
+
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -63,6 +65,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     verification = models.CharField(max_length=3, verbose_name=_('Верифицирован'), blank=True, null=True,
                                     choices=VERIFICATION_CHOICES)
     balance = models.DecimalField(verbose_name=_('Баланс'), decimal_places=2, max_digits=10, default=0)
+    freeze_balance = models.DecimalField(verbose_name=_('Замороженные средства'), max_digits=12, decimal_places=2,
+                                         default=0)
     package = models.ForeignKey('packages.Package', on_delete=models.CASCADE, verbose_name=_('Пакет'), blank=True, null=True)
     rang = models.ForeignKey('awards.RangAward', on_delete=models.CASCADE, verbose_name=_('Ранг'), blank=True, null=True)
     volume = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -166,6 +170,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         from shares.models import ShareHolder
         count_tokens = ShareHolder.objects.filter(user=self).aggregate(total=Sum('amount'))
         return count_tokens['total']
+
+    def update_balance(self, amount):
+        if isinstance(amount, decimal.Decimal):
+            self.balance += amount
+        else:
+            raise ValueError('"amount" must be Decimal instance')
+
+    def update_freeze_balance(self, amount):
+        if isinstance(amount, decimal.Decimal):
+            self.freeze_balance += amount
+        else:
+            raise ValueError('"amount" must be Decimal instance')
 
     # def get_rang(self):
     #     if self.rang:

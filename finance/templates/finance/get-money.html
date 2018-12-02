@@ -11,8 +11,75 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{% trans 'Вывод средств' %}</h4>
-                    <p>Вывод средсв будет включён через несколько дней</p>
+                    <h4 class="card-title">{% trans 'Вывод средств' %}</h4> <br>
+{#                    <p>Вывод средсв будет включён через несколько дней</p>#}
+                    <a href="{% url 'finance:hand-request' %}" class="btn btn-success">Сделать запрос на вывод средств</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{% trans 'Ваши запросы на вывод средств' %}</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            {% if perms.finance.can_moderate_money_requests %}
+                                <th>{% trans 'Пользователь' %}</th>
+                            {% endif %}
+                            <th>{% trans 'Сумма' %}</th>
+                            <th>{% trans 'Информация' %}</th>
+                            <th>{% trans 'Статус' %}</th>
+                            <th>{% trans 'Дата создания' %}</th>
+                            {% if perms.finance.can_moderate_money_requests %}
+                                <th>{% trans 'Действия' %}</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for money_request in money_requests %}
+                                <tr>
+                                    {% if perms.finance.can_moderate_money_requests %}
+                                        <td>{{ money_request.user.unique_number }}
+                                            <br><small class="text-info">{{ money_request.user.get_full_name }}</small>
+                                            <br><small class="text-info">{{ money_request.user.email }}</small>
+                                        </td>
+                                    {% endif %}
+                                    <td>{{ money_request.amount }}</td>
+                                    <td>
+                                        <div style="width: 400px; max-height: 60px; overflow: scroll">{{ money_request.info }}</div>
+                                    </td>
+                                    <td><span class="label label-{{ money_request.status_class }}" style="font-size: 1em">{{ money_request.get_status_display }}</span></td>
+                                    <td>{{ money_request.created }}</td>
+                                    {% if perms.finance.can_moderate_money_requests %}
+                                        <td>
+                                            {% if money_request.status_is_new %}
+                                                <div class="btn-group">
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="action" value="yes">
+                                                        <input type="hidden" name="request_id" value="{{ money_request.id }}">
+                                                        <button class="btn btn-sm btn-outline-success">{% trans 'Выполнить' %}</button>
+                                                    </form>
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="action" value="no">
+                                                        <input type="hidden" name="request_id" value="{{ money_request.id }}">
+                                                        <button class="btn btn-sm btn-outline-danger">{% trans 'Отказать' %}</button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

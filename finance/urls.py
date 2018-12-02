@@ -6,6 +6,7 @@ from .views import (
     PayeerFailView,
     PayeerStatusView,
     GetMoneyFormView,
+    MoneyHandRequestFormView,
 )
 
 
@@ -18,4 +19,5 @@ urlpatterns = [
     path('payments/payeer/fail/', PayeerFailView.as_view(), name='payeer-fail'),
     path('payments/payeer/status/', PayeerStatusView.as_view(), name='payeer-status'),
     path('get-money/', GetMoneyFormView.as_view(), name='get-money'),
+    path('get-money/hand-request', MoneyHandRequestFormView.as_view(), name='hand-request'),
 ]

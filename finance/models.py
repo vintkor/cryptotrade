@@ -4,6 +4,7 @@ from user_profile.models import User
 from django.contrib.postgres.fields import JSONField
 import datetime
 from cryptotrade.settings import BLOCKIO_TIME
+from django.db.transaction import atomic
 
 
 class Purpose(models.Model):
@@ -16,6 +17,7 @@ class Purpose(models.Model):
     class Meta:
         verbose_name_plural = _('Назначения платежей')
         verbose_name = _('Назначение платежа')
+        ordering = ('-code',)
 
     def __str__(self):
         return self.title
@@ -54,6 +56,17 @@ class UsersFinanceHistory(models.Model):
         return '---'
 
     get_number_second_user.short_description = _('Второй пользователь')
+
+    @staticmethod
+    def set_new_operation(user, amount, purpose, uuid, second_user=None):
+        history = UsersFinanceHistory()
+        history.user = user
+        history.amount = amount
+        history.purpose = purpose
+        if second_user:
+            history.second_user = second_user
+        history.uuid = uuid
+        history.save()
 
 
 class PaymentSystem(models.Model):
@@ -117,3 +130,93 @@ class BlockIOWallet(models.Model):
         if not self.end_date:
             self.end_date = datetime.datetime.now() + datetime.timedelta(seconds=BLOCKIO_TIME)            
         return super(BlockIOWallet, self).save(*args, **kwargs)
+
+
+MONEY_REQUEST_STATUSES = (
+    ('1', _('Новый')),
+    ('2', _('Отказано')),
+    ('3', _('Выполнен')),
+)
+
+
+class MoneyRequest(models.Model):
+    """
+    Запросы на вывод средств
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Пользователь'))
+    amount = models.DecimalField(verbose_name=_('Сумма'), max_digits=13, decimal_places=2)
+    info = models.TextField(verbose_name=_('Дополнительная информация'), blank=True, null=True)
+    status = models.CharField(verbose_name=_('Статус'), choices=MONEY_REQUEST_STATUSES, max_length=1)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name=_('Дата создания'))
+
+    class Meta:
+        verbose_name = _('Запрос на вывод средств')
+        verbose_name_plural = _('Запросы на вывод средств')
+        permissions = (
+            ("can_moderate_money_requests", "Может модерировать вывод средств"),
+        )
+        ordering = ('-id',)
+
+    def __init__(self, *args, **kwargs):
+        super(MoneyRequest, self).__init__(*args, **kwargs)
+        self._old_status = self.status
+
+    def __str__(self):
+        return '{} -> {}'.format(self.user.unique_number, self.amount)
+
+    def save(self, *args, **kwargs):
+        if self._old_status != self.status:
+
+            if self.status_is_done():
+                self.save_money_transaction(is_done=True)
+
+            if self.status_is_denied():
+                self.save_money_transaction(is_denied=True)
+
+        return super(MoneyRequest, self).save(*args, **kwargs)
+
+    def status_is_new(self):
+        if self.status == MONEY_REQUEST_STATUSES[0][0]:
+            return True
+        return False
+
+    def status_is_denied(self):
+        if self.status == MONEY_REQUEST_STATUSES[1][0]:
+            return True
+        return False
+
+    def status_is_done(self):
+        if self.status == MONEY_REQUEST_STATUSES[2][0]:
+            return True
+        return False
+
+    @property
+    def status_class(self):
+        if self.status_is_new():
+            return 'info'
+        if self.status_is_done():
+            return 'success'
+        else:
+            return 'danger'
+
+    def save_money_transaction(self, is_denied=False, is_done=False):
+        self.user.update_freeze_balance(-self.amount)
+
+        if is_done:
+            purpose_for_user = Purpose.objects.get(code=26)
+            from finance.utils import make_uuid
+            uuid = make_uuid()
+
+            with atomic():
+                self.user.save()
+                UsersFinanceHistory.set_new_operation(
+                    user=self.user,
+                    amount=-self.amount,
+                    purpose=purpose_for_user,
+                    uuid=uuid,
+                )
+
+        if is_denied:
+            with atomic():
+                self.user.update_balance(self.amount)
+                self.user.save()

@@ -1,0 +1,39 @@
+{% extends 'cabinet.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block page_title %}{% endblock page_title %}
+{% block headed_scripts %}{% endblock headed_scripts %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-info">{% blocktrans %}Уважаемый партнер бизнес-системы Football Network.  Для того, чтобы вывести средства из кабинета на Ваш кошелек, Вам необходимо заполнить форму, где нужно указать  сумму вывода (не менее $ 100 ) и номер кошелька в платежной системе, на которую осуществить вывод средств. Далее, на ваш e-mail будут высланы инструкции для подтверждения вывода. Регламент вывода средств: до 5-7 банковских дней с момента подтверждения операции партнером.{% endblocktrans %}</p>
+                    <p class="text-danger">{% blocktrans %}Указаная Вами сумма будет временно заморожена{% endblocktrans %}</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                <span class="text-info">{{ field.help_text }}</span>
+                                {% for error in field.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <div class="form-group">
+                            <button class="btn btn-success">{% trans 'Отправить запрос' %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer_scripts %}{% endblock footer_scripts %}

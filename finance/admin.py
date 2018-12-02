@@ -5,6 +5,7 @@ from .models import (
     PaymentSystem,
     PaymentHistory,
     BlockIOWallet,
+    MoneyRequest,
 )
 from django.contrib.postgres.fields import JSONField
 from jsoneditor.forms import JSONEditor
@@ -65,4 +66,26 @@ class BlockIOWallet(admin.ModelAdmin):
         'created',
         'end_date',
         'is_done',
+    )
+
+
+@admin.register(MoneyRequest)
+class MoneyRequestAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'amount',
+        'info',
+        'status',
+        'created',
+    )
+    readonly_fields = (
+        'user',
+        'amount',
+        'info',
+        'status',
+        'created',
+    )
+    list_filter = (
+        'status',
+        'created',
     )

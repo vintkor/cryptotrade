@@ -16,13 +16,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView, ListView, View
 from cryptotrade.settings import BITCOIN_CODE, PAYEER_CODE
 from user_profile.models import User
-from .forms import SendMoneyForm
+from .forms import SendMoneyForm, MoneyHandRequestForm
 from .models import (
     BlockIOWallet,
     PaymentHistory,
     PaymentSystem,
     Purpose,
     UsersFinanceHistory,
+    MoneyRequest,
+    MONEY_REQUEST_STATUSES,
 )
 from .payments_utils.payeer import Payeer
 from .utils import make_uuid, set_transaction_to_finance_history
@@ -281,9 +283,75 @@ class PayeerSucceessView(LoginRequiredMixin, View):
         return redirect(reverse_lazy('finance:finance-history'))
 
 
-class GetMoneyFormView(LoginRequiredMixin, View):
+class GetMoneyFormView(LoginRequiredMixin, ListView):
+    """
+    Страница вывода средств
+    """
     login_url = reverse_lazy('user:login')
+    context_object_name = 'money_requests'
+    template_name = 'finance/get-money.html'
+    paginate_by = 50
 
-    def get(self, request):
-        context = {}
-        return render(request, 'finance/get-money.html', context)
+    def get_queryset(self):
+        queryset = MoneyRequest.objects.all()
+        user = self.request.user
+        if self.request.user.has_perm('finance.can_moderate_money_requests'):
+            return queryset
+        return queryset.filter(user=user)
+
+    def post(self, request):
+        if not self.request.user.has_perm('finance.can_moderate_money_requests'):
+            messages.error(request, _('У вас нет права менять статус'))
+            return redirect(reverse_lazy('finance:get-money'))
+
+        action = request.POST.get('action')
+        request_id = request.POST.get('request_id')
+
+        money_request = get_object_or_404(MoneyRequest, pk=request_id)
+
+        if action == 'yes':
+            money_request.status = MONEY_REQUEST_STATUSES[2][0]
+        elif action == 'no':
+            money_request.status = MONEY_REQUEST_STATUSES[1][0]
+
+        money_request.save()
+
+        return redirect(reverse_lazy('finance:get-money'))
+
+
+class MoneyHandRequestFormView(LoginRequiredMixin, FormView):
+    """
+    Форма запроса на вывод средств
+    """
+    form_class = MoneyHandRequestForm
+    template_name = 'finance/money-hand-request.html'
+    login_url = reverse_lazy('user:login')
+    success_url = reverse_lazy('finance:get-money')
+
+    def get_form_kwargs(self):
+        kwargs = super(MoneyHandRequestFormView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        amount = decimal.Decimal(form.cleaned_data['amount'])
+        info = form.cleaned_data['info']
+        user = self.request.user
+
+        with atomic():
+            money_request = MoneyRequest(
+                amount=amount,
+                user=user,
+                info=info,
+                status=MONEY_REQUEST_STATUSES[0][0],
+            )
+            money_request.save()
+
+            user.update_balance(-amount)
+            user.update_freeze_balance(amount)
+            user.save(update_fields=('balance', 'freeze_balance'))
+
+        messages.success(self.request, _('Запрос на вывод средств успешно создан'))
+        # TODO Отправить письмо о новом запросе суперадминистратору
+
+        return super(MoneyHandRequestFormView, self).form_valid(form)

@@ -18,7 +18,7 @@
                         </div>
                         <div class="user-content hide-menu m-t-10">
                             <h5 class="m-b-10 user-name font-medium">FBT {{ user.get_count_tokens }}</h5>
-                            <h5 class="m-b-10 user-name font-medium">FBC {{ user.balance }}</h5>
+                            <h5 class="m-b-10 user-name font-medium">FBC {{ user.balance }} <small>({{ user.freeze_balance }})</small></h5>
                             <h5 class="m-b-10 user-name font-medium">{{ user.unique_number }}</h5>
                             <h5 class="m-b-10 user-name font-medium"><small>{{ user.package }}{% if user.rang %} / {{ user.rang }}{% endif %}</small></h5>
                         </div>
