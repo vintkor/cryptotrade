@@ -56,7 +56,7 @@ Babel = "==2.6.0"
 Django = "==2.0.7"
 PrettyTable = "==0.7.2"
 pyOpenSSL = "==18.0.0"
-Pillow = "==5.2.0"
+Pillow = "==8.2.0"
 
 [dev-packages]
 
